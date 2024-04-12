@@ -29,8 +29,34 @@ public class Doctor
 
     private int Id { get; set; }
     public string Name { get; set; }
-    public int Age { get; set; }
-    public int Experience { get; set; }
+    
+    private int _age;
+    public int Age 
+    { 
+        get => _age;
+        set 
+        {
+            if (value < 17 || value > 65) // allowed age limits
+            {
+                throw new ArgumentException("Doctor's Age must be between 17 and 65 until retirement.");
+            }
+            _age = value;
+        }
+    }
+
+    private int _experience;
+    public int Experience
+    {
+        get => _experience;
+        set
+        {
+            if (value < 0 || value > 48)
+            {
+                throw new ArgumentException("Experience cannot be negative nor greater than 48 as retirement occur.");
+            }
+            _experience = value;
+        }
+    }    
     public List<string> Qualification { get;} = new();
     public List<string> Specialization { get; } = new();
     

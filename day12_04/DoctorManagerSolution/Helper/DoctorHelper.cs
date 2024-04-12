@@ -13,8 +13,26 @@ public class DoctorHelper
         var doctor = new Doctor(id);
         Console.WriteLine("Doctors Name: ");
         doctor.Name = Console.ReadLine() ?? throw new Exception("Name should not be null") ;
-        doctor.Experience = GetNum("experience in years");
-        doctor.Age = GetNum("age in years");
+        
+        var validInput = false;
+
+        do
+        {
+            try
+            {
+                int experience = GetNum("experience in years");
+                doctor.Experience = experience;
+
+                int age = GetNum("age in years");
+                doctor.Age = age;
+
+                validInput = true;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        } while (!validInput);
         
         UpdateQualification(doctor);
         UpdateSpecialization(doctor);
