@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UserValidation
+﻿namespace UserValidation
 {
     internal class Vowels
     {
-        HashSet<Char> vowels = new HashSet<Char>() { 'a', 'e', 'i', 'o', 'u'};
+        private readonly HashSet<char> _vowels = new HashSet<char> { 'a', 'e', 'i', 'o', 'u'};
 
         /*
          * for getting Frequency map
          */
-        private Dictionary<Char, int> getFrequency(string str)
+        private Dictionary<char, int> GetFrequency(string str)
         {
-            Dictionary<Char, int> map = new Dictionary<Char, int>();
+            var map = new Dictionary<char, int>();
             foreach (var ch in str.ToCharArray())
             {
-                if (vowels.Contains(ch))
+                if (_vowels.Contains(ch))
                 {
                    map[ch] = map.GetValueOrDefault(ch, 0) + 1;
                 }
@@ -26,30 +20,30 @@ namespace UserValidation
             return map;
         }
 
-        private int getVowelsCount(string str)
+        private int GetVowelsCount(string str)
         {
-            int count = 0;
+            var count = 0;
             foreach(var ch in str.ToCharArray())
             {
-                if (vowels.Contains(ch))
+                if (_vowels.Contains(ch))
                     count++;
             }
             return count;
         }
 
-        public Dictionary<string, int> getLeastWords(string input)
+        public Dictionary<string, int> GetLeastWords(string input)
         {
             var inputList = input.Split(",").ToList();
-            var leastCount = getFreqNum(inputList[0]);
+            var leastCount = GetFreqNum(inputList[0]);
             var res = new Dictionary<string, int>();
 
             foreach (var word in inputList) {
-                var currCount = getFreqNum(word);
+                var currCount = GetFreqNum(word);
                 if( leastCount > currCount)
                 {
                     leastCount = currCount;
                     res.Clear();
-                    res[word] = getVowelsCount(word);
+                    res[word] = GetVowelsCount(word);
                 }
             }
             return res;
@@ -60,17 +54,17 @@ namespace UserValidation
          * for the vowels aaeiio it will be generated as 1122
          * as frequencies in sorted order
          */
-        private int getFreqNum(string word)
+        private int GetFreqNum(string word)
         {
-            var wordFreq = getFrequency(word);
-            List<int> freqStore = new List<int>();
+            var wordFreq = GetFrequency(word);
+            var freqStore = new List<int>();
             foreach (var item in wordFreq.Values)
             {
                 freqStore.Add(item);
-            };
+            }
             freqStore.Sort();
 
-            string compNo = "";
+            var compNo = "";
 
             foreach (var item in freqStore)
             {
