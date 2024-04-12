@@ -37,9 +37,7 @@
                 var vowels = new Vowels();
                 Console.WriteLine("Enter the comma seperated string for words with least vowels");
                 var str = Console.ReadLine();
-                Console.WriteLine(str);
                 var res = vowels.GetLeastWords(str ?? "");
-                Console.WriteLine("hereee");
                 foreach (var item in res.Keys)
                 {
                     Console.WriteLine(item);
