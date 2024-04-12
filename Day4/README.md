@@ -32,4 +32,4 @@
 
 - Todo
   - [x] Sample model implementing all the classes features
-  - [ ] Arrays further functionalities
+  - [x] Arrays further functionalities

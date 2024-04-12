@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsValidator", "CardsValidator.csproj", "{B8476615-5F3F-45C0-AFA2-E689726F90D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8476615-5F3F-45C0-AFA2-E689726F90D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8476615-5F3F-45C0-AFA2-E689726F90D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8476615-5F3F-45C0-AFA2-E689726F90D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8476615-5F3F-45C0-AFA2-E689726F90D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
