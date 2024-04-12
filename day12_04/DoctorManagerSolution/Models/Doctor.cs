@@ -18,21 +18,21 @@ public class Doctor
     /// <param name="qualification">Qatlification stream</param>
     /// <param name="specialization">Specialization</param>
     /// <exception cref="ArgumentNullException"></exception>
-    public Doctor(int id, string name, int age, int experience, HashSet<string> qualification, HashSet<string> specialization) : this(id)
+    public Doctor(int id, string name, int age, int experience, List<string> qualification, List<string> specialization) : this(id)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Age = age;
         Experience = experience;
-        Qualifications = qualification ?? throw new ArgumentNullException(nameof(qualification));
-        Specializations = specialization ?? throw new ArgumentNullException(nameof(specialization));
+        Qualification = qualification ?? throw new ArgumentNullException(nameof(qualification));
+        Specialization = specialization ?? throw new ArgumentNullException(nameof(specialization));
     }
 
-    public int Id { get; set; }
+    private int Id { get; set; }
     public string Name { get; set; }
     public int Age { get; set; }
     public int Experience { get; set; }
-    public HashSet<string> Qualifications { get;} = new();
-    public HashSet<string> Specializations { get; } = new();
+    private List<string> Qualification { get;} = new();
+    private List<string> Specialization { get; } = new();
     
     /// <summary>
     /// Method to add specialization
@@ -40,7 +40,13 @@ public class Doctor
     /// <param name="specialization"></param>
     public void AddSpecialization(string specialization)
     {
-        Specializations.Add(specialization);
+        if (Specializations.Contains(specialization))
+        {
+            if (!Specialization.Contains(specialization))
+                Specialization.Add(specialization);
+        }
+        else
+            throw new Exception($"{specialization} is not valid.");
     }
     
     /// <summary>
@@ -49,6 +55,41 @@ public class Doctor
     /// <param name="qualification"></param>
     public void AddQualification(string qualification)
     {
-        Qualifications.Add(qualification);
+        if (Qualifications.Contains(qualification))
+        {
+            if (!Qualification.Contains(qualification))
+                Qualification.Add(qualification);
+        }
+        else
+            throw new Exception($"{qualification} is not a valid.");
+    }
+    
+    public static readonly string[] Specializations = {
+        "General Medicine",
+        "Pediatrics",
+        "Cardiology",
+        "Orthopedics",
+        "Neurology",
+        "Dermatology",
+        "Ophthalmology",
+    };
+
+    public static readonly string[] Qualifications = {
+        "MBBS",
+        "MD",
+        "MS",
+        "DM",
+    };
+
+    public void Display()
+    {
+        Console.WriteLine($"Doctor {Id} ------------");
+        Console.WriteLine($"\tName\t\t:\t{Name}");
+        Console.WriteLine($"\tAge\t\t:\t{Age} yrs");
+        Console.WriteLine($"\tExperience\t:\t{Experience} yrs");
+        var qualifications = string.Join(", ", Qualification);
+        Console.WriteLine($"\tQualification\t:\t{qualifications}");
+        var specializations = string.Join(", ", Specialization);
+        Console.WriteLine($"\tSpecialization\t:\t{specializations}");
     }
 }
