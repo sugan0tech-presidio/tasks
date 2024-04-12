@@ -11,7 +11,7 @@ public class DoctorHelper
     public static Doctor GetDoctor(int id)
     {
         var doctor = new Doctor(id);
-        Console.WriteLine("Doctors Name: ");
+        Console.Write("Doctors Name: ");
         doctor.Name = Console.ReadLine() ?? throw new Exception("Name should not be null") ;
         
         var validInput = false;
@@ -83,7 +83,7 @@ public class DoctorHelper
         Console.WriteLine("Select the Qualifications\nin order with space separation like 2 3");
         for (var i = 0; i < Doctor.Qualifications.Length; i++ )
         {
-            Console.WriteLine($"{i + 1}. {Doctor.Qualifications[i]}");
+            Console.Write($"{i + 1}. {Doctor.Qualifications[i]} | ");
         }
 
         foreach (var option in Console.ReadLine()?.Split(" ")!)
@@ -130,7 +130,7 @@ public class DoctorHelper
     public static int GetNum(string msg)
     {
         int res;
-        Console.WriteLine($"Enter {msg}");
+        Console.Write($"Enter {msg} ");
         while(!int.TryParse(Console.ReadLine(), out res))
             Console.WriteLine($"invalid type for {msg} int");
         return res;
