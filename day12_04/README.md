@@ -16,5 +16,5 @@
 
 
 - Todo
-  [x] Sample model implementing all the classes features
-  [] Arrays further functionalities
+  - [x] Sample model implementing all the classes features
+  - [ ] Arrays further functionalities
