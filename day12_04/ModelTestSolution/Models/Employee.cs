@@ -12,6 +12,9 @@ public class Employee
         get => _salary - _salary * 10 / 100;
         set => _salary = value;
     }
+    
+    public DateTime DateOfBirth { get; set; }
+    public string Email { get; set; }
 
     public void Work()
     {
