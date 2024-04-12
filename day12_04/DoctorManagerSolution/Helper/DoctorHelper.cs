@@ -21,6 +21,39 @@ public class DoctorHelper
 
         return doctor;
     }
+
+    /// <summary>
+    /// Method to filter doctors based on given speciality
+    /// </summary>
+    /// <param name="doctors">Array of created doctors</param>
+    public static void FilterBySpeciality(Doctor[] doctors)
+    {
+        
+        Console.WriteLine("\n\nSelect the Specializations");
+        for (var i = 0; i < Doctor.Specializations.Length; i++ )
+            Console.WriteLine($"{i + 1}. {Doctor.Specializations[i]}");
+
+        var option = Console.ReadLine();
+        if (!int.TryParse(option, out var optionPos) || optionPos > Doctor.Specializations.Length)
+        {
+            Console.WriteLine($"invalid entry {option}");
+            return;
+        }
+
+        var count = 0;
+        var specialization = Doctor.Specializations[optionPos - 1];
+        foreach (var doctor in doctors)
+        {
+            if (doctor.Specialization.Contains(specialization))
+            {
+                doctor.Display();
+                count++;
+            }
+            
+        }
+
+        Console.WriteLine($"\n{count} Doctors found for Speciality : {specialization}.");
+    }
     
     /// <summary>
     /// For getting qualification from cli
@@ -37,7 +70,7 @@ public class DoctorHelper
 
         foreach (var option in Console.ReadLine()?.Split(" ")!)
         {
-            if (!int.TryParse(option, out var optionPos) || (optionPos > Doctor.Qualifications.Length && optionPos >= 0))
+            if (!int.TryParse(option, out var optionPos) || optionPos > Doctor.Qualifications.Length )
             {
                 Console.WriteLine($"invalid entry {option}");
                 continue;
@@ -61,7 +94,7 @@ public class DoctorHelper
 
         foreach (var option in Console.ReadLine()?.Split(" ")!)
         {
-            if (!int.TryParse(option, out var optionPos) || (optionPos > Doctor.Specializations.Length && optionPos >= 0))
+            if (!int.TryParse(option, out var optionPos) || optionPos > Doctor.Specializations.Length )
             {
                 Console.WriteLine($"invalid entry {option}");
                 continue;

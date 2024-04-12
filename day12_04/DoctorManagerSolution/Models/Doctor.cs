@@ -31,8 +31,8 @@ public class Doctor
     public string Name { get; set; }
     public int Age { get; set; }
     public int Experience { get; set; }
-    private List<string> Qualification { get;} = new();
-    private List<string> Specialization { get; } = new();
+    public List<string> Qualification { get;} = new();
+    public List<string> Specialization { get; } = new();
     
     /// <summary>
     /// Method to add specialization
