@@ -83,7 +83,16 @@ namespace RequestTrackerApplication
         {
             Employee employee = new Employee();
             employee.Id = 101+ id;
-            employee.BuildEmployeeFromConsole();
+            try
+            {
+                employee.BuildEmployeeFromConsole();
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Then Date of Birth should be in the form of YYYY-MM-DD");
+                return null;
+            }
             return employee;
         }
 

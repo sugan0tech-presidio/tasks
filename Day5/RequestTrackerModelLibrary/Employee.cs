@@ -2,17 +2,12 @@
 {
     public class Employee
     {
-        int _age;
-        DateTime _dob;
+        private int _age;
+        private DateTime _dob;
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Age
-        {
-            get
-            {
-                return _age;
-            } 
-        }
+        public int Age => _age;
+
         public DateTime DateOfBirth { get =>_dob; 
             set {
                 _dob = value;
@@ -41,6 +36,9 @@
             Name = Console.ReadLine()??String.Empty;
             Console.Write("Please enter the Date of birth\t:");
             DateOfBirth = Convert.ToDateTime(Console.ReadLine());
+            while (Age < 18)
+                Console.WriteLine("employee must be above 17");
+            
             Console.Write("Please enter the Basic Salary\t:");
             Salary = Convert.ToDouble(Console.ReadLine());
         }
