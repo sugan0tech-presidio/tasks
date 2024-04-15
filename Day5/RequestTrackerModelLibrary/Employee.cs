@@ -8,6 +8,9 @@
         public string Name { get; set; }
         public int Age => _age;
 
+        /// <summary>
+        ///  directly updates age with the given Date of Birth.
+        /// </summary>
         public DateTime DateOfBirth { get =>_dob; 
             set {
                 _dob = value;
@@ -30,6 +33,9 @@
             Salary = salary;
         }
 
+        /// <summary>
+        /// Gets input from user and updates directly.
+        /// </summary>
         public void BuildEmployeeFromConsole()
         {
             Console.Write("Please enter the Name\t:");
