@@ -4,15 +4,34 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Employee Request Tracker!");
-
-            Console.WriteLine("Enter the type of request (1: Leave, 2: Equipment, 3: Training):");
-            int requestType = int.Parse(Console.ReadLine());
-
+            // Console.WriteLine("Welcome to the Employee Request Tracker!");
+            //
+            // Console.WriteLine("Enter the type of request (1: Leave, 2: Equipment, 3: Training):");
+            // int requestType = int.Parse(Console.ReadLine());
+            //
             var program = new Program();
-            program.ProcessRequest(requestType);
-
-            Console.WriteLine("Thanks for using employee tracker application!!!");
+            // program.ProcessRequest(requestType);
+            //
+            // Console.WriteLine("Thanks for using employee tracker application!!!");
+            program.NoOfTriples();
+            
+        }
+        void NoOfTriples()
+        {
+            int[] numbers = {444, 555, 828,992,999, 928};
+            int countOfRepeatingNumbers = 0;
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                int firstNumber,secondNumber, thirdNumber;
+                firstNumber = numbers[i] / 100;
+                secondNumber = (numbers[i] % 100)/10;
+                thirdNumber = numbers[i] % 10;
+                if (firstNumber == secondNumber && firstNumber == thirdNumber)
+                {
+                    countOfRepeatingNumbers++;
+                }
+            }
+            Console.WriteLine("The numbe rof repeating numbers is "+countOfRepeatingNumbers);
         }
 
         /// <summary>
