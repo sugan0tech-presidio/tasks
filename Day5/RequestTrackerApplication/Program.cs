@@ -2,128 +2,132 @@
 
 namespace RequestTrackerApplication
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        Employee[] employees;
+        public Program()
         {
-            // Console.WriteLine("Welcome to the Employee Request Tracker!");
-            //
-            // Console.WriteLine("Enter the type of request (1: Leave, 2: Equipment, 3: Training):");
-            // int requestType = int.Parse(Console.ReadLine());
-            //
-            var program = new Program();
-            // program.ProcessRequest(requestType);
-            //
-            // Console.WriteLine("Thanks for using employee tracker application!!!");
-            program.NoOfTriples();
-            Employee employee = new Employee();
-            employee.Id = 101;
-            employee.BuildEmployeeFromConsole();
-            employee.PrintEmployeeDetails();
+            employees = new Employee[3];
         }
-        void NoOfTriples()
+        void PrintMenu()
         {
-            int[] numbers = {444, 555, 828, 992, 999, 928};
-            int countOfRepeatingNumbers = 0;
-            for (int i = 0; i < numbers.Length; i++)
+            Console.WriteLine("1. Add Employee");
+            Console.WriteLine("2. Print Employees");
+            Console.WriteLine("3. Search Employee by ID");
+            Console.WriteLine("0. Exit");
+        }
+        void EmployeeInteraction()
+        {
+            int choice = 0;
+            do
             {
-                int firstNumber,secondNumber, thirdNumber;
-                firstNumber = numbers[i] / 100;
-                secondNumber = (numbers[i] % 100)/10;
-                thirdNumber = numbers[i] % 10;
-                if (firstNumber == secondNumber && firstNumber == thirdNumber)
+                PrintMenu();
+                Console.WriteLine("Please select an option");
+                choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
                 {
-                    countOfRepeatingNumbers++;
+                    case 0:
+                        Console.WriteLine("Bye.....");
+                        break;
+                    case 1:
+                        AddEmployee();
+                        break;
+                    case 2:
+                        PrintAllEmployees();
+                        break;
+                    case 3:
+                        SearchAndPrintEmployee();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Try again");
+                        break;
+                }
+            } while (choice !=0);
+        }
+        void AddEmployee()
+        {
+            if(employees[employees.Length - 1] != null)
+            {
+                Console.WriteLine("Sorry we have reached the maximum number of employees");
+                return;
+            }
+            for(int i = 0; i < employees.Length; i++)
+            {
+                if (employees[i] == null)
+                {
+                    employees[i] = CreateEmployee(i);
                 }
             }
-            Console.WriteLine("The numbe rof repeating numbers is "+countOfRepeatingNumbers);
+                
         }
-
-        void haveSameNums(int num)
+        void PrintAllEmployees()
         {
-        }
-
-        /// <summary>
-        /// batch request processing
-        /// </summary>
-        /// <param name="requestType"></param>
-         void ProcessRequest(int requestType)
-        {
-            switch (requestType)
+            if (employees[0] == null)
             {
-                case 1: // Leave
-                    Console.WriteLine("Leave request received.");
-                    HandleLeaveRequest();
+                Console.WriteLine("No Employees available");
+                return;
+            }
+            for(int i = 0;i < employees.Length;i++)
+            {
+                if (employees[i] != null)
+                    PrintEmployee(employees[i]);
+            }
+        }
+        Employee CreateEmployee(int id)
+        {
+            Employee employee = new Employee();
+            employee.Id = 101+ id;
+            employee.BuildEmployeeFromConsole();
+            return employee;
+        }
+
+        void PrintEmployee(Employee employee)
+        {
+            Console.WriteLine("---------------------------");
+            employee.PrintEmployeeDetails();
+            Console.WriteLine("---------------------------");
+        }
+        int GetIdFromConsole()
+        {
+            int id = 0;
+            Console.WriteLine("Please enter the employee Id");
+            while(!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Invalid entry. Please try again");
+            }
+            return id;
+        }
+        void SearchAndPrintEmployee()
+        {
+            Console.WriteLine("Print One employee");
+            int id = GetIdFromConsole();
+            Employee employee = SearchEmployeeById(id);
+            if(employee == null)
+            {
+                Console.WriteLine("No such Employee is present");
+                return;
+            }
+            PrintEmployee(employee);
+        }
+        Employee SearchEmployeeById(int id)
+        {
+            Employee employee = null;
+            for (int i = 0; i < employees.Length; i++)
+            {
+               // if ( employees[i].Id == id && employees[i] != null)//Will lead to exception
+               if (employees[i] != null && employees[i].Id == id)
+                {
+                    employee = employees[i];
                     break;
-                case 2: // Equipment
-                    Console.WriteLine("Equipment request received.");
-                    HandleEquipmentRequest();
-                    break;
-                case 3: // Training
-                    Console.WriteLine("Training request received.");
-                    HandleTrainingRequest();
-                    break;
-                default:
-                    Console.WriteLine("Invalid request type.");
-                    break;
+                }
             }
+            return employee;
         }
 
-        /// <summary>
-        /// Handeling leave request dummy
-        /// </summary>
-        void HandleLeaveRequest()
+        static void Main(string[] args)
         {
-                                                      
-            Console.WriteLine("Processing leave request...");
-            bool isLeaveApproved = true;
-                                           
-            if (isLeaveApproved)
-            {
-                Console.WriteLine("Leave request approved!");
-            }
-            else
-            {
-                Console.WriteLine("Leave request denied.");
-            }
+           Program program = new Program();
+            program.EmployeeInteraction();
         }
-
-        /// <summary>
-        /// Equeipment resuest handler
-        /// </summary>
-        void HandleEquipmentRequest()
-        {
-                                                          
-            Console.WriteLine("Processing equipment request...");
-            bool isEquipmentProvided = true;
-                                  
-            if (isEquipmentProvided)
-            {
-                Console.WriteLine("Equipment provided successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Unable to provide the equipment.");
-            }
-        }
-
-        /// <summary>
-        /// Training request handler
-        /// </summary>
-        void HandleTrainingRequest()
-        {
-                                                         
-            Console.WriteLine("Processing training request...");
-            bool isTrainingScheduled = true;
-                                               
-            if (isTrainingScheduled)
-            {
-                Console.WriteLine("Training scheduled successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Unable to schedule the training.");
-            }
-        }
-    }
+    }    
 }
