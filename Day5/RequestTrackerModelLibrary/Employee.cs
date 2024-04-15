@@ -2,21 +2,21 @@
 {
     public class Employee
     {
-        int age;
-        DateTime dob;
+        int _age;
+        DateTime _dob;
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
         public int Age
         {
             get
             {
-                return age;
+                return _age;
             } 
         }
-        public DateTime DateOfBirth { get =>dob; 
+        public DateTime DateOfBirth { get =>_dob; 
             set {
-                dob = value;
-                age =((DateTime.Today - dob).Days)/365;
+                _dob = value;
+                _age =(DateTime.Today - _dob).Days/365;
             } }
         public double Salary { get; set; }
 
@@ -37,21 +37,21 @@
 
         public void BuildEmployeeFromConsole()
         {
-            Console.WriteLine("Please enter the Name");
+            Console.Write("Please enter the Name\t:");
             Name = Console.ReadLine()??String.Empty;
-            Console.WriteLine("Please enter the Date of birth");
+            Console.Write("Please enter the Date of birth\t:");
             DateOfBirth = Convert.ToDateTime(Console.ReadLine());
-            Console.WriteLine("Please enter the Basic Salary");
+            Console.Write("Please enter the Basic Salary\t:");
             Salary = Convert.ToDouble(Console.ReadLine());
         }
 
         public void PrintEmployeeDetails()
         {
-            Console.WriteLine("Employee Id : "+Id);
-            Console.WriteLine("Employee Name "+Name);
-            Console.WriteLine("Date of birth : "+DateOfBirth);
-            Console.WriteLine("Employee Age : "+Age);
-            Console.WriteLine("Employee Salary : Rs."+Salary);
+            Console.Write($"Employee Id\t:\t{Id}\n");
+            Console.Write($"Employee Name\t:\t{Name}\n");
+            Console.Write($"Employee DOB\t:\t{DateOfBirth}\n");
+            Console.Write($"Employee Age\t:\t{Age}\n");
+            Console.Write($"Employee Salary\t:\t{Salary}\n");
         }
     }
 }

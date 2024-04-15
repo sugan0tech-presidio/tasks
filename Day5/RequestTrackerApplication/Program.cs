@@ -1,4 +1,6 @@
-﻿using RequestTrackerModelLibrary;
+﻿using System.Net;
+using System.Threading.Channels;
+using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication
 {
@@ -7,18 +9,17 @@ namespace RequestTrackerApplication
         Employee[] employees;
         public Program()
         {
-            employees = new Employee[3];
+            employees = new Employee[1];
         }
+
         void PrintMenu()
         {
-            Console.WriteLine("1. Add Employee");
-            Console.WriteLine("2. Print Employees");
-            Console.WriteLine("3. Search Employee by ID");
-            Console.WriteLine("0. Exit");
+            Console.WriteLine("1. Add Employee\n2. Print Employees\n3. Search Employee by ID\n4. Update Employee Name\n5. Delete Employee By Id\n0. Exit\n");
         }
+
         void EmployeeInteraction()
         {
-            int choice = 0;
+            int choice;
             do
             {
                 PrintMenu();
@@ -38,6 +39,12 @@ namespace RequestTrackerApplication
                     case 3:
                         SearchAndPrintEmployee();
                         break;
+                    case 4:
+                        UpdateNameById();
+                        break;
+                    case 5:
+                        DeleteEmployeeById();
+                        break;
                     default:
                         Console.WriteLine("Invalid choice. Try again");
                         break;
@@ -48,15 +55,13 @@ namespace RequestTrackerApplication
         {
             if(employees[employees.Length - 1] != null)
             {
-                Console.WriteLine("Sorry we have reached the maximum number of employees");
+                Console.WriteLine("Sorry we have reached the maximum number of employees\n");
                 return;
             }
-            for(int i = 0; i < employees.Length; i++)
+            for(var i = 0; i < employees.Length; i++)
             {
                 if (employees[i] == null)
-                {
                     employees[i] = CreateEmployee(i);
-                }
             }
                 
         }
@@ -64,13 +69,14 @@ namespace RequestTrackerApplication
         {
             if (employees[0] == null)
             {
-                Console.WriteLine("No Employees available");
+                Console.WriteLine("No Employees available !!!\n");
                 return;
             }
-            for(int i = 0;i < employees.Length;i++)
+
+            foreach (var employee in employees)
             {
-                if (employees[i] != null)
-                    PrintEmployee(employees[i]);
+                if (employee != null)
+                    employee.PrintEmployeeDetails();
             }
         }
         Employee CreateEmployee(int id)
@@ -89,12 +95,11 @@ namespace RequestTrackerApplication
         }
         int GetIdFromConsole()
         {
-            int id = 0;
+            int id;
             Console.WriteLine("Please enter the employee Id");
             while(!int.TryParse(Console.ReadLine(), out id))
-            {
                 Console.WriteLine("Invalid entry. Please try again");
-            }
+            
             return id;
         }
         void SearchAndPrintEmployee()
@@ -114,7 +119,6 @@ namespace RequestTrackerApplication
             Employee employee = null;
             for (int i = 0; i < employees.Length; i++)
             {
-               // if ( employees[i].Id == id && employees[i] != null)//Will lead to exception
                if (employees[i] != null && employees[i].Id == id)
                 {
                     employee = employees[i];
@@ -124,10 +128,33 @@ namespace RequestTrackerApplication
             return employee;
         }
 
+        void UpdateNameById()
+        {
+            int id = GetIdFromConsole();
+            var employee = SearchEmployeeById(id);
+            Console.WriteLine($"Enter the new name to be updated for {employee.Name}\t:");
+            employee.Name = Console.ReadLine() ?? string.Empty;
+            Console.WriteLine($"Scuccessly updated as {SearchEmployeeById(id).Name}!!!");
+        }
+
+        void DeleteEmployeeById()
+        {
+            int id = GetIdFromConsole();
+            for (int i = 0; i < employees.Length; i++)
+            {
+               if (employees[i] != null && employees[i].Id == id)
+               {
+                   employees[i] = null;
+                   return;
+               }
+            }
+            
+        }
+
         static void Main(string[] args)
         {
-           Program program = new Program();
-            program.EmployeeInteraction();
+           var program = new Program();
+           program.EmployeeInteraction();
         }
     }    
 }
