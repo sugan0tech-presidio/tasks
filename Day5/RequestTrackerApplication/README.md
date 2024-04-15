@@ -12,6 +12,9 @@ namespace RequestTrackerModelLibrary
         public string Name { get; set; }
         public int Age => _age;
 
+        /// <summary>
+        ///  directly updates age with the given Date of Birth.
+        /// </summary>
         public DateTime DateOfBirth { get =>_dob; 
             set {
                 _dob = value;
@@ -34,6 +37,9 @@ namespace RequestTrackerModelLibrary
             Salary = salary;
         }
 
+        /// <summary>
+        /// Gets input from user and updates directly.
+        /// </summary>
         public void BuildEmployeeFromConsole()
         {
             Console.Write("Please enter the Name\t:");
@@ -61,7 +67,8 @@ namespace RequestTrackerModelLibrary
             Console.Write($"\tEmployee Salary\t:\t{Salary}\n\n");
         }
     }
-}```
+}
+```
 
 Main program
 ```csharp
@@ -77,11 +84,17 @@ namespace RequestTrackerApplication
             employees = new Employee[3];
         }
 
+        /// <summary>
+        ///  For displaying options list for Employees CRUD.
+        /// </summary>
         void PrintMenu()
         {
             Console.WriteLine("\n1. Add Employee\n2. Print Employees\n3. Search Employee by ID\n4. Update Employee Name\n5. Delete Employee By Id\n0. Exit\n");
         }
 
+        /// <summary>
+        /// Primary method to route user options to Employee CRUD operations.
+        /// </summary>
         void EmployeeInteraction()
         {
             int choice;
@@ -116,6 +129,10 @@ namespace RequestTrackerApplication
                 }
             } while (choice !=0);
         }
+        
+        /// <summary>
+        ///  to add employees, gets input from cli
+        /// </summary>
         void AddEmployee()
         {
             if(employees[employees.Length - 1] != null)
@@ -136,6 +153,9 @@ namespace RequestTrackerApplication
             }
                 
         }
+        /// <summary>
+        /// To display all the employees details that are present in the record
+        /// </summary>
         void PrintAllEmployees()
         {
             if (employees[0] == null)
@@ -150,6 +170,11 @@ namespace RequestTrackerApplication
                     employee.PrintEmployeeDetails();
             }
         }
+        /// <summary>
+        /// Base for creating employee from cli
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Employee CreateEmployee(int id)
         {
             Employee employee = new Employee();
@@ -166,13 +191,22 @@ namespace RequestTrackerApplication
             }
             return employee;
         }
-
+        
+        /// <summary>
+        /// To display the given employee with proper decoration.
+        /// </summary>
+        /// <param name="employee"></param>
         void PrintEmployee(Employee employee)
         {
             Console.WriteLine("---------------------------");
             employee.PrintEmployeeDetails();
             Console.WriteLine("---------------------------");
         }
+        
+        /// <summary>
+        ///  Helper for getting Id from console. With added error handeling.
+        /// </summary>
+        /// <returns> int representation of employee id</returns>
         int GetIdFromConsole()
         {
             int id;
@@ -182,6 +216,10 @@ namespace RequestTrackerApplication
             
             return id;
         }
+        
+        /// <summary>
+        ///  Gets Employee Id from CLI and displays that employee.
+        /// </summary>
         void SearchAndPrintEmployee()
         {
             Console.WriteLine("Print One employee");
@@ -194,6 +232,12 @@ namespace RequestTrackerApplication
             }
             PrintEmployee(employee);
         }
+        
+        /// <summary>
+        ///  Fetches employee with the given Employee Id.
+        /// </summary>
+        /// <param name="id">Employee Id</param>
+        /// <returns>Employee object if presents</returns>
         Employee SearchEmployeeById(int id)
         {
             Employee employee = null;
@@ -208,6 +252,9 @@ namespace RequestTrackerApplication
             return employee;
         }
 
+        /// <summary>
+        ///  Updates name of employee with the given Employee Id.
+        /// </summary>
         void UpdateNameById()
         {
             int id = GetIdFromConsole();
@@ -216,7 +263,10 @@ namespace RequestTrackerApplication
             employee.Name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine($"Scuccessly updated as {SearchEmployeeById(id).Name}!!!\n");
         }
-
+        
+        /// <summary>
+        ///  Deletes Employee with the given Id.
+        /// </summary>
         void DeleteEmployeeById()
         {
             int id = GetIdFromConsole();
