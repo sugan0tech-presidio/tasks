@@ -1,4 +1,6 @@
-﻿namespace RequestTrackerApplication
+﻿using RequestTrackerModelLibrary;
+
+namespace RequestTrackerApplication
 {
     class Program
     {
@@ -14,11 +16,14 @@
             //
             // Console.WriteLine("Thanks for using employee tracker application!!!");
             program.NoOfTriples();
-            
+            Employee employee = new Employee();
+            employee.Id = 101;
+            employee.BuildEmployeeFromConsole();
+            employee.PrintEmployeeDetails();
         }
         void NoOfTriples()
         {
-            int[] numbers = {444, 555, 828,992,999, 928};
+            int[] numbers = {444, 555, 828, 992, 999, 928};
             int countOfRepeatingNumbers = 0;
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -32,6 +37,10 @@
                 }
             }
             Console.WriteLine("The numbe rof repeating numbers is "+countOfRepeatingNumbers);
+        }
+
+        void haveSameNums(int num)
+        {
         }
 
         /// <summary>
