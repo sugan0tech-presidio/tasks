@@ -37,19 +37,24 @@
             Console.Write("Please enter the Date of birth\t:");
             DateOfBirth = Convert.ToDateTime(Console.ReadLine());
             while (Age < 18)
+            {
                 Console.WriteLine("employee must be above 17");
-            
+                Console.Write("Please enter the Date of birth\t:");
+                DateOfBirth = Convert.ToDateTime(Console.ReadLine());
+            }
+
+
             Console.Write("Please enter the Basic Salary\t:");
             Salary = Convert.ToDouble(Console.ReadLine());
         }
 
         public void PrintEmployeeDetails()
         {
-            Console.Write($"Employee Id\t:\t{Id}\n");
-            Console.Write($"Employee Name\t:\t{Name}\n");
-            Console.Write($"Employee DOB\t:\t{DateOfBirth}\n");
-            Console.Write($"Employee Age\t:\t{Age}\n");
-            Console.Write($"Employee Salary\t:\t{Salary}\n");
+            Console.Write($"Employee {Id} Details:\n");
+            Console.Write($"\tEmployee Name\t:\t{Name}\n");
+            Console.Write($"\tEmployee DOB\t:\t{DateOfBirth}\n");
+            Console.Write($"\tEmployee Age\t:\t{Age}\n");
+            Console.Write($"\tEmployee Salary\t:\t{Salary}\n\n");
         }
     }
 }

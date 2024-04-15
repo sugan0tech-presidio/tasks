@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Threading.Channels;
-using RequestTrackerModelLibrary;
+﻿using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication
 {
@@ -9,12 +7,12 @@ namespace RequestTrackerApplication
         Employee[] employees;
         public Program()
         {
-            employees = new Employee[1];
+            employees = new Employee[3];
         }
 
         void PrintMenu()
         {
-            Console.WriteLine("1. Add Employee\n2. Print Employees\n3. Search Employee by ID\n4. Update Employee Name\n5. Delete Employee By Id\n0. Exit\n");
+            Console.WriteLine("\n1. Add Employee\n2. Print Employees\n3. Search Employee by ID\n4. Update Employee Name\n5. Delete Employee By Id\n0. Exit\n");
         }
 
         void EmployeeInteraction()
@@ -23,7 +21,7 @@ namespace RequestTrackerApplication
             do
             {
                 PrintMenu();
-                Console.WriteLine("Please select an option");
+                Console.Write("Please select an option\t:");
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
                 {
@@ -55,13 +53,19 @@ namespace RequestTrackerApplication
         {
             if(employees[employees.Length - 1] != null)
             {
-                Console.WriteLine("Sorry we have reached the maximum number of employees\n");
+                Console.WriteLine("\nSorry we have reached the maximum number of employees\n");
                 return;
             }
+
+            var counter = 1;
             for(var i = 0; i < employees.Length; i++)
             {
                 if (employees[i] == null)
+                {
+                    Console.WriteLine($"\nEnter details for employee, entry count: {counter}\n");
                     employees[i] = CreateEmployee(i);
+                    counter++;
+                }
             }
                 
         }
@@ -82,7 +86,7 @@ namespace RequestTrackerApplication
         Employee CreateEmployee(int id)
         {
             Employee employee = new Employee();
-            employee.Id = 101+ id;
+            employee.Id = 101 + id;
             try
             {
                 employee.BuildEmployeeFromConsole();
@@ -105,9 +109,9 @@ namespace RequestTrackerApplication
         int GetIdFromConsole()
         {
             int id;
-            Console.WriteLine("Please enter the employee Id");
+            Console.Write($"Please enter the employee Id\t:");
             while(!int.TryParse(Console.ReadLine(), out id))
-                Console.WriteLine("Invalid entry. Please try again");
+                Console.WriteLine("\nInvalid entry. Please try again\n");
             
             return id;
         }
@@ -118,7 +122,7 @@ namespace RequestTrackerApplication
             Employee employee = SearchEmployeeById(id);
             if(employee == null)
             {
-                Console.WriteLine("No such Employee is present");
+                Console.WriteLine("\nNo such Employee is present\n");
                 return;
             }
             PrintEmployee(employee);
@@ -143,7 +147,7 @@ namespace RequestTrackerApplication
             var employee = SearchEmployeeById(id);
             Console.WriteLine($"Enter the new name to be updated for {employee.Name}\t:");
             employee.Name = Console.ReadLine() ?? string.Empty;
-            Console.WriteLine($"Scuccessly updated as {SearchEmployeeById(id).Name}!!!");
+            Console.WriteLine($"Scuccessly updated as {SearchEmployeeById(id).Name}!!!\n");
         }
 
         void DeleteEmployeeById()

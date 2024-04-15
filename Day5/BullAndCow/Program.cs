@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("\t\tWelcome to the Cows and Bulls Game!!\n\n");
+        Console.WriteLine("\t\tWelcome to the Cows and Bulls Game!!\nRules: word should be in 4 characters only consists of alphabets\n");
 
         var secret = "golf";
         var program = new Program();
@@ -12,6 +12,12 @@ class Program
         {
             Console.Write("Enter your guess\t:");
             var guess = (Console.ReadLine()??string.Empty).ToLower();
+            if (guess.Length != 4)
+            {
+                Console.WriteLine("Please enter a valid guess\n");
+                continue;
+                
+            }
             if (guess == secret)
             {
                 Console.WriteLine("Whola that's a fine guess");
