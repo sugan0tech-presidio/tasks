@@ -4,7 +4,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("\t\tWelcome to the Cows and Bulls Game!!\nRules: word should be in 4 characters only consists of alphabets\n");
+        Console.WriteLine("\t\tWelcome to the Cows and Bulls Game!!\n" +
+                          "Rule 1: word should be in 4 characters only consists of alphabets\n" +
+                          "Rule 2: cows represents no of exact matched words & bull represents misplaced character\n");
 
         var secret = "golf";
         var program = new Program();
@@ -30,14 +32,14 @@ class Program
 
     string GetHint(string secret, string guess)
     {
-        var bullsCount = 0;
-        var cowsCount = 0;
+        var cowCount = 0;
+        var bullCount = 0;
         var freq = new int[26];
         var n = secret.Length;
         
         for(int i = 0; i < n; i++){
             if(secret[i] == guess[i])
-                bullsCount++;
+                cowCount++;
             else
                 freq[secret[i] - 'a']++;
         }
@@ -45,13 +47,13 @@ class Program
         for(int i = 0; i < n; i++){
             if(secret[i] != guess[i]){
                 if(freq[guess[i] - 'a'] > 0){
-                    cowsCount++;
+                    bullCount++;
                     freq[guess[i] - 'a']--;
                 }
             }
         }
         
-        return $"cows - {cowsCount}, bulls - {bullsCount}";
+        return $"bulls - {bullCount}, cows - {cowCount}";
 
     }
 }
