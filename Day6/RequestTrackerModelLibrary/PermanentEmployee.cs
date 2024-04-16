@@ -29,4 +29,10 @@ public class PermanentEmployee : Employee
         base.PrintEmployeeDetails();
         Console.Write($"\tEmployee Salary\t:\t{Salary}\n");
     }
+
+    public override string ToString()
+    {
+        return base.ToString()
+            +$"\tEmployee Salary\t:\t{Salary}";
+    }
 }

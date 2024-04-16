@@ -56,10 +56,19 @@ public class Employee
     public virtual void PrintEmployeeDetails()
     {
         Console.Write($"Employee {Id} Details:\n");
-        Console.WriteLine(
-            $"\tEmployee type\t:\t{GetType()}\n"); // Get's type for current instance either parent or the child
+        Console.WriteLine($"\tEmployee type\t:\t{GetType()}\n"); // Get's type for current instance either parent or the child
         Console.Write($"\tEmployee Name\t:\t{Name}\n");
         Console.Write($"\tEmployee DOB\t:\t{DateOfBirth}\n");
         Console.Write($"\tEmployee Age\t:\t{Age}\n");
     }
+    
+    public override string ToString()
+    {
+        return $"Employee {Id} Details:\n"
+               +$"\tEmployee type\t:\t{GetType()}\n"
+               +$"\tEmployee Name\t:\t{Name}\n"
+               +$"\tEmployee DOB\t:\t{DateOfBirth}\n"
+               +$"\tEmployee Age\t:\t{Age}\n";
+    }
+
 }

@@ -92,7 +92,7 @@ internal class Program
 
         foreach (var employee in employees)
             if (employee != null)
-                employee.PrintEmployeeDetails();
+                Console.WriteLine(employee);
     }
 
     /// <summary>

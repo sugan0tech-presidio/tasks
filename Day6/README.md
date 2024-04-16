@@ -5,8 +5,9 @@ Learning
  - Classes
  - Encpsulation
  - Inheritance  ( Direct, Multilevel )
- - Polymorphism ( virutual methods )
+ - Polymorphism ( virutual methods & overriding )
  - GetType method
+ - ToString
 
 
 Tasks

@@ -33,4 +33,10 @@ public class ContractEmployee : Employee
         base.PrintEmployeeDetails();
         Console.Write($"\tEmployee Wage Per Day\t:\t{WagesPerDay}\n");
     }
+
+    public override string ToString()
+    {
+        return base.ToString()
+               +$"\tEmployee Wage Per Day\t:\t{WagesPerDay}";
+    }
 }
