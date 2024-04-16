@@ -7,9 +7,9 @@ public class AccentureEmployee : Employee
     {
     }
 
-    public override double EmployeePF(double basicSalary)
+    public override double EmployeePf()
     {
-        return basicSalary * 0.12;
+        return BasicSalary * 0.12;
     }
 
     public double EmployerPFContribution(double basicSalary)
@@ -25,15 +25,15 @@ public class AccentureEmployee : Employee
                5 days of Privilege Leave per year";
     }
 
-    public override double GratuityAmount(float serviceCompleted, double basicSalary)
+    public override double GratuityAmount(float serviceCompleted)
     {
         if (serviceCompleted > 5)
         {
             if (serviceCompleted > 10)
-                return basicSalary * 2;
+                return BasicSalary * 2;
             if (serviceCompleted > 20)
-                return basicSalary * 3;
-            return basicSalary;
+                return BasicSalary * 3;
+            return BasicSalary;
         }
 
         return 0;

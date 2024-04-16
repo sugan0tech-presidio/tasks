@@ -2,7 +2,7 @@
 
 public interface GovtRules
 {
-    public double EmployeePF(double basicSalary);
+    public double EmployeePf();
     public string LeaveDetails();
-    public double GratuityAmount(float serviceCompleted, double basicSalary);
+    public double GratuityAmount(float serviceCompleted);
 }

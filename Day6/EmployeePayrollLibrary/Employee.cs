@@ -28,10 +28,9 @@ public abstract class Employee : GovtRules
     public int DepartmentId { get; set; }
     public string Designation { get; set; }
     public double BasicSalary { get; set; }
-
-    public abstract double EmployeePF(double basicSalary);
+    public abstract double EmployeePf();
     public abstract string LeaveDetails();
-    public abstract double GratuityAmount(float serviceCompleted, double basicSalary);
+    public abstract double GratuityAmount(float serviceCompleted);
 
     /// <summary>
     ///     Gets input from user and updates directly.
