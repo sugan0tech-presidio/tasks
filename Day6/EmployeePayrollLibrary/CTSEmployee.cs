@@ -25,6 +25,10 @@ public class CTSEmployee : Employee
                10 days of Privilege Leave per year";
     }
 
+    /// <summary>
+    ///     As part of employeer PF amount
+    /// </summary>
+    /// <returns></returns>
     public override double GratuityAmount(float serviceCompleted)
     {
         if (serviceCompleted > 5)

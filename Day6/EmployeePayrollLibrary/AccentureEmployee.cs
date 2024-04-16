@@ -12,9 +12,13 @@ public class AccentureEmployee : Employee
         return BasicSalary * 0.12;
     }
 
-    public double EmployerPFContribution(double basicSalary)
+    /// <summary>
+    ///     As part of employeer PF amount
+    /// </summary>
+    /// <returns></returns>
+    public double EmployerPFContribution()
     {
-        return basicSalary * (0.0833 + 0.0367); // Employer contribution (PF + Pension Fund)
+        return BasicSalary * (0.0833 + 0.0367); // Employer contribution (PF + Pension Fund)
     }
 
     public override string LeaveDetails()
