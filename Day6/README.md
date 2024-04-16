@@ -36,7 +36,6 @@ Tasks
 > if >20 years service , 3* basic salary=gratuity amount
 > if < 5 no gratuity.
 
-### phase 4
 > If class is Accenture ,
 > 12% of basic salary of employee should go for PF and 12% of employer contribution should go to PFfrom employer contribution.
 > Leave Details for Accenture is 

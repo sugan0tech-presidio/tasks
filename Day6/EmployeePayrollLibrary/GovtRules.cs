@@ -4,5 +4,5 @@ public interface GovtRules
 {
     public double EmployeePF(double basicSalary);
     public string LeaveDetails();
-    public double gratuityAmount(float serviceCompleted, double basicSalary);
+    public double GratuityAmount(float serviceCompleted, double basicSalary);
 }

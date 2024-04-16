@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeePayroll", "EmployeePayroll.csproj", "{720C99A8-B70D-4BE9-9E22-8EA56CE00D12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeePayrollLibrary", "..\EmployeePayrollLibrary\EmployeePayrollLibrary.csproj", "{0968F502-84D2-471A-80C4-E00DE442D756}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{720C99A8-B70D-4BE9-9E22-8EA56CE00D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{720C99A8-B70D-4BE9-9E22-8EA56CE00D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{720C99A8-B70D-4BE9-9E22-8EA56CE00D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{720C99A8-B70D-4BE9-9E22-8EA56CE00D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0968F502-84D2-471A-80C4-E00DE442D756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0968F502-84D2-471A-80C4-E00DE442D756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0968F502-84D2-471A-80C4-E00DE442D756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0968F502-84D2-471A-80C4-E00DE442D756}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
