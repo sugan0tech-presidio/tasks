@@ -1,55 +1,64 @@
 ﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
-namespace DoctorsAppointmentManager.Repository;
-
-public class AppointmentRepository : IRepository<int, Appointment>
+namespace DoctorsAppointmentManager.Repository
 {
-    private readonly List<Appointment> _appointments;
-
-    public AppointmentRepository()
+    public class AppointmentRepository : IRepository<int, Appointment>
     {
-        _appointments = new List<Appointment>();
-    }
+        private readonly Dictionary<int, Appointment> _appointments;
 
-    public List<Appointment> GetAll()
-    {
-        return _appointments;
-    }
-
-    public Appointment Get(int key)
-    {
-        return _appointments.FirstOrDefault(a => a.Id == key);
-    }
-
-    public Appointment Add(Appointment item)
-    {
-        // Generating a unique id for the new appointment 
-        var newId = _appointments.Count > 0 ? _appointments.Max(a => a.Id) + 1 : 1;
-        item.Id = newId;
-        _appointments.Add(item);
-        return item;
-    }
-
-    public Appointment Update(Appointment item)
-    {
-        // Find the appointment in the list
-        var existingAppointment = _appointments.FirstOrDefault(a => a.Id == item.Id);
-        if (existingAppointment != null)
+        public AppointmentRepository()
         {
-            // Update the appointment's properties
-            existingAppointment.Doctor = item.Doctor;
-            existingAppointment.Patient = item.Patient;
-            existingAppointment.AppointmentDateTime = item.AppointmentDateTime;
+            _appointments = new Dictionary<int, Appointment>();
         }
 
-        return existingAppointment;
-    }
+        public List<Appointment> GetAll()
+        {
+            return new List<Appointment>(_appointments.Values);
+        }
 
-    public Appointment Delete(int key)
-    {
-        // Find the appointment in the list
-        var appointmentToDelete = _appointments.FirstOrDefault(a => a.Id == key);
-        if (appointmentToDelete != null) _appointments.Remove(appointmentToDelete);
-        return appointmentToDelete;
+        public Appointment Get(int key)
+        {
+            // Use TryGetValue to safely retrieve the appointment
+            _appointments.TryGetValue(key, out Appointment appointment);
+            return appointment;
+        }
+
+        public Appointment Add(Appointment item)
+        {
+            // Generating a unique id for the new appointment 
+            var newId = _appointments.Count > 0 ? _appointments.Keys.Max() + 1 : 1;
+            item.Id = newId;
+            _appointments.Add(newId, item);
+            return item;
+        }
+
+        public Appointment Update(Appointment item)
+        {
+            // Find the appointment in the dictionary
+            if (_appointments.ContainsKey(item.Id))
+            {
+                // Update the appointment's properties
+                _appointments[item.Id] = item;
+                return item;
+            }
+            else
+            {
+                return null; // Appointment not found
+            }
+        }
+
+        public Appointment Delete(int key)
+        {
+            // Find the appointment in the dictionary
+            if (_appointments.TryGetValue(key, out Appointment appointment))
+            {
+                _appointments.Remove(key);
+                return appointment;
+            }
+            else
+            {
+                return null; // Appointment not found
+            }
+        }
     }
 }

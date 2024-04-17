@@ -1,91 +1,89 @@
 ﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
-namespace DoctorsAppointmentManager.Repository;
-
-public class DoctorRepository : IRepository<int, Doctor>
+namespace DoctorsAppointmentManager.Repository
 {
-    public static readonly string[] Specializations =
+    public class DoctorRepository : IRepository<int, Doctor>
     {
-        "General Medicine",
-        "Pediatrics",
-        "Cardiology",
-        "Orthopedics",
-        "Neurology",
-        "Dermatology",
-        "Ophthalmology"
-    };
-
-    public static readonly string[] Qualifications =
-    {
-        "MBBS",
-        "MD",
-        "MS",
-        "DM"
-    };
-
-    private readonly List<Doctor> _doctors;
-
-
-    public DoctorRepository()
-    {
-        // Initialize the list of doctors
-        _doctors = new List<Doctor>();
-    }
-
-    public List<Doctor> GetAll()
-    {
-        return _doctors;
-    }
-
-    public Doctor Get(int key)
-    {
-        return _doctors.FirstOrDefault(d => d.Id == key);
-    }
-
-    public Doctor Add(Doctor item)
-    {
-        // Generating a unique id for the new doctor
-        var newId = _doctors.Count > 0 ? _doctors.Max(d => d.Id) + 1 : 1;
-        item.Id = newId;
-        _doctors.Add(item);
-        return item;
-    }
-
-    public Doctor Update(Doctor item)
-    {
-        // Find the doctor in the list
-        var existingDoctor = _doctors.FirstOrDefault(d => d.Id == item.Id);
-        if (existingDoctor != null)
+        public static readonly string[] Specializations =
         {
-            // Update the doctor's properties
-            existingDoctor.Name = item.Name;
-            foreach (var val in item.Specialization)
-                existingDoctor.AddSpecialization(val);
+            "General Medicine",
+            "Pediatrics",
+            "Cardiology",
+            "Orthopedics",
+            "Neurology",
+            "Dermatology",
+            "Ophthalmology"
+        };
+
+        public static readonly string[] Qualifications =
+        {
+            "MBBS",
+            "MD",
+            "MS",
+            "DM"
+        };
+
+        private readonly Dictionary<int, Doctor> _doctors;
+
+        public DoctorRepository()
+        {
+            // Initialize the dictionary of doctors
+            _doctors = new Dictionary<int, Doctor>();
         }
 
-        return existingDoctor;
-    }
+        public List<Doctor> GetAll()
+        {
+            return new List<Doctor>(_doctors.Values);
+        }
 
-    public Doctor Delete(int key)
-    {
-        // Find the doctor in the list
-        var doctorToDelete = _doctors.FirstOrDefault(d => d.Id == key);
-        if (doctorToDelete != null) _doctors.Remove(doctorToDelete);
-        return doctorToDelete;
-    }
+        public Doctor Get(int key)
+        {
+            // Use TryGetValue to safely retrieve the doctor
+            _doctors.TryGetValue(key, out Doctor doctor);
+            return doctor;
+        }
 
-    /// <summary>
-    ///     Method to filter doctors based on given speciality
-    /// </summary>
-    /// <param name="doctors">Array of created doctors</param>
-    public List<Doctor> FilterBySpeciality(string speciality)
-    {
-        // to be implement in view
+        public Doctor Add(Doctor item)
+        {
+            // Generating a unique id for the new doctor
+            var newId = _doctors.Count > 0 ? _doctors.Keys.Max() + 1 : 1;
+            item.Id = newId;
+            _doctors.Add(newId, item);
+            return item;
+        }
 
-        var doctorsResult = new List<Doctor>();
-        foreach (var doctor in _doctors)
-            if (doctor.Specialization.Contains(speciality))
-                doctorsResult.Add(doctor);
-        return doctorsResult;
+        public Doctor Update(Doctor item)
+        {
+            // Find the doctor in the dictionary
+            if (_doctors.ContainsKey(item.Id))
+            {
+                // Update the doctor's properties
+                _doctors[item.Id] = item;
+                return item;
+            }
+            else
+            {
+                return null; // Doctor not found
+            }
+        }
+
+        public Doctor Delete(int key)
+        {
+            // Find the doctor in the dictionary
+            if (_doctors.TryGetValue(key, out Doctor doctor))
+            {
+                _doctors.Remove(key);
+                return doctor;
+            }
+            else
+            {
+                return null; // Doctor not found
+            }
+        }
+
+        public List<Doctor> FilterBySpeciality(string speciality)
+        {
+            return _doctors.Values.Where(d => d.Specialization.Contains(speciality)).ToList();
+        }
     }
 }
