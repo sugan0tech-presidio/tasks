@@ -4,25 +4,27 @@ namespace DoctorsAppointmentManager.Repository;
 
 public class DoctorRepository : IRepository<int, Doctor>
 {
-    private readonly List<Doctor> _doctors;
-    
-    public static readonly string[] Specializations = {
+    public static readonly string[] Specializations =
+    {
         "General Medicine",
         "Pediatrics",
         "Cardiology",
         "Orthopedics",
         "Neurology",
         "Dermatology",
-        "Ophthalmology",
+        "Ophthalmology"
     };
 
-    public static readonly string[] Qualifications = {
+    public static readonly string[] Qualifications =
+    {
         "MBBS",
         "MD",
         "MS",
-        "DM",
+        "DM"
     };
-    
+
+    private readonly List<Doctor> _doctors;
+
 
     public DoctorRepository()
     {
@@ -71,24 +73,19 @@ public class DoctorRepository : IRepository<int, Doctor>
         if (doctorToDelete != null) _doctors.Remove(doctorToDelete);
         return doctorToDelete;
     }
-    
+
     /// <summary>
-    /// Method to filter doctors based on given speciality
+    ///     Method to filter doctors based on given speciality
     /// </summary>
     /// <param name="doctors">Array of created doctors</param>
     public List<Doctor> FilterBySpeciality(string speciality)
     {
-        
         // to be implement in view
-        
-        List<Doctor> doctorsResult = new List<Doctor>();
+
+        var doctorsResult = new List<Doctor>();
         foreach (var doctor in _doctors)
-        {
             if (doctor.Specialization.Contains(speciality))
                 doctorsResult.Add(doctor);
-            
-        }
         return doctorsResult;
     }
-
 }

@@ -1,6 +1,6 @@
 ﻿namespace DoctorsAppointmentManager.controllers;
 
-public class PatientController: IBaseController
+public class PatientController : IBaseController
 {
     public void GetFromConsole()
     {

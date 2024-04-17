@@ -4,6 +4,7 @@ public class Patient : Person
 {
     public string InsuranceProvider { get; set; }
     public string MedicalHistory { get; set; }
+
     public override string ToString()
     {
         // todo to move this to base.
@@ -12,6 +13,6 @@ public class Patient : Person
                + $"\tPatient Name\t:\t{Name}\n"
                + $"\tPatient DOB\t:\t{DateOfBirth}\n"
                + $"\tPatient Age\t:\t{Age}\n"
-               +$"\tPatient InsuranceProvider\t:\t{InsuranceProvider}\n";
+               + $"\tPatient InsuranceProvider\t:\t{InsuranceProvider}\n";
     }
 }

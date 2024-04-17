@@ -6,8 +6,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        DoctorRepository doctorRepository = new DoctorRepository();
-        PatientRepository patientRepository = new PatientRepository();
-        AppointmentRepository appointmentRepository = new AppointmentRepository();
+        var doctorRepository = new DoctorRepository();
+        var patientRepository = new PatientRepository();
+        var appointmentRepository = new AppointmentRepository();
     }
 }
