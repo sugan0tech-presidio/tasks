@@ -1,4 +1,6 @@
-﻿namespace DoctorsAppointmentLibrary.Repository;
+﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+
+namespace DoctorsAppointmentManager.Repository;
 
 public class DoctorRepository : IRepository<int, Doctor>
 {

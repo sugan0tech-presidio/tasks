@@ -1,4 +1,4 @@
-﻿namespace DoctorsAppointmentLibrary;
+﻿namespace DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
 public abstract class Person
 {

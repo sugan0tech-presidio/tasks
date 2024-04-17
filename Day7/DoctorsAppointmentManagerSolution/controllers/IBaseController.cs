@@ -1,4 +1,4 @@
-﻿namespace DoctorsAppointmentLibrary.controllers;
+﻿namespace DoctorsAppointmentManager.controllers;
 
 public interface IBaseController
 {
