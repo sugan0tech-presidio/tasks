@@ -2,6 +2,18 @@
 
 public class Patient : Person
 {
+    public Patient(DateTime dob, string name, string contactNumber, string email, int age, string address, string insuranceProvider, string medicalHistory) : base(dob, name, contactNumber, email, age, address)
+    {
+        InsuranceProvider = insuranceProvider;
+        MedicalHistory = medicalHistory;
+    }
+
+    public Patient(DateTime dob, int id, string name, string contactNumber, string email, int age, string address, string insuranceProvider, string medicalHistory) : base(dob, id, name, contactNumber, email, age, address)
+    {
+        InsuranceProvider = insuranceProvider;
+        MedicalHistory = medicalHistory;
+    }
+
     public string InsuranceProvider { get; set; }
     public string MedicalHistory { get; set; }
 

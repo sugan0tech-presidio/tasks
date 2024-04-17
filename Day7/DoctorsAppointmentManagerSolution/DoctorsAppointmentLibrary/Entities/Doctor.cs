@@ -2,7 +2,19 @@
 
 public class Doctor : Person
 {
+
+    public Doctor(DateTime dob, string name, string contactNumber, string email, int age, string address, int experience) : base(dob, name, contactNumber, email, age, address)
+    {
+        _experience = experience;
+    }
+    public Doctor(DateTime dob, int id, string name, string contactNumber, string email, int age, string address,
+        int experience) : base(dob, id, name, contactNumber, email, age, address)
+    {
+        _experience = experience;
+    }
+
     private int _experience;
+
     public List<string> Qualification { get; } = new();
     public List<string> Specialization { get; } = new();
 
