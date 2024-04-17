@@ -5,6 +5,24 @@ namespace DoctorsAppointmentManager.Repository;
 public class DoctorRepository : IRepository<int, Doctor>
 {
     private readonly List<Doctor> _doctors;
+    
+    public static readonly string[] Specializations = {
+        "General Medicine",
+        "Pediatrics",
+        "Cardiology",
+        "Orthopedics",
+        "Neurology",
+        "Dermatology",
+        "Ophthalmology",
+    };
+
+    public static readonly string[] Qualifications = {
+        "MBBS",
+        "MD",
+        "MS",
+        "DM",
+    };
+    
 
     public DoctorRepository()
     {
@@ -39,7 +57,8 @@ public class DoctorRepository : IRepository<int, Doctor>
         {
             // Update the doctor's properties
             existingDoctor.Name = item.Name;
-            existingDoctor.Specialization = item.Specialization;
+            foreach (var val in item.Specialization)
+                existingDoctor.AddSpecialization(val);
         }
 
         return existingDoctor;

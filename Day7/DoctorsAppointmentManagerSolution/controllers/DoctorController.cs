@@ -1,4 +1,6 @@
-﻿namespace DoctorsAppointmentManager.controllers;
+﻿using DoctorsAppointmentManager.Repository;
+
+namespace DoctorsAppointmentManager.controllers;
 
 public class DoctorController: IBaseController
 {
@@ -21,4 +23,5 @@ public class DoctorController: IBaseController
     {
         throw new NotImplementedException();
     }
+    
 }
