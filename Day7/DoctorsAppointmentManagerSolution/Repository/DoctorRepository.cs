@@ -71,4 +71,24 @@ public class DoctorRepository : IRepository<int, Doctor>
         if (doctorToDelete != null) _doctors.Remove(doctorToDelete);
         return doctorToDelete;
     }
+    
+    /// <summary>
+    /// Method to filter doctors based on given speciality
+    /// </summary>
+    /// <param name="doctors">Array of created doctors</param>
+    public List<Doctor> FilterBySpeciality(string speciality)
+    {
+        
+        // to be implement in view
+        
+        List<Doctor> doctorsResult = new List<Doctor>();
+        foreach (var doctor in _doctors)
+        {
+            if (doctor.Specialization.Contains(speciality))
+                doctorsResult.Add(doctor);
+            
+        }
+        return doctorsResult;
+    }
+
 }
