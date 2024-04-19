@@ -19,7 +19,17 @@ internal class Program
     private void PrintMenu()
     {
         Console.WriteLine(
-            "\n1. Add Employee\n2. Print Employees\n3. Search Employee by ID\n4. Update Employee Name\n5. Delete Employee By Id\n0. Exit\n");
+            "\n1. Add Employee\n" +
+            "2. Print Employees\n" +
+            "3. Search Employee by ID\n" +
+            "4. Update Employee\n" +
+            "5. Delete Employee By Id\n" +
+            "6. Add Department\n" +
+            "7. List Department\n" +
+            "8. Delete Department by Name\n" +
+            "9. Delete Department by ID\n" +
+            "10. Add Department to Employee\n" +
+            "0. Exit\n");
     }
 
     /// <summary>
@@ -52,6 +62,21 @@ internal class Program
                     break;
                 case 5:
                     _employeeController.DeleteEmployeeById();
+                    break;
+                case 6:
+                    _departmentController.CreateDepartment();
+                    break;
+                case 7:
+                    _departmentController.PrintAllDepartments();
+                    break;
+                case 8:
+                    _departmentController.DeleteDepartmentByName();
+                    break;
+                case 9:
+                    _departmentController.DeleteDepartmentById();
+                    break;
+                case 10:
+                    _employeeController.AddDepartment();
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Try again");

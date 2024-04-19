@@ -17,6 +17,29 @@ public class DepartmentLogic : IDepartmentBL
         return departmentRepository.Update(department);
     }
 
+    public void AddEmployee(int deptId, Employee employee)
+    {
+        var dept = departmentRepository.GetById(deptId);
+        dept.Employees.Add(employee);
+        departmentRepository.Update(dept);
+    }
+
+    public bool DeleteByName(string name)
+    {
+        int id;
+        try
+        {
+            id = departmentRepository.GetAll().First(dept => dept.Name.Equals(name)).Id;
+        }
+        catch (InvalidOperationException e)
+        {
+            Console.WriteLine($"No Department with the name\t:\t{name}");
+            return false;
+        }
+
+        return departmentRepository.Delete(id);
+    }
+
     public bool Delete(int departmentId)
     {
         return departmentRepository.Delete(departmentId);

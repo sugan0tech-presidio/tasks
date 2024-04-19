@@ -4,7 +4,7 @@ public class Department
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int DepartmentHead { get; set; }
+    public Employee DepartmentHead { get; set; }
     public List<Employee> Employees { get; set; } = new();
     
     public override bool Equals(object? obj)
@@ -17,7 +17,8 @@ public class Department
     {
         return $"Department {Id} Details:\n"
                +$"\tDepartment Name\t:\t{Name}\n"
-               +$"\tDepartment Head\t:\t{DepartmentHead}\n"
+               +$"\tDepartment Head\t:\t{DepartmentHead.Name}\n"
+               +$"\tDepartment Head Id\t:\t{DepartmentHead.Id}\n"
                +$"\tEmployee Count\t:\t{Employees.Count}\n";
     }
 }

@@ -6,6 +6,8 @@ namespace RequestTrackerApplication.Controller;
 public class EmployeeController
 {
     private readonly EmployeeLogic _employeeLogic = new();
+    private readonly DepartmentLogic _departmentLogic = new();
+    private readonly DepartmentController _departmentController = new();
 
     /// <summary>
     ///     To display all the employees details that are present in the record
@@ -149,5 +151,33 @@ public class EmployeeController
     {
         var id = GetIdFromConsole();
         _employeeLogic.Delete(id);
+    }
+
+    public void AddDepartment()
+    {
+        Console.WriteLine("Adding department to an employee...");
+
+        // Get employee ID
+        var employeeId = GetIdFromConsole();
+        var employee = _employeeLogic.GetById(employeeId);
+
+        // Get department ID
+        foreach (var department1 in _departmentLogic.GetAll())
+        {
+            Console.WriteLine($"\n\t\t\t{department1.Id}. {department1.Name}");
+        }
+
+        Console.WriteLine("Enter the department ID to assign to the employee:");
+        var departmentId = GetIdFromConsole();
+        var department = _departmentLogic.GetById(departmentId);
+        _departmentLogic.AddEmployee(department.Id, employee);
+
+        // Assign department ID to the employee
+        employee.DepartmentId = departmentId;
+
+        // Update the employee using employee logic
+        _employeeLogic.Update(employee);
+
+        Console.WriteLine($"Department '{department.Name}' assigned to employee '{employee.Name}' successfully!");
     }
 }
