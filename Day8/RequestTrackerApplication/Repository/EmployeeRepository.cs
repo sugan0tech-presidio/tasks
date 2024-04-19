@@ -27,6 +27,7 @@ public class EmployeeRepository : IEmployeeRepository
         while (EmployeeDict.ContainsKey(currSeq))
             currSeq++;
 
+        employee.Id = currSeq;
         EmployeeDict.Add(currSeq, employee);
         return EmployeeDict[currSeq];
     }

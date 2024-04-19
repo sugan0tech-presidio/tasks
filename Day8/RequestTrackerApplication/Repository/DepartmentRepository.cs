@@ -22,6 +22,7 @@ public class DepartmentRepository : IDepartmentRepository
         while (DepartmentDict.ContainsKey(currSeq))
             currSeq++;
 
+        department.Id = currSeq;
         DepartmentDict.Add(currSeq, department);
         return DepartmentDict[currSeq];
     }
