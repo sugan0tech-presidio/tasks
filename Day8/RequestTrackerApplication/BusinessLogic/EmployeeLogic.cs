@@ -48,12 +48,15 @@ public class EmployeeLogic : IEmployeeBL
 
     /// <summary>
     ///  Deletes an employee with the given Id.
+    ///  Also removed reference from Departments.
     /// </summary>
     /// <param name="employeeId">Employee Id</param>
     /// <returns>Deletion status bool</returns>
     /// <exception cref="KeyNotFoundException">If no employee present with that Id</exception>
     public bool Delete(int employeeId)
     {
+        Employee emp = _employeeRepository.GetById(employeeId);
+        _departmentLogic.RemoveEmployee(emp.DepartmentId, emp);
         return _employeeRepository.Delete(employeeId);
     }
 

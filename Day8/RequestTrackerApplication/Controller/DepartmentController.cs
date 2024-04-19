@@ -135,6 +135,10 @@ public class DepartmentController
         {
             Console.WriteLine(e);
         }
+        catch (DepartmentInUseException e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     /// <summary>
@@ -152,6 +156,10 @@ public class DepartmentController
             Console.WriteLine(department ? $"{name} Department deleted" : $"Department with name '{name}' not found!");
         }
         catch (InvalidDepartmentNameException e)
+        {
+            Console.WriteLine(e);
+        }
+        catch (DepartmentInUseException e)
         {
             Console.WriteLine(e);
         }

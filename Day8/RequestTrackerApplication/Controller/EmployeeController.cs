@@ -155,7 +155,16 @@ public class EmployeeController
     public void UpdateNameById()
     {
         var id = GetIdFromConsole("employee");
-        var employee = SearchEmployeeById(id);
+        Employee employee;
+        try
+        {
+            employee = SearchEmployeeById(id);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
         Console.WriteLine($"Enter the new name to be updated for {employee.Name}\t:");
         employee.Name = Console.ReadLine() ?? string.Empty;
         Console.WriteLine($"Scuccessly updated as {SearchEmployeeById(id).Name}!!!\n");

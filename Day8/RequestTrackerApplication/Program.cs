@@ -37,52 +37,52 @@ internal class Program
     /// </summary>
     private void EmployeeInteraction()
     {
-        int choice;
+        string choice;
         do
         {
             PrintMenu();
             Console.Write("Please select an option\t:");
-            choice = Convert.ToInt32(Console.ReadLine());
+            choice = Console.ReadLine()??"";
             switch (choice)
             {
-                case 0:
+                case "0":
                     Console.WriteLine("Bye.....");
                     break;
-                case 1:
+                case "1":
                     _employeeController.CreateEmployee();
                     break;
-                case 2:
+                case "2":
                     _employeeController.PrintAllEmployees();
                     break;
-                case 3:
+                case "3":
                     _employeeController.SearchAndPrintEmployee();
                     break;
-                case 4:
+                case "4":
                     _employeeController.UpdateNameById();
                     break;
-                case 5:
+                case "5":
                     _employeeController.DeleteEmployeeById();
                     break;
-                case 6:
+                case "6":
                     _departmentController.CreateDepartment();
                     break;
-                case 7:
+                case "7":
                     _departmentController.PrintAllDepartments();
                     break;
-                case 8:
+                case "8":
                     _departmentController.DeleteDepartmentByName();
                     break;
-                case 9:
+                case "9":
                     _departmentController.DeleteDepartmentById();
                     break;
-                case 10:
+                case "10":
                     _employeeController.AddDepartment();
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Try again");
                     break;
             }
-        } while (choice != 0);
+        } while (choice != "0");
     }
 
     private static void Main(string[] args)

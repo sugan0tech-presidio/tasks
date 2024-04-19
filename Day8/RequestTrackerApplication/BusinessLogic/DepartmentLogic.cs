@@ -42,6 +42,19 @@ public class DepartmentLogic : IDepartmentBL
         dept.Employees.Add(employee);
         _departmentRepository.Update(dept);
     }
+    
+    /// <summary>
+    ///  Removes Employee from department.
+    /// </summary>
+    /// <param name="deptId">Department Id</param>
+    /// <param name="employee">Fetched Object of Employee.</param>
+    /// <exception cref="KeyNotFoundException">If department ID doesn't exist</exception>
+    public void RemoveEmployee(int deptId, Employee employee)
+    {
+        var dept = _departmentRepository.GetById(deptId);
+        dept.Employees.Remove(employee);
+        _departmentRepository.Update(dept);
+    }
 
     /// <summary>
     /// Deletes department by given name.
@@ -61,7 +74,7 @@ public class DepartmentLogic : IDepartmentBL
             throw new InvalidDepartmentNameException($"No Department with the name\t:\t{name}");
         }
 
-        return _departmentRepository.Delete(id);
+        return Delete(id);
     }
 
     /// <summary>
@@ -70,8 +83,15 @@ public class DepartmentLogic : IDepartmentBL
     /// <param name="departmentId"></param>
     /// <returns>Deletion status</returns>
     /// <exception cref="KeyNotFoundException">If department ID doesn't exist</exception>
+    /// <exception cref="DepartmentInUseException">If Employees are in this Department</exception>
     public bool Delete(int departmentId)
     {
+        int count = GetById(departmentId).Employees.Count;
+        if (count > 0)
+        {
+            throw new DepartmentInUseException($"{count} employees are in this department, Delete them first!!");
+        }
+
         return _departmentRepository.Delete(departmentId);
     }
  
