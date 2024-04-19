@@ -14,22 +14,6 @@ public class PermanentEmployee : Employee
 
     public double Salary { get; set; }
 
-    /// <summary>
-    ///     For Contract Employees it will be wages not salary.
-    /// </summary>
-    public override void BuildEmployeeFromConsole()
-    {
-        base.BuildEmployeeFromConsole();
-        Console.Write("Please enter the salary\t:");
-        Salary = Convert.ToDouble(Console.ReadLine());
-    }
-
-    public override void PrintEmployeeDetails()
-    {
-        base.PrintEmployeeDetails();
-        Console.Write($"\tEmployee Salary\t:\t{Salary}\n");
-    }
-
     public override string ToString()
     {
         return base.ToString()

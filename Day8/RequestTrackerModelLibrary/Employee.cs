@@ -36,32 +36,6 @@ public class Employee
         }
     }
 
-    /// <summary>
-    ///     Gets input from user and updates directly.
-    /// </summary>
-    public virtual void BuildEmployeeFromConsole()
-    {
-        Console.Write("Please enter the Name\t:");
-        Name = Console.ReadLine() ?? string.Empty;
-        Console.Write("Please enter the Date of birth\t:");
-        DateOfBirth = Convert.ToDateTime(Console.ReadLine());
-        while (Age < 18)
-        {
-            Console.WriteLine("employee must be above 17");
-            Console.Write("Please enter the Date of birth\t:");
-            DateOfBirth = Convert.ToDateTime(Console.ReadLine());
-        }
-    }
-
-    public virtual void PrintEmployeeDetails()
-    {
-        Console.Write($"Employee {Id} Details:\n");
-        Console.WriteLine($"\tEmployee type\t:\t{GetType()}\n"); // Get's type for current instance either parent or the child
-        Console.Write($"\tEmployee Name\t:\t{Name}\n");
-        Console.Write($"\tEmployee DOB\t:\t{DateOfBirth}\n");
-        Console.Write($"\tEmployee Age\t:\t{Age}\n");
-    }
-
     public override bool Equals(Object obj)
     {
         var tmp = (Employee) obj;
