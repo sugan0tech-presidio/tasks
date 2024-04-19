@@ -61,7 +61,23 @@ public class Employee
         Console.Write($"\tEmployee DOB\t:\t{DateOfBirth}\n");
         Console.Write($"\tEmployee Age\t:\t{Age}\n");
     }
-    
+
+    public override bool Equals(Object obj)
+    {
+        var tmp = (Employee) obj;
+        return Equals(tmp);
+    }
+
+    protected bool Equals(Employee other)
+    {
+        return _dob.Equals(other._dob) && Id == other.Id && Name == other.Name && DepartmentId == other.DepartmentId && Age == other.Age;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_dob, Id, Name, DepartmentId, Age);
+    }
+
     public override string ToString()
     {
         return $"Employee {Id} Details:\n"
