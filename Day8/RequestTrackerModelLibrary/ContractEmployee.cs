@@ -18,6 +18,6 @@ public class ContractEmployee : Employee
     public override string ToString()
     {
         return base.ToString()
-               +$"\tEmployee Wage Per Day\t:\t{WagesPerDay}";
+               + $"\tEmployee Wage Per Day\t:\t{WagesPerDay}";
     }
 }

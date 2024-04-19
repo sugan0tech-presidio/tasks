@@ -1,6 +1,6 @@
 ﻿namespace RequestTrackerApplication.Exceptions;
 
-public class InvalidDepartmentNameException: Exception
+public class InvalidDepartmentNameException : Exception
 {
     public InvalidDepartmentNameException()
     {

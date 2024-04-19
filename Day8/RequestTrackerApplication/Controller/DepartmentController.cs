@@ -72,7 +72,6 @@ public class DepartmentController
         {
             Console.WriteLine(e);
         }
-
     }
 
     /// <summary>
@@ -108,14 +107,15 @@ public class DepartmentController
         var id = GetIdFromConsole();
         Department department;
         try
-        { 
-           department = _departmentLogic.GetById(id);
+        {
+            department = _departmentLogic.GetById(id);
         }
         catch (KeyNotFoundException e)
         {
             Console.WriteLine(e);
             return;
         }
+
         Console.WriteLine($"Enter the new name to be updated for {department.Name}:");
         department.Name = Console.ReadLine() ?? string.Empty;
         Console.WriteLine($"Successfully updated as {department.Name}!!!\n");
@@ -163,6 +163,5 @@ public class DepartmentController
         {
             Console.WriteLine(e);
         }
-
     }
 }

@@ -17,6 +17,6 @@ public class PermanentEmployee : Employee
     public override string ToString()
     {
         return base.ToString()
-            +$"\tEmployee Salary\t:\t{Salary}";
+               + $"\tEmployee Salary\t:\t{Salary}";
     }
 }

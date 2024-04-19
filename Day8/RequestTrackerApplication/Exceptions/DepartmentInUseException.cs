@@ -1,6 +1,6 @@
 ﻿namespace RequestTrackerApplication.Exceptions;
 
-public class DepartmentInUseException: Exception
+public class DepartmentInUseException : Exception
 {
     public DepartmentInUseException()
     {

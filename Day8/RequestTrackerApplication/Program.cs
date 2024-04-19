@@ -42,7 +42,7 @@ internal class Program
         {
             PrintMenu();
             Console.Write("Please select an option\t:");
-            choice = Console.ReadLine()??"";
+            choice = Console.ReadLine() ?? "";
             switch (choice)
             {
                 case "0":

@@ -1,6 +1,6 @@
 ﻿namespace RequestTrackerApplication.Exceptions;
 
-public class InvalidDOBFormatException: Exception
+public class InvalidDOBFormatException : Exception
 {
     public InvalidDOBFormatException()
     {

@@ -38,13 +38,14 @@ public class Employee
 
     public override bool Equals(Object obj)
     {
-        var tmp = (Employee) obj;
+        var tmp = (Employee)obj;
         return Equals(tmp);
     }
 
     protected bool Equals(Employee other)
     {
-        return _dob.Equals(other._dob) && Id == other.Id && Name == other.Name && DepartmentId == other.DepartmentId && Age == other.Age;
+        return _dob.Equals(other._dob) && Id == other.Id && Name == other.Name && DepartmentId == other.DepartmentId &&
+               Age == other.Age;
     }
 
     public override int GetHashCode()
@@ -55,10 +56,9 @@ public class Employee
     public override string ToString()
     {
         return $"Employee {Id} Details:\n"
-               +$"\tEmployee type\t:\t{GetType()}\n"
-               +$"\tEmployee Name\t:\t{Name}\n"
-               +$"\tEmployee DOB\t:\t{DateOfBirth}\n"
-               +$"\tEmployee Age\t:\t{Age}\n";
+               + $"\tEmployee type\t:\t{GetType()}\n"
+               + $"\tEmployee Name\t:\t{Name}\n"
+               + $"\tEmployee DOB\t:\t{DateOfBirth}\n"
+               + $"\tEmployee Age\t:\t{Age}\n";
     }
-
 }

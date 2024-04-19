@@ -42,7 +42,7 @@ public class DepartmentLogic : IDepartmentBL
         dept.Employees.Add(employee);
         _departmentRepository.Update(dept);
     }
-    
+
     /// <summary>
     ///  Removes Employee from department.
     /// </summary>
@@ -94,7 +94,7 @@ public class DepartmentLogic : IDepartmentBL
 
         return _departmentRepository.Delete(departmentId);
     }
- 
+
     /// <summary>
     ///  Get department by Id
     /// </summary>

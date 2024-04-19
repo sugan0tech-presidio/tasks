@@ -136,7 +136,6 @@ public class EmployeeController
         {
             Console.WriteLine(e);
         }
-
     }
 
     /// <summary>
@@ -165,6 +164,7 @@ public class EmployeeController
             Console.WriteLine(e);
             return;
         }
+
         Console.WriteLine($"Enter the new name to be updated for {employee.Name}\t:");
         employee.Name = Console.ReadLine() ?? string.Empty;
         Console.WriteLine($"Scuccessly updated as {SearchEmployeeById(id).Name}!!!\n");
@@ -213,6 +213,7 @@ public class EmployeeController
             return;
         }
 
-        Console.WriteLine($"Department '{department.Name}' assigned to employee '{_employeeLogic.GetById(employeeId).Name}' successfully!");
+        Console.WriteLine(
+            $"Department '{department.Name}' assigned to employee '{_employeeLogic.GetById(employeeId).Name}' successfully!");
     }
 }

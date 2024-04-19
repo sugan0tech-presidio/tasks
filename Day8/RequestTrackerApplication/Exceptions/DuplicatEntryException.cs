@@ -1,6 +1,6 @@
 ﻿namespace RequestTrackerApplication.Exceptions;
 
-public class DuplicatEntryException: Exception
+public class DuplicatEntryException : Exception
 {
     public DuplicatEntryException()
     {
