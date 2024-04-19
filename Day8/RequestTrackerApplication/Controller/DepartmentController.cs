@@ -1,5 +1,5 @@
 ﻿namespace RequestTrackerApplication.Controller;
 
-public interface BaseController
+public class DepartmentController
 {
 }

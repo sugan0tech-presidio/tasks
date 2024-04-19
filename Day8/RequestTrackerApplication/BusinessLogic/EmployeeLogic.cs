@@ -3,31 +3,32 @@ using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication.BusinessLogic;
 
-public class EmployeeLogic: IEmployeeBL
+public class EmployeeLogic : IEmployeeBL
 {
-    private EmployeeRepository employeeRepository = new();
+    private readonly EmployeeRepository _employeeRepository = new();
+
     public Employee Add(Employee employee)
     {
-        return employeeRepository.Add(employee);
+        return _employeeRepository.Add(employee);
     }
 
     public Employee Update(Employee employee)
     {
-        return employeeRepository.Update(employee);
+        return _employeeRepository.Update(employee);
     }
 
     public bool Delete(int employeeId)
     {
-        return employeeRepository.Delete(employeeId);
+        return _employeeRepository.Delete(employeeId);
     }
 
     public Employee GetById(int employeeId)
     {
-        return employeeRepository.GetById(employeeId);
+        return _employeeRepository.GetById(employeeId);
     }
 
     public List<Employee> GetAll()
     {
-        return employeeRepository.GetAll();
+        return _employeeRepository.GetAll();
     }
 }

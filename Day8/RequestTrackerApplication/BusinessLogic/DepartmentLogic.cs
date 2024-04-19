@@ -3,9 +3,10 @@ using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication.BusinessLogic;
 
-public class DepartmentLogic: IDepartmentBL
+public class DepartmentLogic : IDepartmentBL
 {
     private DepartmentRepository departmentRepository = new();
+
     public Department Add(Department department)
     {
         return departmentRepository.Add(department);
