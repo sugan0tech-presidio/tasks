@@ -1,4 +1,5 @@
 ﻿using RequestTrackerApplication.BusinessLogic;
+using RequestTrackerApplication.Exceptions;
 using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication.Controller;
@@ -39,9 +40,20 @@ public class DepartmentController
             Console.Write("Please enter the Department Head: ");
         }
 
-        department.DepartmentHead = _employeeLogic.GetById(departmentHeadId);
 
-        _departmentLogic.Add(department);
+        try
+        {
+            department.DepartmentHead = _employeeLogic.GetById(departmentHeadId);
+            _departmentLogic.Add(department);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
+        catch (DuplicatEntryException e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     /// <summary>
@@ -51,9 +63,16 @@ public class DepartmentController
     {
         Console.WriteLine("Print One department");
         var id = GetIdFromConsole();
-        var department = _departmentLogic.GetById(id);
+        try
+        {
+            var department = _departmentLogic.GetById(id);
+            PrintDepartment(department);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
 
-        PrintDepartment(department);
     }
 
     /// <summary>
@@ -87,7 +106,16 @@ public class DepartmentController
     public void UpdateDepartmentNameById()
     {
         var id = GetIdFromConsole();
-        var department = _departmentLogic.GetById(id);
+        Department department;
+        try
+        { 
+           department = _departmentLogic.GetById(id);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
         Console.WriteLine($"Enter the new name to be updated for {department.Name}:");
         department.Name = Console.ReadLine() ?? string.Empty;
         Console.WriteLine($"Successfully updated as {department.Name}!!!\n");
@@ -99,7 +127,14 @@ public class DepartmentController
     public void DeleteDepartmentById()
     {
         var id = GetIdFromConsole();
-        _departmentLogic.Delete(id);
+        try
+        {
+            _departmentLogic.Delete(id);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     /// <summary>
@@ -110,9 +145,16 @@ public class DepartmentController
         Console.WriteLine("Enter the name of the department to delete:");
         var name = Console.ReadLine() ?? "";
 
-        // Check if the department with the given name exists
-        var department = _departmentLogic.DeleteByName(name);
+        try
+        {
+            // Check if the department with the given name exists
+            var department = _departmentLogic.DeleteByName(name);
+            Console.WriteLine(department ? $"{name} Department deleted" : $"Department with name '{name}' not found!");
+        }
+        catch (InvalidDepartmentNameException e)
+        {
+            Console.WriteLine(e);
+        }
 
-        Console.WriteLine(department ? $"{name} Department deleted" : $"Department with name '{name}' not found!");
     }
 }

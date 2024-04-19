@@ -1,4 +1,5 @@
-﻿using RequestTrackerModelLibrary;
+﻿using RequestTrackerApplication.Exceptions;
+using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication.Repository;
 
@@ -11,11 +12,11 @@ public class DepartmentRepository : IDepartmentRepository
     /// </summary>
     /// <param name="department">Department object</param>
     /// <returns>Saved Department object</returns>
-    /// <exception cref="Exception">If the department with same fields exist</exception>
+    /// <exception cref="DuplicatEntryException">If the department with same fields exist</exception>
     public Department Add(Department department)
     {
         if (DepartmentDict.Values.Any(dept => dept.Name.Equals(department.Name)))
-            throw new Exception($"Department exists with same Name {department.Name}");
+            throw new DuplicatEntryException($"Department exists with same Name {department.Name}");
 
         // Generating employee ID also recycling deleted ids too in the sequence.
         var currSeq = 1;
@@ -32,11 +33,11 @@ public class DepartmentRepository : IDepartmentRepository
     /// </summary>
     /// <param name="department">Updated Department object</param>
     /// <returns></returns>
-    /// <exception cref="Exception">If no Department found with the Id</exception>
+    /// <exception cref="KeyNotFoundException">If no Department found with the Id</exception>
     public Department Update(Department department)
     {
         if (!DepartmentDict.ContainsKey(department.Id))
-            throw new Exception($"Department exists with same Id {department.Id}");
+            throw new KeyNotFoundException($"Department exists with same Id {department.Id}");
 
         DepartmentDict[department.Id] = department;
         return DepartmentDict[department.Id];
@@ -47,11 +48,11 @@ public class DepartmentRepository : IDepartmentRepository
     /// </summary>
     /// <param name="deptId">Deprtment Id</param>
     /// <returns>Deletion status</returns>
-    /// <exception cref="Exception">If no deparment found with the Id</exception>
+    /// <exception cref="KeyNotFoundException">If no deparment found with the Id</exception>
     public bool Delete(int deptId)
     {
         if (!DepartmentDict.ContainsKey(deptId))
-            throw new Exception($"No Department exists with same Id {deptId}");
+            throw new KeyNotFoundException($"No Department exists with same Id {deptId}");
 
         return DepartmentDict.Remove(deptId);
     }
@@ -61,11 +62,11 @@ public class DepartmentRepository : IDepartmentRepository
     /// </summary>
     /// <param name="deptId"></param>
     /// <returns>Department Object</returns>
-    /// <exception cref="Exception">If no department found with Id</exception>
+    /// <exception cref="KeyNotFoundException">If no department found with Id</exception>
     public Department GetById(int deptId)
     {
         if (!DepartmentDict.TryGetValue(deptId, out var dept))
-            throw new Exception($"No Department exists with same Id {deptId}");
+            throw new KeyNotFoundException($"No Department exists with same Id {deptId}");
 
         return dept;
     }

@@ -1,4 +1,5 @@
-﻿using RequestTrackerModelLibrary;
+﻿using RequestTrackerApplication.Exceptions;
+using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication.Repository;
 
@@ -13,14 +14,14 @@ public class EmployeeRepository : IEmployeeRepository
     /// </summary>
     /// <param name="employee">Employee obj without id</param>
     /// <returns></returns>
-    /// <exception cref="Exception">If similar employee found</exception>
+    /// <exception cref="DuplicatEntryException">If similar record of employee found</exception>
     public Employee Add(Employee employee)
     {
         // Make sure no Employee with same info (Name, DOB & Dept) exists
         if (EmployeeDict.Values.Count(emp =>
                 emp.Name.Equals(employee.Name) && emp.DepartmentId.Equals(employee.DepartmentId) &&
                 emp.DateOfBirth.Equals(employee.DateOfBirth)) > 0)
-            throw new Exception($"Similar record exists!!!\n {employee}");
+            throw new DuplicatEntryException($"\nEmployee : Similar record exists!!!\n {employee}");
 
         // Generating employee ID also recycling deleted ids too in the sequence.
         var currSeq = 1;
@@ -37,11 +38,11 @@ public class EmployeeRepository : IEmployeeRepository
     /// </summary>
     /// <param name="employee">Updated employee object</param>
     /// <returns>Updated ref of the Employee</returns>
-    /// <exception cref="Exception">If no employee presents with that Id</exception>
+    /// <exception cref="KeyNotFoundException">If no employee presents with that Id</exception>
     public Employee Update(Employee employee)
     {
         if (!EmployeeDict.ContainsKey(employee.Id))
-            throw new Exception("Id doesn't exit");
+            throw new KeyNotFoundException("Id doesn't exit");
 
         EmployeeDict[employee.Id] = employee;
         return EmployeeDict[employee.Id];
@@ -52,11 +53,11 @@ public class EmployeeRepository : IEmployeeRepository
     /// </summary>
     /// <param name="employeeId">Employee Id</param>
     /// <returns>Deletion status bool</returns>
-    /// <exception cref="Exception">If no employee present with that Id</exception>
+    /// <exception cref="KeyNotFoundException">If no employee present with that Id</exception>
     public bool Delete(int employeeId)
     {
         if (!EmployeeDict.ContainsKey(employeeId))
-            throw new Exception($"Employee with {employeeId} doesn't exit");
+            throw new KeyNotFoundException($"Employee with {employeeId} doesn't exit");
 
         return EmployeeDict.Remove(employeeId);
     }
@@ -66,11 +67,11 @@ public class EmployeeRepository : IEmployeeRepository
     /// </summary>
     /// <param name="employeeId">Employee Id</param>
     /// <returns>Fetched Employee</returns>
-    /// <exception cref="Exception">If No employee presents</exception>
+    /// <exception cref="KeyNotFoundException">If No employee presents</exception>
     public Employee GetById(int employeeId)
     {
         if (!EmployeeDict.TryGetValue(employeeId, out var emp))
-            throw new Exception($"Employee with {employeeId} doesn't exit");
+            throw new KeyNotFoundException($"Employee with {employeeId} doesn't exit");
 
         return emp;
     }

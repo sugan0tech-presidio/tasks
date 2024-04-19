@@ -11,8 +11,4 @@
         <ProjectReference Include="..\RequestTrackerModelLibrary\RequestTrackerModelLibrary.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Exceptions\"/>
-    </ItemGroup>
-
 </Project>

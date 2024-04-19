@@ -1,4 +1,5 @@
 ﻿using RequestTrackerApplication.BusinessLogic;
+using RequestTrackerApplication.Exceptions;
 using RequestTrackerModelLibrary;
 
 namespace RequestTrackerApplication.Controller;
@@ -7,7 +8,6 @@ public class EmployeeController
 {
     private readonly EmployeeLogic _employeeLogic = new();
     private readonly DepartmentLogic _departmentLogic = new();
-    private readonly DepartmentController _departmentController = new();
 
     /// <summary>
     ///     To display all the employees details that are present in the record
@@ -37,7 +37,14 @@ public class EmployeeController
         else
             employee = new PermanentEmployee();
 
-        BuildEmployeeFromConsole(employee);
+        try
+        {
+            BuildEmployeeFromConsole(employee);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     /// <summary>
@@ -47,9 +54,9 @@ public class EmployeeController
     {
         Console.Write("Please enter the Name\t:");
         emp.Name = Console.ReadLine() ?? string.Empty;
-        Console.Write("Please enter the Date of birth\t:");
         try
         {
+            Console.Write("Please enter the Date of birth\t:");
             emp.DateOfBirth = Convert.ToDateTime(Console.ReadLine());
             while (emp.Age < 18)
             {
@@ -60,15 +67,18 @@ public class EmployeeController
         }
         catch (FormatException e)
         {
-            Console.WriteLine(e);
-            Console.WriteLine("Then Date of Birth should be in the form of YYYY-MM-DD");
-            return;
+            throw new InvalidDOBFormatException("Should be in the form: YYYY-MM-DD");
         }
 
         emp = GetSalary(emp);
         _employeeLogic.Add(emp);
     }
 
+    /// <summary>
+    /// Gets salary details from the users ( routes based on Employee type )
+    /// </summary>
+    /// <param name="employee">Employee object</param>
+    /// <returns>returns salary amount in double</returns>
     private Employee GetSalary(Employee employee)
     {
         if (employee.GetType() == typeof(PermanentEmployee))
@@ -86,7 +96,7 @@ public class EmployeeController
     }
 
     /// <summary>
-    ///     To display the given employee with proper decoration.
+    /// To display the given employee with proper decoration.
     /// </summary>
     /// <param name="employee"></param>
     private void PrintEmployee(Employee employee)
@@ -100,10 +110,10 @@ public class EmployeeController
     ///     Helper for getting Id from console. With added error handeling.
     /// </summary>
     /// <returns> int representation of employee id</returns>
-    private int GetIdFromConsole()
+    private int GetIdFromConsole(string msg)
     {
         int id;
-        Console.Write("Please enter the employee Id\t:");
+        Console.Write($"Please enter the {msg} Id\t:");
         while (!int.TryParse(Console.ReadLine(), out id))
             Console.WriteLine("\nInvalid entry. Please try again\n");
 
@@ -116,10 +126,17 @@ public class EmployeeController
     public void SearchAndPrintEmployee()
     {
         Console.WriteLine("Print One employee");
-        var id = GetIdFromConsole();
-        var employee = _employeeLogic.GetById(id);
+        var id = GetIdFromConsole("employee");
+        try
+        {
+            var employee = _employeeLogic.GetById(id);
+            PrintEmployee(employee);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
 
-        PrintEmployee(employee);
     }
 
     /// <summary>
@@ -137,7 +154,7 @@ public class EmployeeController
     /// </summary>
     public void UpdateNameById()
     {
-        var id = GetIdFromConsole();
+        var id = GetIdFromConsole("employee");
         var employee = SearchEmployeeById(id);
         Console.WriteLine($"Enter the new name to be updated for {employee.Name}\t:");
         employee.Name = Console.ReadLine() ?? string.Empty;
@@ -149,8 +166,15 @@ public class EmployeeController
     /// </summary>
     public void DeleteEmployeeById()
     {
-        var id = GetIdFromConsole();
-        _employeeLogic.Delete(id);
+        var id = GetIdFromConsole("employee");
+        try
+        {
+            _employeeLogic.Delete(id);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     public void AddDepartment()
@@ -158,8 +182,7 @@ public class EmployeeController
         Console.WriteLine("Adding department to an employee...");
 
         // Get employee ID
-        var employeeId = GetIdFromConsole();
-        var employee = _employeeLogic.GetById(employeeId);
+        var employeeId = GetIdFromConsole("employee");
 
         // Get department ID
         foreach (var department1 in _departmentLogic.GetAll())
@@ -168,16 +191,19 @@ public class EmployeeController
         }
 
         Console.WriteLine("Enter the department ID to assign to the employee:");
-        var departmentId = GetIdFromConsole();
-        var department = _departmentLogic.GetById(departmentId);
-        _departmentLogic.AddEmployee(department.Id, employee);
+        var departmentId = GetIdFromConsole("department");
+        Department department;
+        try
+        {
+            department = _departmentLogic.GetById(departmentId);
+            _employeeLogic.AddDepartment(employeeId, departmentId);
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+            return;
+        }
 
-        // Assign department ID to the employee
-        employee.DepartmentId = departmentId;
-
-        // Update the employee using employee logic
-        _employeeLogic.Update(employee);
-
-        Console.WriteLine($"Department '{department.Name}' assigned to employee '{employee.Name}' successfully!");
+        Console.WriteLine($"Department '{department.Name}' assigned to employee '{_employeeLogic.GetById(employeeId).Name}' successfully!");
     }
 }
