@@ -23,8 +23,11 @@ public class BillService
         foreach (var val in bill.Prescriptions)
         {
             
-            string drugA = val.Medications.Keys.First().Name;
-            string drugB = prescription.Medications.Keys.First().Name;
+            string drugA = val.Drug.Name;
+            Console.WriteLine(drugA);
+            Console.WriteLine(prescription);
+            string drugB = prescription.Drug.Name;
+            Console.WriteLine(drugB);
             if(Dangerouscombinations.IsCombinationDangerous(drugA, drugB))
             {
                 throw new ($"Fatal drug combination: {Dangerouscombinations.GetRisk(drugA, drugB)}");

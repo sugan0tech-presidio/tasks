@@ -158,6 +158,8 @@ public class PrescriptionController
 
     private bool isDrugAvailable(Drug drug, int quantity)
     {
+        Console.WriteLine(drug.Name);
+        Console.WriteLine(drug.Count);
         if (drug.Count <= 0)
         {
             Console.WriteLine("\nDrug is out of stock!!!");
