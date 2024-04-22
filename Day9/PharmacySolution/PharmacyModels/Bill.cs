@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace PharmacyModels;
 
@@ -15,7 +13,7 @@ public class Bill: BaseEntity
     public override string ToString()
     {
         return $"\nBill Id\t: {Id}" +
-               $"\nTotal\t: {Total}" +
-               $"\nUser\t:{user}";
+               $"\n\tUser\t:{user}" +
+               $"\n\tTotal\t: ${Total}\n";
     }
 }

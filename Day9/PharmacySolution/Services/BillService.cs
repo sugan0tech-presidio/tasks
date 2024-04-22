@@ -16,6 +16,15 @@ public class BillService
     {
         _billRepo.Add(bill);
     }
+    
+    public List<Bill> GetAll()
+    {
+        return _billRepo.GetAll();
+    }
+    public Bill GetById(int Id)
+    {
+        return _billRepo.GetById(Id);
+    }
 
     public void AddPrescription(Bill bill, Prescription prescription)
     {

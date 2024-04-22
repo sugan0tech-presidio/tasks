@@ -1,5 +1,4 @@
-﻿using PharmacyManagement.Repositories;
-using PharmacyManagement.Services;
+﻿using PharmacyManagement.Services;
 using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
@@ -22,7 +21,9 @@ public class BillingController
             {
                 Console.WriteLine("\n1. Create Bill");
                 Console.WriteLine("2. Discard Bill");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("3. View Bill");
+                Console.WriteLine("4. View All Bill");
+                Console.WriteLine("5. Exit");
                 Console.Write("Enter your choice: ");
                 var choice = Console.ReadLine();
 
@@ -35,6 +36,12 @@ public class BillingController
                         DiscardBill();
                         break;
                     case "3":
+                        ViewById();
+                        break;
+                    case "4":
+                        ViewAll();
+                        break;
+                    case "5":
                         Console.WriteLine("Exiting...");
                         return;
                     default:
@@ -54,6 +61,9 @@ public class BillingController
             bill.user = Console.ReadLine()??"";
 
             AddPrescription(bill);
+
+            Console.WriteLine("\nCreated Bill");
+            Console.WriteLine(bill);
         }
 
         private void AddPrescription(Bill bill)
@@ -61,11 +71,11 @@ public class BillingController
             string opt;
             while (true)
             {
-                Console.WriteLine("Are you want to add prescription");
+                Console.Write("\nAre you want to add prescription y/n:");
                 opt = Console.ReadLine() ?? "n";
-                if (opt == "n")
+                if (opt != "y")
                 {
-                    break;
+                    return;
                 }
 
                 var prescribtion = _prescriptionController.GetPrescription();
@@ -78,5 +88,20 @@ public class BillingController
         {
             Console.WriteLine("\nDiscarding Bill...");
             // Here you can implement the logic to discard the current bill
+        }
+
+        private void ViewById()
+        {
+            Console.Write("\nEnter the Bill Id:");
+            var id = int.Parse(Console.ReadLine());
+            Console.WriteLine(_billService.GetById(id));
+        }
+        
+        private void ViewAll()
+        {
+            foreach (var bill in _billService.GetAll())
+            {
+                Console.WriteLine(bill);
+            }
         }
 }
