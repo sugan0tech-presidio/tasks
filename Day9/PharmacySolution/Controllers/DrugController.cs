@@ -1,4 +1,5 @@
-﻿using PharmacyManagement.Services;
+﻿using PharmacyManagement.Exceptions;
+using PharmacyManagement.Services;
 using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
@@ -141,6 +142,8 @@ public class DrugController
     {
         Console.Write("\nEnter Drug ID to delete: ");
         var id = Convert.ToInt32(Console.ReadLine());
+        if (!_authController.HasAuthority("Administrator"))
+            throw new UserNotAuthorisedException("You don't have permission to delete Drug");
 
         try
         {

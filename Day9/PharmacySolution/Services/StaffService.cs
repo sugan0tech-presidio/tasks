@@ -1,4 +1,5 @@
 ﻿using System.Security.Authentication;
+using PharmacyManagement.Exceptions;
 using PharmacyManagement.Repositories;
 using PharmacyModels;
 
@@ -8,7 +9,7 @@ public class StaffService
 {
     private readonly StaffRepo _staffRepository;
     public static bool IsLogged { get; private set; }
-    public static string? LoggedUser { get; private set; }
+    public static Staff? LoggedStaff { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StaffService"/> class.
@@ -122,7 +123,7 @@ public class StaffService
             throw new AuthenticationException("Invalid email or password.");
 
         IsLogged = true;
-        LoggedUser = authenticatedStaff.Name;
+        LoggedStaff = authenticatedStaff;
 
         return authenticatedStaff;
     }
@@ -143,5 +144,17 @@ public class StaffService
     public void Logout()
     {
         IsLogged = false;
+    }
+
+    /// <summary>
+    /// Get's role of the given staff
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotLoggedInException">If there is no login attempt</exception>
+    public string getRole()
+    {
+        if (LoggedStaff != null) return LoggedStaff.Role;
+        throw new NotLoggedInException("Login first!!!");
     }
 }

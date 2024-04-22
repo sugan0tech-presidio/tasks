@@ -27,6 +27,11 @@ public class Staff : Person
     {
     }
 
+    public bool HasAuthority(string role)
+    {
+        return Role.Equals(role);
+    }
+
     public override bool Equals(object? obj)
     {
         var staff = obj as Staff;

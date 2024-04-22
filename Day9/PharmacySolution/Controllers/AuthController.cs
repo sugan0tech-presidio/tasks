@@ -11,7 +11,7 @@ public class AuthController
     {
         if (StaffService.IsLogged)
         {
-            Console.WriteLine($"Logged as\t: {StaffService.LoggedUser}\n");
+            Console.WriteLine($"Logged as\t: {StaffService.LoggedStaff}\n");
             return true;
         }
 
@@ -52,5 +52,10 @@ public class AuthController
 
         _staffService.Logout();
         Console.WriteLine("Logging out...");
+    }
+
+    public bool HasAuthority(string level)
+    {
+        return _staffService.getRole().Equals(level);
     }
 }
