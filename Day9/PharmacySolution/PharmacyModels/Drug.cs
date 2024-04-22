@@ -1,4 +1,8 @@
-﻿namespace PharmacyModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace PharmacyModels;
 
 // todo drug validation for age group & gender groups
 public class Drug: BaseEntity

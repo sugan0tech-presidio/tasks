@@ -1,4 +1,6 @@
-﻿namespace PharmacyModels;
+﻿using System;
+
+namespace PharmacyModels;
 
 public abstract class Person: BaseEntity
 {

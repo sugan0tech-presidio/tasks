@@ -4,14 +4,14 @@ namespace PharmacyManagement.Controllers;
 
 using System;
 
-public class PrescriptionConsoleController
+public class PrescriptionController
 {
     private readonly PrescriptionService _prescriptionService;
     private readonly StaffService _staffService;
 
     private const string AdminRole = "Administrator";
 
-    public PrescriptionConsoleController(PrescriptionService prescriptionService, StaffService staffService)
+    public PrescriptionController(PrescriptionService prescriptionService, StaffService staffService)
     {
         _prescriptionService = prescriptionService ?? throw new ArgumentNullException(nameof(prescriptionService), "Prescription service cannot be null.");
         _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");

@@ -1,4 +1,7 @@
-﻿namespace PharmacyModels;
+﻿using System;
+using System.Collections.Generic;
+
+namespace PharmacyModels;
 
 public class Doctor : Person
 {

@@ -11,7 +11,7 @@ public class StaffRepo: BaseEntityRepo<Staff>
     /// <returns>The staff member with the specified email, or null if not found.</returns>
     public Staff FindByEmail(string email)
     {
-        return _entities.Values.FirstOrDefault(staff => staff.Email == email);
+        return Entities.Values.FirstOrDefault(staff => staff.Email == email);
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ public class StaffRepo: BaseEntityRepo<Staff>
     /// <returns>The staff member with the specified email and password, or null if not found.</returns>
     public Staff FindByEmailAndPassword(string email, string password)
     {
-        return _entities.Values.FirstOrDefault(staff => staff.Email == email && staff.Password == password);
+        return Entities.Values.FirstOrDefault(staff => staff.Email == email && staff.Password == password);
     }
 
     /// <summary>
@@ -32,6 +32,6 @@ public class StaffRepo: BaseEntityRepo<Staff>
     /// <returns>A list of staff members with the specified role.</returns>
     public List<Staff> FindByRole(string role)
     {
-        return _entities.Values.Where(staff => staff.Role == role).ToList();
+        return Entities.Values.Where(staff => staff.Role == role).ToList();
     }
 }

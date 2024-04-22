@@ -30,6 +30,6 @@ public class DoctorRepo: BaseEntityRepo<Doctor>
     /// <returns>selected list of doctors</returns>
     public List<Doctor> FilterBySpeciality(string speciality)
     {
-        return _entities.Values.Where(d => d.Specialization.Contains(speciality)).ToList();
+        return Entities.Values.Where(d => d.Specialization.Contains(speciality)).ToList();
     }
 }

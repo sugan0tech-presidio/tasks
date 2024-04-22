@@ -1,5 +1,6 @@
-﻿using PharmacyManagement.Repositories;
-using PharmacyModels;
+﻿using PharmacyModels;
+
+namespace PharmacyManagement.Repositories;
 
 /// <summary>
 /// A base repository implementation for entities.
@@ -10,7 +11,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     /// <summary>
     /// The dictionary storing entities by their ID.
     /// </summary>
-    protected static readonly Dictionary<int, TBaseEntity> _entities = new ();
+    protected static readonly Dictionary<int, TBaseEntity> Entities = new ();
 
     /// <summary>
     /// Retrieves an entity by its ID.
@@ -20,7 +21,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
     public TBaseEntity GetById(int id)
     {
-        if (_entities.TryGetValue(id, out var entity))
+        if (Entities.TryGetValue(id, out var entity))
             throw new KeyNotFoundException($"{GetType()} with key {id} not found!!!");
         
         return entity;
@@ -32,7 +33,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     /// <returns>A list of all entities.</returns>
     public List<TBaseEntity> GetAll()
     {
-        return _entities.Values.ToList();
+        return Entities.Values.ToList();
     }
 
     /// <summary>
@@ -47,11 +48,11 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
             throw new ArgumentNullException(nameof(entity), $"{GetType()} cannot be null.");
 
         var currSeq = 1;
-        while (_entities.ContainsKey(currSeq))
+        while (Entities.ContainsKey(currSeq))
             currSeq++;
         entity.Id = currSeq;
         
-        _entities.Add(currSeq, entity);
+        Entities.Add(currSeq, entity);
         return entity;
     }
 
@@ -64,16 +65,16 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     public TBaseEntity Update(TBaseEntity entity)
     {
         var id = entity.Id;
-        if (_entities.ContainsKey(id))
+        if (Entities.ContainsKey(id))
         {
-            _entities[id] = entity;
+            Entities[id] = entity;
         }
         else
         {
             throw new KeyNotFoundException("Entity not found.");
         }
 
-        return _entities[id];
+        return Entities[id];
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
     public void Delete(int id)
     {
-        if (!_entities.Remove(id))
+        if (!Entities.Remove(id))
         {
             throw new KeyNotFoundException("Entity not found.");
         }
