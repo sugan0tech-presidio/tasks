@@ -18,13 +18,10 @@ public class StaffController
     {
         Console.WriteLine("Welcome to Staff Management System!");
 
-        while (true)
-        {
             if (_authController.Auth())
             {
                 ShowMainMenu();
             }
-        }
     }
 
     private void ShowMainMenu()

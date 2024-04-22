@@ -24,13 +24,10 @@ public class PrescriptionController
     {
         Console.WriteLine("Welcome to Prescription Management System!");
 
-        while (true)
-        {
             if (_authController.Auth())
             {
                 ShowMainMenu();
             }
-        }
     }
 
     private void ShowMainMenu()

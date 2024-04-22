@@ -21,7 +21,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
     public TBaseEntity GetById(int id)
     {
-        if (Entities.TryGetValue(id, out var entity))
+        if (!Entities.TryGetValue(id, out var entity))
             throw new KeyNotFoundException($"{GetType()} with key {id} not found!!!");
         
         return entity;

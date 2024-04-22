@@ -19,13 +19,10 @@ public class PatientController
     {
         Console.WriteLine("Welcome to Patient Management System!");
 
-        while (true)
-        {
             if (_authController.Auth())
             {
                 ShowMainMenu();
             }
-        }
     }
 
     private void ShowMainMenu()

@@ -90,13 +90,10 @@ public class DoctorController
     {
         Console.WriteLine("Welcome to Doctor Management System!");
 
-        while (true)
-        {
             if (_authController.Auth())
             {
                 ShowMainMenu();
             }
-        }
     }
 
     private void ShowMainMenu()

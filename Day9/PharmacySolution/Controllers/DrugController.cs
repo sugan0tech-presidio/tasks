@@ -21,14 +21,11 @@ public class DrugController
     {
         Console.WriteLine("Welcome to Drug Management System!");
 
-        while (true)
-        {
             if (_authController.Auth())
             {
                 ShowMainMenu();
             }
 
-        }
     }
 
     private void ShowMainMenu()
