@@ -1,4 +1,5 @@
 ﻿using PharmacyManagement.Services;
+using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
 
@@ -54,7 +55,7 @@ public class DrugController
                     AddDrug();
                     break;
                 case "3":
-                    UpdateDrug();
+                    UpdateStash();
                     break;
                 case "4":
                     DeleteDrug();
@@ -84,37 +85,42 @@ public class DrugController
 
     private void AddDrug()
     {
+        var drug = new Drug();
         Console.WriteLine("\nEnter Drug Details:");
-        Console.Write("Name: ");
-        var name = Console.ReadLine();
-        // Add other drug details input here
+        Console.Write("\nName: ");
+        drug.Name = Console.ReadLine();
+        
+        Console.Write("\nProvider: ");
+        drug.Provider = Console.ReadLine();
 
-        // Call drug service to add drug
-        // _drugService.Add(new Drug(...));
+        Console.Write("\nPrice: ");
+        drug.price = double.Parse(Console.ReadLine()??"0");
 
+        Console.WriteLine("\nClassification: ");
+        drug.Classification = Console.ReadLine();
+
+        Console.WriteLine("\nIsPrescriptionNeeded: ");
+        drug.PrescriptionNeeded = bool.Parse(Console.ReadLine()??"false");
+        
+        _drugService.Add(drug);
         Console.WriteLine("Drug added successfully.");
     }
 
-    private void UpdateDrug()
+    private void UpdateStash()
     {
-        Console.Write("\nEnter Drug ID to update: ");
+        Console.Write("\nEnter Drug ID to add More: ");
         var id = Convert.ToInt32(Console.ReadLine());
 
-        // Check if the drug exists and user has permission to update it
-        // var drug = _drugService.GetById(id);
-        // if (drug == null)
-        // {
-        //     Console.WriteLine("Drug not found.");
-        //     return;
-        // }
-        // Add permission check here
+        var drug = _drugService.GetById(id);
 
-        Console.WriteLine("\nEnter Updated Drug Details:");
-        // Get updated details from user input
-        // Update drug properties
-        // Call drug service to update drug
+        Console.WriteLine("\nEnter New Stash Expiry");
+        var expiryDate = DateTime.Parse(Console.ReadLine());
+        Console.WriteLine("\nEnter New Stash quantity");
+        var quantity = int.Parse(Console.ReadLine());
+        
+        drug.AddNewStash(expiryDate, quantity);
 
-        Console.WriteLine("Drug updated successfully.");
+        Console.WriteLine("Drug added successfully.");
     }
 
     private void DeleteDrug()
@@ -122,6 +128,7 @@ public class DrugController
         Console.Write("\nEnter Drug ID to delete: ");
         var id = Convert.ToInt32(Console.ReadLine());
 
+        _drugService.Delete(id);
         // Check if the drug exists and user has permission to delete it
         // var drug = _drugService.GetById(id);
         // if (drug == null)

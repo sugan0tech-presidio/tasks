@@ -23,4 +23,21 @@ public class Staff: Person
     public Staff(DateTime dob, int id, string name, string contactNumber, string email, int age, string address) : base(dob, id, name, contactNumber, email, age, address)
     {
     }
+
+    public override bool Equals(object? obj)
+    {
+        var staff = obj as Staff;
+        return base.Equals(staff)&&staff.Role.Equals(Role);
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + 
+               $"\n\tRole: {Role}";
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }
