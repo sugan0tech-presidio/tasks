@@ -1,6 +1,6 @@
 ﻿namespace PharmacyManagement.Exceptions;
 
-public class UserNotFound: Exception
+public class UserNotFound : Exception
 {
     public UserNotFound()
     {

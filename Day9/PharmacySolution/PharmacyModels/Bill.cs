@@ -2,20 +2,20 @@
 
 namespace PharmacyModels;
 
-public class Bill: BaseEntity
+public class Bill : BaseEntity
 {
-
     public List<Prescription> Prescriptions { get; } = new();
-    public double Total { get; set;}
+    public double Total { get; set; }
     public string user;
-    
+
 
     public override string ToString()
     {
         var prescriptions = "\nDrug\t\t\tQuan X Price";
         foreach (var prescription in Prescriptions)
         {
-            prescriptions += "\n" + prescription.Drug.Name + "\t\t" + prescription.Quantity + "x" + prescription.Drug.price;
+            prescriptions += "\n" + prescription.Drug.Name + "\t\t" + prescription.Quantity + "x" +
+                             prescription.Drug.price;
         }
 
         return $"\nBill Id\t: {Id}" +

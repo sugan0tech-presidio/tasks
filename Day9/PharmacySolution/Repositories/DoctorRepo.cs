@@ -2,7 +2,7 @@
 
 namespace PharmacyManagement.Repositories;
 
-public class DoctorRepo: BaseEntityRepo<Doctor>
+public class DoctorRepo : BaseEntityRepo<Doctor>
 {
     public static readonly string[] Specializations =
     {
@@ -22,7 +22,7 @@ public class DoctorRepo: BaseEntityRepo<Doctor>
         "MS",
         "DM"
     };
-    
+
     /// <summary>
     /// Filter doctors based on the speciality.
     /// </summary>

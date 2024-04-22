@@ -11,7 +11,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     /// <summary>
     /// The dictionary storing entities by their ID.
     /// </summary>
-    protected static readonly Dictionary<int, TBaseEntity> Entities = new ();
+    protected static readonly Dictionary<int, TBaseEntity> Entities = new();
 
     /// <summary>
     /// Retrieves an entity by its ID.
@@ -23,7 +23,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
     {
         if (!Entities.TryGetValue(id, out var entity))
             throw new KeyNotFoundException($"{GetType()} with key {id} not found!!!");
-        
+
         return entity;
     }
 
@@ -51,7 +51,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
         while (Entities.ContainsKey(currSeq))
             currSeq++;
         entity.Id = currSeq;
-        
+
         Entities.Add(currSeq, entity);
         return entity;
     }

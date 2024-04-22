@@ -79,8 +79,10 @@ public class DoctorController
     /// <exception cref="ArgumentNullException">Thrown when doctorService or staffService is null.</exception>
     public DoctorController(DoctorService doctorService, StaffService staffService)
     {
-        _doctorService = doctorService ?? throw new ArgumentNullException(nameof(doctorService), "Doctor service cannot be null.");
-        _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
+        _doctorService = doctorService ??
+                         throw new ArgumentNullException(nameof(doctorService), "Doctor service cannot be null.");
+        _staffService = staffService ??
+                        throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
     }
 
     /// <summary>
@@ -90,10 +92,10 @@ public class DoctorController
     {
         Console.WriteLine("Welcome to Doctor Management System!");
 
-            if (_authController.Auth())
-            {
-                ShowMainMenu();
-            }
+        if (_authController.Auth())
+        {
+            ShowMainMenu();
+        }
     }
 
     private void ShowMainMenu()

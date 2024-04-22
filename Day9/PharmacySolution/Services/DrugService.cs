@@ -1,4 +1,5 @@
-﻿using PharmacyManagement.Repositories;
+﻿using PharmacyManagement.Exceptions;
+using PharmacyManagement.Repositories;
 using PharmacyModels;
 
 namespace PharmacyManagement.Services;
@@ -13,7 +14,8 @@ public class DrugService
     /// <param name="drugRepository">The drug repository.</param>
     public DrugService(DrugRepo drugRepository)
     {
-        _drugRepository = drugRepository ?? throw new ArgumentNullException(nameof(drugRepository), "Drug repository cannot be null.");
+        _drugRepository = drugRepository ??
+                          throw new ArgumentNullException(nameof(drugRepository), "Drug repository cannot be null.");
     }
 
     /// <summary>
@@ -93,6 +95,56 @@ public class DrugService
         catch (KeyNotFoundException)
         {
             throw new KeyNotFoundException($"Drug with ID {id} not found.");
+        }
+    }
+
+    /// <summary>
+    ///  checks the availablity of the drug
+    /// </summary>
+    /// <param name="drug"></param>
+    /// <param name="quantity"></param>
+    /// <exception cref="OutOfStockException">If There is not drugs available</exception>
+    /// <exception cref="NotEnoughDrugException">If there is insufficient Drugs</exception>
+    public void IsDrugAvailable(Drug drug, int quantity)
+    {
+        Console.WriteLine(drug.Name);
+        Console.WriteLine(drug.Count);
+        if (drug.Count <= 0)
+        {
+            Console.WriteLine("\nDrug is out of stock!!!");
+            throw new OutOfStockException($"Drug :{drug.Name} is out of Stock!!!");
+        }
+
+        if (drug.Count >= quantity) return;
+
+        Console.WriteLine("\nDrug is not enough!!!");
+        throw new NotEnoughDrugException(
+            $"Drug : {drug.Name} is not Enough!!!\nAvailable : {drug.Count} Required : {quantity}");
+    }
+
+    /// <summary>
+    ///  checks if the Drugs Expired, has any warnings..
+    /// </summary>
+    /// <param name="drug"></param>
+    /// <exception cref="ExpiredDrugException">If the drug expired.</exception>
+    public void ValidateDrug(Drug drug)
+    {
+        var minExpiryDate = drug.QuantitiesWithDates.Keys.Min();
+        var currentDate = DateTime.Today;
+        if (drug.PrescriptionNeeded)
+        {
+            Console.WriteLine("Note this drugs needs doctors approval!!!");
+        }
+
+        if (currentDate >= minExpiryDate)
+        {
+            Console.WriteLine("Few drug are expired!! Update in Store!!");
+            throw new ExpiredDrugException($"Few of the drugs {drug.Name}Expired");
+        }
+
+        if (minExpiryDate < currentDate.AddDays(30))
+        {
+            Console.WriteLine("Drug gonna Expire soon!!!");
         }
     }
 }

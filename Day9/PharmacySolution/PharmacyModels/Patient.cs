@@ -4,13 +4,8 @@ namespace PharmacyModels;
 
 public class Patient : Person
 {
-    public Patient(DateTime dob, string name, string contactNumber, string email, int age, string address, string insuranceProvider, string medicalHistory) : base(dob, name, contactNumber, email, age, address)
-    {
-        InsuranceProvider = insuranceProvider;
-        MedicalHistory = medicalHistory;
-    }
-
-    public Patient(DateTime dob, int id, string name, string contactNumber, string email, int age, string address, string insuranceProvider, string medicalHistory) : base(dob, id, name, contactNumber, email, age, address)
+    public Patient(DateTime dob, int id, string name, string contactNumber, string email, int age, string address,
+        string insuranceProvider, string medicalHistory) : base(dob, id, name, contactNumber, email, age, address)
     {
         InsuranceProvider = insuranceProvider;
         MedicalHistory = medicalHistory;
@@ -18,11 +13,11 @@ public class Patient : Person
 
     public string InsuranceProvider { get; set; }
     public string MedicalHistory { get; set; }
-    
+
     /// <summary>
-    ///  Loyality score based on previous purchase histories ( will be 10% of purchase )
+    ///  Loyalty score based on previous purchase histories ( will be 10% of purchase )
     /// </summary>
-    public double LoyalityScore { get; set; }
+    public int LoyaltyScore { get; set; } = 0;
 
     public override string ToString()
     {
@@ -32,6 +27,7 @@ public class Patient : Person
                + $"\tPatient Name\t:\t{Name}\n"
                + $"\tPatient DOB\t:\t{DateOfBirth}\n"
                + $"\tPatient Age\t:\t{Age}\n"
+               + $"\tPatient Loyalty Score\t:\t{LoyaltyScore}\n"
                + $"\tPatient InsuranceProvider\t:\t{InsuranceProvider}\n";
     }
 }

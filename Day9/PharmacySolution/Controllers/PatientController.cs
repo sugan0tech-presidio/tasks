@@ -2,27 +2,25 @@
 
 namespace PharmacyManagement.Controllers;
 
-
 public class PatientController
 {
     private readonly PatientService _patientService;
-    private readonly StaffService _staffService;
-    private AuthController _authController = new();
+    private readonly AuthController _authController = new();
 
-    public PatientController(PatientService patientService, StaffService staffService)
+    public PatientController(PatientService patientService)
     {
-        _patientService = patientService ?? throw new ArgumentNullException(nameof(patientService), "Patient service cannot be null.");
-        _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
+        _patientService = patientService ??
+                          throw new ArgumentNullException(nameof(patientService), "Patient service cannot be null.");
     }
 
     public void Run()
     {
         Console.WriteLine("Welcome to Patient Management System!");
 
-            if (_authController.Auth())
-            {
-                ShowMainMenu();
-            }
+        if (_authController.Auth())
+        {
+            ShowMainMenu();
+        }
     }
 
     private void ShowMainMenu()

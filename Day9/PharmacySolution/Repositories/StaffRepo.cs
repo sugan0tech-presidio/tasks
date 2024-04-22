@@ -3,7 +3,7 @@ using PharmacyModels;
 
 namespace PharmacyManagement.Repositories;
 
-public class StaffRepo: BaseEntityRepo<Staff>
+public class StaffRepo : BaseEntityRepo<Staff>
 {
     /// <summary>
     /// Finds a staff member by their email.
@@ -36,6 +36,7 @@ public class StaffRepo: BaseEntityRepo<Staff>
         {
             return staff;
         }
+
         throw new UserNotFound($"User not found for the credentials email and password!!!");
     }
 

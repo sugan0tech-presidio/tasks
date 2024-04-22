@@ -7,21 +7,22 @@ using System;
 public class StaffController
 {
     private readonly StaffService _staffService;
-    private AuthController _authController = new();
+    private readonly AuthController _authController = new();
 
     public StaffController(StaffService staffService)
     {
-        _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
+        _staffService = staffService ??
+                        throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
     }
 
     public void Run()
     {
         Console.WriteLine("Welcome to Staff Management System!");
 
-            if (_authController.Auth())
-            {
-                ShowMainMenu();
-            }
+        if (_authController.Auth())
+        {
+            ShowMainMenu();
+        }
     }
 
     private void ShowMainMenu()
@@ -76,6 +77,7 @@ public class StaffController
         }
     }
 
+    // todo
     private void AddStaffMember()
     {
         Console.WriteLine("\nEnter Staff Member Details:");
@@ -115,18 +117,14 @@ public class StaffController
     {
         Console.Write("\nEnter Staff Member ID to delete: ");
         var id = Convert.ToInt32(Console.ReadLine());
-
-        // Check if the staff member exists and user has permission to delete it
-        // var staffMember = _staffService.GetById(id);
-        // if (staffMember == null)
-        // {
-        //     Console.WriteLine("Staff member not found.");
-        //     return;
-        // }
-        // Add permission check here
-
-        // Call staff service to delete staff member
-
-        Console.WriteLine("Staff member deleted successfully.");
+        try
+        {
+            _staffService.Delete(id);
+            Console.WriteLine("Staff member deleted successfully.");
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }

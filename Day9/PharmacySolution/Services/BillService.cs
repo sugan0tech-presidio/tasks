@@ -5,44 +5,62 @@ namespace PharmacyManagement.Services;
 
 public class BillService
 {
-    private BillRepo _billRepo;
+    private readonly BillRepo _billRepo;
 
     public BillService(BillRepo billRepo)
     {
         _billRepo = billRepo;
     }
 
+    /// <summary>
+    ///  To add  Bill
+    /// </summary>
+    /// <param name="bill"></param>
     public void Add(Bill bill)
     {
         _billRepo.Add(bill);
     }
-    
+
+    /// <summary>
+    /// Retrieves all Bills.
+    /// </summary>
+    /// <returns>A list of Bills.</returns>
     public List<Bill> GetAll()
     {
         return _billRepo.GetAll();
     }
-    public Bill GetById(int Id)
+
+    /// <summary>
+    ///  Gets bill by Id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="KeyNotFoundException">Thrown if Bills with the specified ID is not found.</exception>
+    public Bill GetById(int id)
     {
-        return _billRepo.GetById(Id);
+        return _billRepo.GetById(id);
     }
 
+    /// <summary>
+    ///  Adding prescription to the bill.
+    ///  If bill not present, creates one.
+    /// </summary>
+    /// <param name="bill"></param>
+    /// <param name="prescription"></param>
+    /// <exception cref="Exception">If A dangerous drug combination detected.</exception>
     public void AddPrescription(Bill bill, Prescription prescription)
     {
-        var isDangerousCombination = false;
         foreach (var val in bill.Prescriptions)
         {
-            
             string drugA = val.Drug.Name;
-            Console.WriteLine(drugA);
-            Console.WriteLine(prescription);
             string drugB = prescription.Drug.Name;
-            Console.WriteLine(drugB);
-            if(Dangerouscombinations.IsCombinationDangerous(drugA, drugB))
+
+            if (Dangerouscombinations.IsCombinationDangerous(drugA, drugB))
             {
-                throw new ($"Fatal drug combination: {Dangerouscombinations.GetRisk(drugA, drugB)}");
+                throw new($"Fatal drug combination: {Dangerouscombinations.GetRisk(drugA, drugB)}");
             }
         }
-        
+
         bill.Prescriptions.Add(prescription);
         var drug = prescription.Drug;
         bill.Total += drug.price * prescription.Quantity;
@@ -50,9 +68,9 @@ public class BillService
         {
             _billRepo.Update(bill);
         }
-        catch (KeyNotFoundException e)
+        catch (KeyNotFoundException)
         {
-            Console.WriteLine(e);
+            Console.WriteLine("Creating new bill!!");
             _billRepo.Add(bill);
         }
     }

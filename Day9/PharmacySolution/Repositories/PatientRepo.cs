@@ -2,7 +2,6 @@
 
 namespace PharmacyManagement.Repositories;
 
-public class PatientRepo: BaseEntityRepo<Patient>
+public class PatientRepo : BaseEntityRepo<Patient>
 {
-    
 }

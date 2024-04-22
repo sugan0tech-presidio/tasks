@@ -2,6 +2,6 @@
 
 namespace PharmacyManagement.Repositories;
 
-public class BillRepo: BaseEntityRepo<Bill>
+public class BillRepo : BaseEntityRepo<Bill>
 {
 }

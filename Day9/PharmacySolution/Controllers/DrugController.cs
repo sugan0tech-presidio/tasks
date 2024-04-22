@@ -8,24 +8,25 @@ using System;
 public class DrugController
 {
     private readonly DrugService _drugService;
-    private readonly StaffService _staffService;
-    private AuthController _authController = new ();
+    private readonly AuthController _authController = new();
 
-    public DrugController(DrugService drugService, StaffService staffService)
+    public DrugController(DrugService drugService)
     {
-        _drugService = drugService ?? throw new ArgumentNullException(nameof(drugService), "Drug service cannot be null.");
-        _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
+        _drugService = drugService ??
+                       throw new ArgumentNullException(nameof(drugService), "Drug service cannot be null.");
     }
 
+    /// <summary>
+    /// Runner for Drug controller
+    /// </summary>
     public void Run()
     {
         Console.WriteLine("Welcome to Drug Management System!");
 
-            if (_authController.Auth())
-            {
-                ShowMainMenu();
-            }
-
+        if (_authController.Auth())
+        {
+            ShowMainMenu();
+        }
     }
 
     private void ShowMainMenu()
@@ -70,6 +71,9 @@ public class DrugController
         }
     }
 
+    /// <summary>
+    ///  Prints list of all drugs.
+    /// </summary>
     private void ListDrugs()
     {
         var drugs = _drugService.GetAll();
@@ -80,29 +84,37 @@ public class DrugController
         }
     }
 
+    /// <summary>
+    /// Adds drug from console
+    /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
     private void AddDrug()
     {
         var drug = new Drug();
         Console.WriteLine("\nEnter Drug Details:");
         Console.Write("\nName: ");
-        drug.Name = Console.ReadLine();
-        
+        drug.Name = Console.ReadLine() ?? throw new InvalidOperationException("Enter a valid string of Drug Name");
+
         Console.Write("\nProvider: ");
-        drug.Provider = Console.ReadLine();
+        drug.Provider = Console.ReadLine() ?? "";
 
         Console.Write("\nPrice: ");
-        drug.price = double.Parse(Console.ReadLine()??"0");
+        drug.price = double.Parse(Console.ReadLine() ?? "0");
 
         Console.WriteLine("\nClassification: ");
-        drug.Classification = Console.ReadLine();
+        drug.Classification = Console.ReadLine() ?? "";
 
         Console.WriteLine("\nIsPrescriptionNeeded: ");
-        drug.PrescriptionNeeded = bool.Parse(Console.ReadLine()??"false");
-        
+        drug.PrescriptionNeeded = bool.Parse(Console.ReadLine() ?? "false");
+
         _drugService.Add(drug);
         Console.WriteLine("Drug added successfully.");
     }
 
+    /// <summary>
+    /// Updates drug's stash
+    /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
     private void UpdateStash()
     {
         Console.Write("\nEnter Drug ID to add More: ");
@@ -111,32 +123,33 @@ public class DrugController
         var drug = _drugService.GetById(id);
 
         Console.WriteLine("\nEnter New Stash Expiry");
-        var expiryDate = DateTime.Parse(Console.ReadLine());
+        var expiryDate = DateTime.Parse(Console.ReadLine() ??
+                                        throw new InvalidOperationException("Enter a valid Expiry date format"));
         Console.WriteLine("\nEnter New Stash quantity");
-        var quantity = int.Parse(Console.ReadLine());
-        
+        var quantity =
+            int.Parse(Console.ReadLine() ?? throw new InvalidOperationException("Enter valid data for quantity"));
+
         drug.AddNewStash(expiryDate, quantity);
 
         Console.WriteLine("Drug added successfully.");
     }
 
+    /// <summary>
+    ///  Deletes a drug
+    /// </summary>
     private void DeleteDrug()
     {
         Console.Write("\nEnter Drug ID to delete: ");
         var id = Convert.ToInt32(Console.ReadLine());
 
-        _drugService.Delete(id);
-        // Check if the drug exists and user has permission to delete it
-        // var drug = _drugService.GetById(id);
-        // if (drug == null)
-        // {
-        //     Console.WriteLine("Drug not found.");
-        //     return;
-        // }
-        // Add permission check here
-
-        // Call drug service to delete drug
-
-        Console.WriteLine("Drug deleted successfully.");
+        try
+        {
+            _drugService.Delete(id);
+            Console.WriteLine("Drug deleted successfully.");
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }

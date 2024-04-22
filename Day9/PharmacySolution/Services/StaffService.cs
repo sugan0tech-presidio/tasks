@@ -8,15 +8,16 @@ public class StaffService
 {
     private readonly StaffRepo _staffRepository;
     public static bool IsLogged { get; private set; }
-    public static string LoggedUser { get; private set; }
-    
+    public static string? LoggedUser { get; private set; }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="StaffService"/> class.
     /// </summary>
     /// <param name="staffRepository">The staff repository.</param>
     public StaffService(StaffRepo staffRepository)
     {
-        _staffRepository = staffRepository ?? throw new ArgumentNullException(nameof(staffRepository), "Staff repository cannot be null.");
+        _staffRepository = staffRepository ??
+                           throw new ArgumentNullException(nameof(staffRepository), "Staff repository cannot be null.");
     }
 
     /// <summary>
@@ -143,5 +144,4 @@ public class StaffService
     {
         IsLogged = false;
     }
-    
 }

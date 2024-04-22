@@ -13,7 +13,9 @@ public class PatientService
     /// <param name="patientRepository">The patient repository.</param>
     public PatientService(PatientRepo patientRepository)
     {
-        _patientRepository = patientRepository ?? throw new ArgumentNullException(nameof(patientRepository), "Patient repository cannot be null.");
+        _patientRepository = patientRepository ??
+                             throw new ArgumentNullException(nameof(patientRepository),
+                                 "Patient repository cannot be null.");
     }
 
     /// <summary>

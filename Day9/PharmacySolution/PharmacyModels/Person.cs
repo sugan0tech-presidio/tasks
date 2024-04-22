@@ -2,7 +2,7 @@
 
 namespace PharmacyModels;
 
-public abstract class Person: BaseEntity
+public abstract class Person : BaseEntity
 {
     protected Person(DateTime dob, string name, string contactNumber, string email, int age, string address)
     {
@@ -14,7 +14,8 @@ public abstract class Person: BaseEntity
         Address = address;
     }
 
-    protected Person(DateTime dob, int id, string name, string contactNumber, string email, int age, string address): base(id)
+    protected Person(DateTime dob, int id, string name, string contactNumber, string email, int age,
+        string address) : base(id)
     {
         DateOfBirth = dob;
         Name = name;
@@ -25,7 +26,7 @@ public abstract class Person: BaseEntity
     }
 
     public string Name { get; set; }
-    public string ContactNumber { get; set; }
+    public string ContactNumber { get; }
     public string Email { get; set; }
     private DateTime _dob;
     public int Age { get; private set; }

@@ -13,7 +13,9 @@ public class PrescriptionService
     /// <param name="prescriptionRepository">The prescription repository.</param>
     public PrescriptionService(PrescriptionRepo prescriptionRepository)
     {
-        _prescriptionRepository = prescriptionRepository ?? throw new ArgumentNullException(nameof(prescriptionRepository), "Prescription repository cannot be null.");
+        _prescriptionRepository = prescriptionRepository ??
+                                  throw new ArgumentNullException(nameof(prescriptionRepository),
+                                      "Prescription repository cannot be null.");
     }
 
     /// <summary>
@@ -53,7 +55,7 @@ public class PrescriptionService
     {
         if (prescription == null)
             throw new ArgumentNullException(nameof(prescription), "Prescription cannot be null.");
-        
+
         prescription.IssueDate = new DateTime();
 
         return _prescriptionRepository.Add(prescription);

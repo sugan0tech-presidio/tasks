@@ -1,6 +1,6 @@
 ﻿namespace PharmacyManagement.Exceptions;
 
-public class DangerousDrugCombinationException: Exception
+public class DangerousDrugCombinationException : Exception
 {
     public DangerousDrugCombinationException()
     {
