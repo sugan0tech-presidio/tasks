@@ -35,13 +35,15 @@ namespace PharmacyModels;
         // Method to get the risk associated with a dangerous combination
         public static string GetRisk(string drugA, string drugB)
         {
-            if (DangerousCombinations.TryGetValue(drugA + "+" drugB, out var value))
+            if (DangerousCombinations.TryGetValue(drugA + "+" + drugB, out var value))
             {
                 return value;
             }
-            else
+            if (DangerousCombinations.TryGetValue(drugB + "+" + drugA, out value))
             {
-                return "Unknown";
+                return value;
             }
+            
+            return "Unknown";
         }
     }

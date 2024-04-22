@@ -1,15 +1,18 @@
 ﻿using PharmacyManagement.Repositories;
 using PharmacyManagement.Services;
+using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
 
 public class BillingController
 {
         private readonly BillService _billService;
+        private readonly PrescriptionController _prescriptionController;
 
-        public BillController(BillService billService)
+        public BillingController(BillService billService, PrescriptionController prescriptionController)
         {
-            _billService = new BillService(new BillRepo());
+            _billService = billService;
+            _prescriptionController = prescriptionController;
         }
 
         public void Run()
@@ -43,9 +46,31 @@ public class BillingController
 
         private void CreateBillFromConsole()
         {
+            Bill bill = new Bill();
             Console.WriteLine("\nCreating Bill from Console...");
             // Here you can implement the logic to create a bill from user input
             // For example, you can ask for prescription details and generate the bill accordingly
+            Console.WriteLine("\nEnter the user Name...");
+            bill.user = Console.ReadLine()??"";
+
+            AddPrescription(bill);
+        }
+
+        private void AddPrescription(Bill bill)
+        {
+            string opt;
+            while (true)
+            {
+                Console.WriteLine("Are you want to add prescription");
+                opt = Console.ReadLine() ?? "n";
+                if (opt == "n")
+                {
+                    break;
+                }
+
+                _billService.AddPrescription(bill, _prescriptionController.GetPrescription());
+            }
+
         }
 
         private void DiscardBill()

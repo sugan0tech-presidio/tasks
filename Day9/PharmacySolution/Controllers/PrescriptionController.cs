@@ -120,6 +120,43 @@ public class PrescriptionController
 
         Console.WriteLine("Prescription added successfully.");
     }
+    
+    public Prescription GetPrescription()
+    {
+        var prescription = new Prescription();
+        Console.WriteLine("\nEnter Prescription Details:");
+        Console.Write("\nEnter Doctor name:");
+        prescription.PrescribingDoctor = Console.ReadLine()??"";
+        
+        Console.Write("\nEnter the Drug Id:");
+        var drugId = int.Parse(Console.ReadLine());
+        
+        var drug = _drugService.GetById(drugId);
+        if (!validateDrug(drug))
+            return null;
+        
+        Console.Write("\nEnter the Drug Quantity:");
+        var quantity = int.Parse(Console.ReadLine());
+        
+        if (!isDrugAvailable(drug, quantity))
+            return null;
+        
+        
+        prescription.Medications.Add(_drugService.GetById(drugId),quantity);
+
+
+        Console.Write("\nAny Notes on Drug: ");
+        prescription.Notes = Console.ReadLine()??"";
+        
+        // Get patient, doctor, and medications details from user input
+
+        // Call prescription service to add prescription
+        // _prescriptionService.Add(new Prescription(...));
+        _prescriptionService.Add(prescription);
+
+        Console.WriteLine("Prescription added successfully.");
+        return prescription;
+    }
 
     private bool isDrugAvailable(Drug drug, int quantity)
     {

@@ -12,6 +12,7 @@ namespace PharmacyManagement
         private PatientController patientController;
         private PrescriptionController prescriptionController;
         private AuthController authController;
+        private BillingController billingController;
         private StaffService staffService;
 
         static void Main(string[] args)
@@ -27,11 +28,13 @@ namespace PharmacyManagement
             var drugService = new DrugService(new DrugRepo());
             var patientService = new PatientService(new PatientRepo());
             var prescriptionService = new PrescriptionService(new PrescriptionRepo());
+            var billService = new BillService(new BillRepo());
 
             staffController = new StaffController(staffService);
             drugController = new DrugController(drugService, staffService);
             patientController = new PatientController(patientService, staffService);
             prescriptionController = new PrescriptionController(prescriptionService, staffService);
+            billingController = new BillingController(billService, prescriptionController);
         }
 
         private void RunMainMenu()
@@ -45,7 +48,8 @@ namespace PharmacyManagement
                 Console.WriteLine("2. Drug Management");
                 Console.WriteLine("3. Patient Management");
                 Console.WriteLine("4. Prescription Management");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Billing Management");
+                Console.WriteLine("6. Exit");
 
                 Console.Write("\nEnter your choice: ");
                 var choice = Console.ReadLine();
@@ -65,6 +69,9 @@ namespace PharmacyManagement
                         prescriptionController.Run();
                         break;
                     case "5":
+                        billingController.Run();
+                        break;
+                    case "6":
                         Console.WriteLine("Exiting...");
                         return;
                     default:

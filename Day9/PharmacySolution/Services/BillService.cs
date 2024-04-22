@@ -32,6 +32,8 @@ public class BillService
         }
         
         bill.Prescriptions.Add(prescription);
+        var drug = prescription.Medications.Keys.First();
+        bill.Total += drug.price * prescription.Medications[drug];
         _billRepo.Update(bill);
     }
 }
