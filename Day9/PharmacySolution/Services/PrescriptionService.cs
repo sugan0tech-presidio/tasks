@@ -53,6 +53,8 @@ public class PrescriptionService
     {
         if (prescription == null)
             throw new ArgumentNullException(nameof(prescription), "Prescription cannot be null.");
+        
+        prescription.IssueDate = new DateTime();
 
         return _prescriptionRepository.Add(prescription);
     }

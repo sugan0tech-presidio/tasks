@@ -1,4 +1,6 @@
-﻿using PharmacyManagement.Services;
+﻿using PharmacyManagement.Repositories;
+using PharmacyManagement.Services;
+using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
 
@@ -9,11 +11,13 @@ public class PrescriptionController
     private readonly PrescriptionService _prescriptionService;
     private readonly StaffService _staffService;
     private AuthController _authController = new();
+    private readonly DrugService _drugService;
 
     public PrescriptionController(PrescriptionService prescriptionService, StaffService staffService)
     {
         _prescriptionService = prescriptionService ?? throw new ArgumentNullException(nameof(prescriptionService), "Prescription service cannot be null.");
         _staffService = staffService ?? throw new ArgumentNullException(nameof(staffService), "Staff service cannot be null.");
+        _drugService = new DrugService(new DrugRepo());
     }
 
     public void Run()
@@ -83,13 +87,75 @@ public class PrescriptionController
 
     private void AddPrescription()
     {
+        var prescription = new Prescription();
         Console.WriteLine("\nEnter Prescription Details:");
+        Console.Write("\nEnter Doctor name:");
+        prescription.PrescribingDoctor = Console.ReadLine()??"";
+        
+        Console.Write("\nEnter the Drug Id:");
+        var drugId = int.Parse(Console.ReadLine());
+        
+        var drug = _drugService.GetById(drugId);
+        if (!validateDrug(drug))
+            return;
+        
+        Console.Write("\nEnter the Drug Quantity:");
+        var quantity = int.Parse(Console.ReadLine());
+        
+        if (!isDrugAvailable(drug, quantity))
+            return;
+        
+        
+        prescription.Medications.Add(_drugService.GetById(drugId),quantity);
+
+
+        Console.Write("\nAny Notes on Drug: ");
+        prescription.Notes = Console.ReadLine()??"";
+        
         // Get patient, doctor, and medications details from user input
 
         // Call prescription service to add prescription
         // _prescriptionService.Add(new Prescription(...));
+        _prescriptionService.Add(prescription);
 
         Console.WriteLine("Prescription added successfully.");
+    }
+
+    private bool isDrugAvailable(Drug drug, int quantity)
+    {
+        if (drug.Count > 0)
+        {
+            Console.WriteLine("\nDrug is out of stock!!!");
+            return false;
+        }
+        if (drug.Count < quantity)
+        {
+            Console.WriteLine("\nDrug is not enough!!!");
+        }
+        return true;
+    }
+
+    private bool validateDrug(Drug drug)
+    {
+        var minExpiryDate = drug.QuantitiesWithDates.Keys.Min();
+        var currentDate = DateTime.Today;
+        if (drug.PrescriptionNeeded)
+        {
+            Console.WriteLine("Note this drugs needs doctors approval!!!");
+        }
+
+        if (currentDate >= minExpiryDate)
+        {
+            Console.WriteLine("Few drug are expired!! Update in Store!!");
+            return false;
+        }
+        
+        if (minExpiryDate < currentDate.AddDays(30))
+        {
+            Console.WriteLine("Drug gonna Expire soon!!!");
+        }
+
+        return true;
     }
 
     private void UpdatePrescription()
@@ -118,6 +184,8 @@ public class PrescriptionController
     {
         Console.Write("\nEnter Prescription ID to delete: ");
         var id = Convert.ToInt32(Console.ReadLine());
+        
+        _prescriptionService.Delete(id);
 
         // Check if the prescription exists and user has permission to delete it
         // var prescription = _prescriptionService.GetById(id);
