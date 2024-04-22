@@ -68,7 +68,8 @@ public class BillingController
                     break;
                 }
 
-                _billService.AddPrescription(bill, _prescriptionController.GetPrescription());
+                var prescribtion = _prescriptionController.GetPrescription();
+                _billService.AddPrescription(bill, prescribtion);
             }
 
         }

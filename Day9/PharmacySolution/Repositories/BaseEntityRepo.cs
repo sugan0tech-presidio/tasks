@@ -71,7 +71,7 @@ public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where
         }
         else
         {
-            throw new KeyNotFoundException("Entity not found.");
+            throw new KeyNotFoundException($"{GetType()}'s Entity not found.");
         }
 
         return Entities[id];
