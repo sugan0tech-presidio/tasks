@@ -2,11 +2,11 @@
 
 namespace PharmacyManagement.Repositories;
 
-public abstract class BaseEntityRepo : IBaseRepo<BaseEntity>
+public abstract class BaseEntityRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBaseEntity : IEntity
 {
-    private readonly Dictionary<int, BaseEntity> _entities = new ();
+    private readonly Dictionary<int, TBaseEntity> _entities = new ();
 
-    public BaseEntity GetById(int id)
+    public TBaseEntity GetById(int id)
     {
         if (_entities.TryGetValue(id, out var entity))
             throw new KeyNotFoundException($"{GetType()} with key {id} not found!!!");
@@ -14,12 +14,12 @@ public abstract class BaseEntityRepo : IBaseRepo<BaseEntity>
         return entity;
     }
 
-    public List<BaseEntity> GetAll()
+    public List<TBaseEntity> GetAll()
     {
         return _entities.Values.ToList();
     }
 
-    public BaseEntity Add(BaseEntity entity)
+    public TBaseEntity Add(TBaseEntity entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity), $"{GetType()} cannot be null.");
@@ -33,7 +33,7 @@ public abstract class BaseEntityRepo : IBaseRepo<BaseEntity>
         return entity;
     }
 
-    public BaseEntity Update(BaseEntity entity)
+    public TBaseEntity Update(TBaseEntity entity)
     {
         var id = entity.Id;
         if (_entities.ContainsKey(id))

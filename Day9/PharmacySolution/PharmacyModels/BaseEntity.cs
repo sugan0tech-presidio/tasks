@@ -1,6 +1,6 @@
 ﻿namespace PharmacyModels;
 
-public abstract class BaseEntity
+public abstract class BaseEntity: IEntity
 {
     
     protected BaseEntity()
