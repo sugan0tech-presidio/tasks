@@ -16,6 +16,11 @@ public class Patient : Person
 
     public string InsuranceProvider { get; set; }
     public string MedicalHistory { get; set; }
+    
+    /// <summary>
+    ///  Loyality score based on previous purchase histories ( will be 10% of purchase )
+    /// </summary>
+    public double LoyalityScore { get; set; }
 
     public override string ToString()
     {
