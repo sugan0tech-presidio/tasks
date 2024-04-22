@@ -54,15 +54,15 @@ public class BillingController
         private void CreateBillFromConsole()
         {
             Bill bill = new Bill();
-            Console.WriteLine("\nCreating Bill from Console...");
+            Console.WriteLine("\n\t\t\tCreating Bill from Console...");
             // Here you can implement the logic to create a bill from user input
             // For example, you can ask for prescription details and generate the bill accordingly
-            Console.WriteLine("\nEnter the user Name...");
+            Console.Write("\nEnter the user Name:");
             bill.user = Console.ReadLine()??"";
 
             AddPrescription(bill);
 
-            Console.WriteLine("\nCreated Bill");
+            Console.WriteLine("\n\t\t\tCreated Bill");
             Console.WriteLine(bill);
         }
 

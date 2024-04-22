@@ -12,8 +12,15 @@ public class Bill: BaseEntity
 
     public override string ToString()
     {
+        var prescriptions = "\nDrug\t\t\tQuan X Price";
+        foreach (var prescription in Prescriptions)
+        {
+            prescriptions += "\n" + prescription.Drug.Name + "\t\t" + prescription.Quantity + "x" + prescription.Drug.price;
+        }
+
         return $"\nBill Id\t: {Id}" +
-               $"\n\tUser\t:{user}" +
-               $"\n\tTotal\t: ${Total}\n";
+               $"\nUser\t:{user}" +
+               prescriptions +
+               $"\nTotal\t:\t\t${Total}\n";
     }
 }
