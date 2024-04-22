@@ -1,6 +1,6 @@
 ﻿namespace PharmacyManagement.Exceptions;
 
-public class UserNotAuthorisedException: Exception
+public class UserNotAuthorisedException : Exception
 {
     public UserNotAuthorisedException()
     {

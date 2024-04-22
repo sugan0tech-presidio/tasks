@@ -22,7 +22,7 @@ public class AuthController
             var email = Console.ReadLine();
             Console.Write("Password: ");
             var password = Console.ReadLine();
-            var AdminRole = "administrator";
+            var AdminRole = "Administrator";
 
             var authenticatedStaff = _staffService.Authenticate(email, password);
             if (authenticatedStaff.Role != AdminRole)

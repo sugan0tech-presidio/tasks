@@ -37,7 +37,7 @@ namespace PharmacyManagement
             _drugController = new DrugController(_drugService);
             _patientController = new PatientController(_patientService);
             _prescriptionController = new PrescriptionController(prescriptionService);
-            _billingController = new BillingController(billService, _prescriptionController);
+            _billingController = new BillingController(billService, _prescriptionController, _patientService);
         }
 
         private void RunMainMenu()

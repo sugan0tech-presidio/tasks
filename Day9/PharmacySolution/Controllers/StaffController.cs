@@ -1,4 +1,5 @@
-﻿using PharmacyManagement.Services;
+﻿using PharmacyManagement.Exceptions;
+using PharmacyManagement.Services;
 
 namespace PharmacyManagement.Controllers;
 
@@ -40,29 +41,40 @@ public class StaffController
             Console.Write("\nEnter your choice: ");
             var choice = Console.ReadLine();
 
-            switch (choice)
+            try
             {
-                case "1":
-                    ListStaffMembers();
-                    break;
-                case "2":
-                    AddStaffMember();
-                    break;
-                case "3":
-                    UpdateStaffMember();
-                    break;
-                case "4":
-                    DeleteStaffMember();
-                    break;
-                case "5":
-                    Console.Clear();
-                    break;
-                case "6":
-                    _authController.Logout();
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                switch (choice)
+                {
+                    case "1":
+                        ListStaffMembers();
+                        break;
+                    case "2":
+                        AddStaffMember();
+                        break;
+                    case "3":
+                        UpdateStaffMember();
+                        break;
+                    case "4":
+                        DeleteStaffMember();
+                        break;
+                    case "5":
+                        Console.Clear();
+                        break;
+                    case "6":
+                        _authController.Logout();
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (InvalidIdFormatException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (KeyNotFoundException e)
+            {
+                Console.WriteLine(e);
             }
         }
     }

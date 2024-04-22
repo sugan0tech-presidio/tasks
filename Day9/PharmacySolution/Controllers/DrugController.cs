@@ -45,29 +45,44 @@ public class DrugController
             Console.Write("\nEnter your choice: ");
             var choice = Console.ReadLine();
 
-            switch (choice)
+            try
             {
-                case "1":
-                    ListDrugs();
-                    break;
-                case "2":
-                    AddDrug();
-                    break;
-                case "3":
-                    UpdateStash();
-                    break;
-                case "4":
-                    DeleteDrug();
-                    break;
-                case "5":
-                    Console.Clear();
-                    break;
-                case "6":
-                    _authController.Logout();
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                switch (choice)
+                {
+                    case "1":
+                        ListDrugs();
+                        break;
+                    case "2":
+                        AddDrug();
+                        break;
+                    case "3":
+                        UpdateStash();
+                        break;
+                    case "4":
+                        DeleteDrug();
+                        break;
+                    case "5":
+                        Console.Clear();
+                        break;
+                    case "6":
+                        _authController.Logout();
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (UserNotAuthorisedException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (KeyNotFoundException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
             }
         }
     }

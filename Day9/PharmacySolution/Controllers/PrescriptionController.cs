@@ -52,29 +52,56 @@ public class PrescriptionController
             Console.Write("\nEnter your choice: ");
             var choice = Console.ReadLine();
 
-            switch (choice)
+            try
             {
-                case "1":
-                    ListPrescriptions();
-                    break;
-                case "2":
-                    AddPrescription();
-                    break;
-                case "3":
-                    UpdatePrescription();
-                    break;
-                case "4":
-                    DeletePrescription();
-                    break;
-                case "5":
-                    Console.Clear();
-                    break;
-                case "6":
-                    _authController.Logout();
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                switch (choice)
+                {
+                    case "1":
+                        ListPrescriptions();
+                        break;
+                    case "2":
+                        AddPrescription();
+                        break;
+                    case "3":
+                        UpdatePrescription();
+                        break;
+                    case "4":
+                        DeletePrescription();
+                        break;
+                    case "5":
+                        Console.Clear();
+                        break;
+                    case "6":
+                        _authController.Logout();
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (DangerousDrugCombinationException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (ExpiredDrugException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (InvalidIdFormatException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (OutOfStockException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (NotEnoughDrugException e)
+            {
+                Console.WriteLine(e);
             }
         }
     }

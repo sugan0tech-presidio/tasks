@@ -17,7 +17,7 @@ public class Patient : Person
     /// <summary>
     ///  Loyalty score based on previous purchase histories ( will be 10% of purchase )
     /// </summary>
-    public int LoyaltyScore { get; set; } = 0;
+    public double LoyaltyScore { get; set; } = 0;
 
     public override string ToString()
     {

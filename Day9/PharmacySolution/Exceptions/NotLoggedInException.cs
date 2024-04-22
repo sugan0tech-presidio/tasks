@@ -1,6 +1,6 @@
 ﻿namespace PharmacyManagement.Exceptions;
 
-public class NotLoggedInException: Exception
+public class NotLoggedInException : Exception
 {
     public NotLoggedInException()
     {

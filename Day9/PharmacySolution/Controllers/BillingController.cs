@@ -1,4 +1,5 @@
-﻿using PharmacyManagement.Services;
+﻿using PharmacyManagement.Exceptions;
+using PharmacyManagement.Services;
 using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
@@ -7,9 +8,12 @@ public class BillingController
 {
     private readonly BillService _billService;
     private readonly PrescriptionController _prescriptionController;
+    private readonly PatientService _patientService;
 
-    public BillingController(BillService billService, PrescriptionController prescriptionController)
+    public BillingController(BillService billService, PrescriptionController prescriptionController,
+        PatientService patientService)
     {
+        _patientService = patientService;
         _billService = billService;
         _prescriptionController = prescriptionController;
     }
@@ -27,26 +31,41 @@ public class BillingController
             Console.Write("Enter your choice: ");
             var choice = Console.ReadLine();
 
-            switch (choice)
+            try
             {
-                case "1":
-                    CreateBillFromConsole();
-                    break;
-                case "2":
-                    DiscardBill();
-                    break;
-                case "3":
-                    ViewById();
-                    break;
-                case "4":
-                    ViewAll();
-                    break;
-                case "5":
-                    Console.WriteLine("Exiting...");
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                switch (choice)
+                {
+                    case "1":
+                        CreateBillFromConsole();
+                        break;
+                    case "2":
+                        DiscardBill();
+                        break;
+                    case "3":
+                        ViewById();
+                        break;
+                    case "4":
+                        ViewAll();
+                        break;
+                    case "5":
+                        Console.WriteLine("Exiting...");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (InvalidIdFormatException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (KeyNotFoundException e)
+            {
+                Console.WriteLine(e);
             }
         }
     }
@@ -57,13 +76,18 @@ public class BillingController
         Console.WriteLine("\n\t\t\tCreating Bill from Console...");
         // Here you can implement the logic to create a bill from user input
         // For example, you can ask for prescription details and generate the bill accordingly
-        Console.Write("\nEnter the user Name:");
-        bill.user = Console.ReadLine() ?? "";
+        Console.Write("\nEnter the Patient Id:");
+        int userId = int.Parse(Console.ReadLine() ?? throw new InvalidIdFormatException());
+
+        var patient = _patientService.GetById(userId);
+        bill.user = patient;
 
         AddPrescription(bill);
 
         Console.WriteLine("\n\t\t\tCreated Bill");
         Console.WriteLine(bill);
+        patient.LoyaltyScore = bill.Total / 100;
+        _patientService.Update(patient);
     }
 
     private void AddPrescription(Bill bill)
