@@ -101,10 +101,10 @@ public class PrescriptionController
         
         if (!isDrugAvailable(drug, quantity))
             return;
-        
-        
-        prescription.Medications.Add(_drugService.GetById(drugId),quantity);
 
+
+        prescription.Drug = _drugService.GetById(drugId);
+        prescription.Quantity = quantity;
 
         Console.Write("\nAny Notes on Drug: ");
         prescription.Notes = Console.ReadLine()??"";
@@ -139,7 +139,8 @@ public class PrescriptionController
             return null;
         
         
-        prescription.Medications.Add(_drugService.GetById(drugId),quantity);
+        prescription.Drug = _drugService.GetById(drugId);
+        prescription.Quantity = quantity;
 
 
         Console.Write("\nAny Notes on Drug: ");

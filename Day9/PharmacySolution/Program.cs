@@ -114,13 +114,21 @@ namespace PharmacyManagement
 
             // "Clopidogrel+PPIs" => "Clopidogrel" and "PPIs"
             var drug1 = new Drug(1, "Clopidogrel", "Provider", DateTime.Now.AddDays(30), 10.99, true, "Antiplatelet Agent");
+            drug1.QuantitiesWithDates.Add(DateTime.Now.AddDays(45), 100);
+            drug1.Count = 100;
             var drug2 = new Drug(2, "PPIs", "Provider", DateTime.Now.AddDays(30), 10.99, true,
                 "Gastric Acid Suppressant");
+            drug2.QuantitiesWithDates.Add(DateTime.Now.AddDays(45), 100);
+            drug1.Count = 100;
                 
             // "Ramipril+Spironolactone" => "Ramipril" and "Spironolactone"
             var drug3 = new Drug(3, "Ramipril", "Provider", DateTime.Now.AddDays(60), 15.99, false, "ACE Inhibitor");
+            drug3.QuantitiesWithDates.Add(DateTime.Now.AddDays(45), 100);
+            drug1.Count = 100;
             var drug4 = new Drug(4, "Spironolactone", "Provider", DateTime.Now.AddDays(60), 15.99, false,
                     "Potasssium-Sparing Diuretic");
+            drug4.QuantitiesWithDates.Add(DateTime.Now.AddDays(45), 100);
+            drug1.Count = 100;
 
             drugService.Add(drug1);
             drugService.Add(drug2);

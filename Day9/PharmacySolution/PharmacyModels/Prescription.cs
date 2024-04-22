@@ -8,6 +8,8 @@ public class Prescription: BaseEntity
     // Properties
     public Patient Patient { get; set; }
     public Dictionary<Drug, int> Medications { get; set; }
+    public Drug Drug { get; set;}
+    public int Quantity { get; set;}
     public string PrescribingDoctor { get; set; }
     public DateTime IssueDate { get; set; }
     public string Notes { get; set; }
@@ -37,12 +39,12 @@ public class Prescription: BaseEntity
 
     public override string ToString()
     {
-        string medicationsString = string.Join("\n", Medications.Keys);
         return $"\nPrescription ID\t: {Id}" +
                $"\n\tPatient\t: {Patient}" +
                $"\n\tPrescribing Doctor\t: {PrescribingDoctor}" +
                $"\n\tIssue Date\t: {IssueDate}" +
                $"\n\tNotes\t: {Notes}" +
-               $"\n\tMedications\t:\n{medicationsString}";
+               $"\n\tDrug\t: {Drug.Name}" +
+               $"\n\tQuantity\t: {Quantity}";
     }
 }
