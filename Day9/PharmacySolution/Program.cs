@@ -1,58 +1,110 @@
 ﻿using PharmacyManagement.Controllers;
 using PharmacyManagement.Repositories;
 using PharmacyManagement.Services;
+using PharmacyModels;
 
-namespace PharmacyManagement;
-
-class Program
+namespace PharmacyManagement
 {
-    static void Main(string[] args)
+    class Program
     {
-        var staffService = new StaffService(new StaffRepo()); // Initialize StaffService
-        var drugService = new DrugService(new DrugRepo()); // Initialize DrugService
-        var patientService = new PatientService(new PatientRepo()); // Initialize PatientService
-        var prescriptionService = new PrescriptionService(new PrescriptionRepo()); // Initialize PrescriptionService
+        private StaffController staffController;
+        private DrugController drugController;
+        private PatientController patientController;
+        private PrescriptionController prescriptionController;
+        private AuthController authController;
+        private StaffService staffService;
 
-        var staffController = new StaffController(staffService); // Initialize StaffConsoleController
-        var drugController = new DrugController(drugService, staffService); // Initialize DrugConsoleController
-        var patientController = new PatientController(patientService, staffService); // Initialize PatientConsoleController
-        var prescriptionController = new PrescriptionController(prescriptionService, staffService); // Initialize PrescriptionConsoleController
-
-        Console.WriteLine("Welcome to Pharmacy Management System!");
-
-        while (true)
+        static void Main(string[] args)
         {
-            Console.WriteLine("\nMain Menu:");
-            Console.WriteLine("1. Staff Management");
-            Console.WriteLine("2. Drug Management");
-            Console.WriteLine("3. Patient Management");
-            Console.WriteLine("4. Prescription Management");
-            Console.WriteLine("5. Exit");
+            Program program = new Program();
+            program.SeedStaff();
+            program.RunMainMenu();
+        }
 
-            Console.Write("\nEnter your choice: ");
-            var choice = Console.ReadLine();
+        Program()
+        {
+            staffService = new StaffService(new StaffRepo());
+            var drugService = new DrugService(new DrugRepo());
+            var patientService = new PatientService(new PatientRepo());
+            var prescriptionService = new PrescriptionService(new PrescriptionRepo());
 
-            switch (choice)
+            staffController = new StaffController(staffService);
+            drugController = new DrugController(drugService, staffService);
+            patientController = new PatientController(patientService, staffService);
+            prescriptionController = new PrescriptionController(prescriptionService, staffService);
+        }
+
+        private void RunMainMenu()
+        {
+            Console.WriteLine("Welcome to Pharmacy Management System!");
+
+            while (true)
             {
-                case "1":
-                    staffController.Run();
-                    break;
-                case "2":
-                    drugController.Run();
-                    break;
-                case "3":
-                    patientController.Run();
-                    break;
-                case "4":
-                    prescriptionController.Run();
-                    break;
-                case "5":
-                    Console.WriteLine("Exiting...");
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                Console.WriteLine("\nMain Menu:");
+                Console.WriteLine("1. Staff Management");
+                Console.WriteLine("2. Drug Management");
+                Console.WriteLine("3. Patient Management");
+                Console.WriteLine("4. Prescription Management");
+                Console.WriteLine("5. Exit");
+
+                Console.Write("\nEnter your choice: ");
+                var choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        staffController.Run();
+                        break;
+                    case "2":
+                        drugController.Run();
+                        break;
+                    case "3":
+                        patientController.Run();
+                        break;
+                    case "4":
+                        prescriptionController.Run();
+                        break;
+                    case "5":
+                        Console.WriteLine("Exiting...");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
             }
+        }
+
+        public void SeedStaff()
+        {
+
+            // Seed staff data
+            var staff1 = new Staff(
+                new DateTime(1980, 1, 1),
+                "John Doe",
+                "1234567890",
+                "1",
+                30,
+                "123 Main St"
+            );
+            staff1.Role = "Administrator"; // Assigning role
+            staff1.Password = "1"; // Assigning password
+
+            var staff2 = new Staff(
+                new DateTime(1985, 2, 15),
+                "Jane Smith",
+                "0987654321",
+                "jane@example.com",
+                35,
+                "456 Oak St"
+            );
+            staff2.Role = "Pharmacist"; // Assigning role
+            staff2.Password = "pharma@123"; // Assigning password
+
+            // Add staff to the repository
+            staffService.Add(staff1);
+            staffService.Add(staff2);
+
+            Console.WriteLine("Staff data seeded successfully.");
         }
     }
 }

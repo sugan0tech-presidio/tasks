@@ -7,8 +7,7 @@ using System;
 public class StaffController
 {
     private readonly StaffService _staffService;
-
-    private const string AdminRole = "Administrator";
+    private AuthController _authController = new();
 
     public StaffController(StaffService staffService)
     {
@@ -21,28 +20,9 @@ public class StaffController
 
         while (true)
         {
-            try
+            if (_authController.Auth())
             {
-                Console.WriteLine("\nPlease log in to continue:");
-                Console.Write("Email: ");
-                var email = Console.ReadLine();
-                Console.Write("Password: ");
-                var password = Console.ReadLine();
-
-                var authenticatedStaff = _staffService.Authenticate(email, password);
-                if (authenticatedStaff.Role != AdminRole)
-                {
-                    Console.WriteLine("You do not have permission to access this system.");
-                    continue;
-                }
-
-                Console.WriteLine("\nLogged in successfully as Administrator.");
                 ShowMainMenu();
-                break;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
             }
         }
     }
@@ -80,7 +60,7 @@ public class StaffController
                     Console.Clear();
                     break;
                 case "6":
-                    Console.WriteLine("Logging out...");
+                    _authController.Logout();
                     return;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");

@@ -7,7 +7,9 @@ namespace PharmacyManagement.Services;
 public class StaffService
 {
     private readonly StaffRepo _staffRepository;
-
+    public static bool IsLogged { get; private set; }
+    public static string LoggedUser { get; private set; }
+    
     /// <summary>
     /// Initializes a new instance of the <see cref="StaffService"/> class.
     /// </summary>
@@ -118,6 +120,9 @@ public class StaffService
         if (authenticatedStaff == null)
             throw new AuthenticationException("Invalid email or password.");
 
+        IsLogged = true;
+        LoggedUser = authenticatedStaff.Name;
+
         return authenticatedStaff;
     }
 
@@ -133,4 +138,10 @@ public class StaffService
         staff.Role = role;
         Update(staff);
     }
+
+    public void Logout()
+    {
+        IsLogged = false;
+    }
+    
 }

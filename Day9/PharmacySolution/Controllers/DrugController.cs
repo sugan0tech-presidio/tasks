@@ -8,8 +8,7 @@ public class DrugController
 {
     private readonly DrugService _drugService;
     private readonly StaffService _staffService;
-
-    private const string AdminRole = "Administrator";
+    private AuthController _authController = new ();
 
     public DrugController(DrugService drugService, StaffService staffService)
     {
@@ -23,29 +22,11 @@ public class DrugController
 
         while (true)
         {
-            try
+            if (_authController.Auth())
             {
-                Console.WriteLine("\nPlease log in to continue:");
-                Console.Write("Email: ");
-                var email = Console.ReadLine();
-                Console.Write("Password: ");
-                var password = Console.ReadLine();
-
-                var authenticatedStaff = _staffService.Authenticate(email, password);
-                if (authenticatedStaff.Role != AdminRole)
-                {
-                    Console.WriteLine("You do not have permission to access this system.");
-                    continue;
-                }
-
-                Console.WriteLine("\nLogged in successfully as Administrator.");
                 ShowMainMenu();
-                break;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+
         }
     }
 
@@ -82,7 +63,7 @@ public class DrugController
                     Console.Clear();
                     break;
                 case "6":
-                    Console.WriteLine("Logging out...");
+                    _authController.Logout();
                     return;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
