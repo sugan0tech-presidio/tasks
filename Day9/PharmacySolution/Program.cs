@@ -14,18 +14,19 @@ namespace PharmacyManagement
         private AuthController authController;
         private BillingController billingController;
         private StaffService staffService;
+        private DrugService drugService;
 
         static void Main(string[] args)
         {
             Program program = new Program();
-            program.SeedStaff();
+            program.Seed();
             program.RunMainMenu();
         }
 
         Program()
         {
             staffService = new StaffService(new StaffRepo());
-            var drugService = new DrugService(new DrugRepo());
+            drugService = new DrugService(new DrugRepo());
             var patientService = new PatientService(new PatientRepo());
             var prescriptionService = new PrescriptionService(new PrescriptionRepo());
             var billService = new BillService(new BillRepo());
@@ -81,7 +82,7 @@ namespace PharmacyManagement
             }
         }
 
-        public void SeedStaff()
+        public void Seed()
         {
 
             // Seed staff data
@@ -111,7 +112,22 @@ namespace PharmacyManagement
             staffService.Add(staff1);
             staffService.Add(staff2);
 
-            Console.WriteLine("Staff data seeded successfully.");
+            // "Clopidogrel+PPIs" => "Clopidogrel" and "PPIs"
+            var drug1 = new Drug(1, "Clopidogrel", "Provider", DateTime.Now.AddDays(30), 10.99, true, "Antiplatelet Agent");
+            var drug2 = new Drug(2, "PPIs", "Provider", DateTime.Now.AddDays(30), 10.99, true,
+                "Gastric Acid Suppressant");
+                
+            // "Ramipril+Spironolactone" => "Ramipril" and "Spironolactone"
+            var drug3 = new Drug(3, "Ramipril", "Provider", DateTime.Now.AddDays(60), 15.99, false, "ACE Inhibitor");
+            var drug4 = new Drug(4, "Spironolactone", "Provider", DateTime.Now.AddDays(60), 15.99, false,
+                    "Potasssium-Sparing Diuretic");
+
+            drugService.Add(drug1);
+            drugService.Add(drug2);
+            drugService.Add(drug3);
+            drugService.Add(drug4);
+            
+            Console.WriteLine("Seeds completed");
         }
     }
 }
