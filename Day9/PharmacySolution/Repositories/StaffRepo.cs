@@ -1,4 +1,5 @@
-﻿using PharmacyModels;
+﻿using PharmacyManagement.Exceptions;
+using PharmacyModels;
 
 namespace PharmacyManagement.Repositories;
 
@@ -9,9 +10,16 @@ public class StaffRepo: BaseEntityRepo<Staff>
     /// </summary>
     /// <param name="email">The email of the staff member to find.</param>
     /// <returns>The staff member with the specified email, or null if not found.</returns>
+    /// <exception cref="UserNotFound">If no user exists for the mail</exception>
     public Staff FindByEmail(string email)
     {
-        return Entities.Values.FirstOrDefault(staff => staff.Email == email);
+        foreach (var entitiesValue in Entities.Values)
+        {
+            if (entitiesValue.Email.Equals(email))
+                return entitiesValue;
+        }
+
+        throw new UserNotFound($"User not found for the mail {email}");
     }
 
     /// <summary>
@@ -20,9 +28,15 @@ public class StaffRepo: BaseEntityRepo<Staff>
     /// <param name="email">The email of the staff member to find.</param>
     /// <param name="password">The password of the staff member to find.</param>
     /// <returns>The staff member with the specified email and password, or null if not found.</returns>
+    /// <exception cref="UserNotFound">If no user present for the credential.</exception>
     public Staff FindByEmailAndPassword(string email, string password)
     {
-        return Entities.Values.FirstOrDefault(staff => staff.Email == email && staff.Password == password);
+        var staff = FindByEmail(email);
+        if (staff.Password.Equals(password))
+        {
+            return staff;
+        }
+        throw new UserNotFound($"User not found for the credentials email and password!!!");
     }
 
     /// <summary>
