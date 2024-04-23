@@ -52,7 +52,7 @@ namespace DoctorAppointmentManager.Services
         /// <exception cref="Exception">Thrown when the end date is greater than the start date.</exception>
         public List<Appointment> GetAppointmentsInDateRange(DateTime startDate, DateTime endDate)
         {
-            if (endDate > startDate)
+            if (endDate < startDate)
                 throw new Exception("endDate > startDate");
             return _appointmentRepository.GetAll().FindAll(appointment => appointment.AppointmentDateTime > startDate && appointment.AppointmentDateTime < endDate);
         }
@@ -66,8 +66,7 @@ namespace DoctorAppointmentManager.Services
         /// <returns>The list of appointments for the specified doctor within the specified date range.</returns>
         public List<Appointment> GetAppointmentsForDoctorInDateRange(Doctor doctor, DateTime startDate, DateTime endDate)
         {
-            var inRangeAppointments = _appointmentRepository.GetAll().FindAll(appointment =>
-                appointment.AppointmentDateTime > startDate && appointment.AppointmentDateTime < endDate);
+            var inRangeAppointments = GetAppointmentsInDateRange(startDate, endDate);
 
             return inRangeAppointments.FindAll(appointment => appointment.Doctor.Equals(doctor));
         }
@@ -81,8 +80,7 @@ namespace DoctorAppointmentManager.Services
         /// <returns>The list of appointments for the specified patient within the specified date range.</returns>
         public List<Appointment> GetAppointmentsForPatientInDateRange(Patient patient, DateTime startDate, DateTime endDate)
         {
-            var inRangeAppointments = _appointmentRepository.GetAll().FindAll(appointment =>
-                appointment.AppointmentDateTime > startDate && appointment.AppointmentDateTime < endDate);
+            var inRangeAppointments = GetAppointmentsInDateRange(startDate, endDate);
 
             return inRangeAppointments.FindAll(appointment => appointment.Patient.Equals(patient));
         }
@@ -114,7 +112,6 @@ namespace DoctorAppointmentManager.Services
         /// </summary>
         /// <param name="appointment">The appointment to update.</param>
         /// <exception cref="KeyNotFoundException">Thrown when the appointment to update is not found.</exception>
-        /// <exception cref="DuplicateAppointmentException">Thrown when an appointment with the same date and doctor already exists.</exception>
         public void UpdateAppointment(Appointment appointment)
         {
             try
@@ -122,11 +119,6 @@ namespace DoctorAppointmentManager.Services
                 _appointmentRepository.Update(appointment);
             }
             catch (KeyNotFoundException ex)
-            {
-                Console.WriteLine($"Error updating appointment: {ex.Message}");
-                throw;
-            }
-            catch (DuplicateAppointmentException ex)
             {
                 Console.WriteLine($"Error updating appointment: {ex.Message}");
                 throw;
