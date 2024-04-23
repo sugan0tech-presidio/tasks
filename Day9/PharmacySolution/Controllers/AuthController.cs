@@ -1,14 +1,15 @@
 ﻿using PharmacyManagement.Repositories;
 using PharmacyManagement.Services;
+using PharmacyModels;
 
 namespace PharmacyManagement.Controllers;
 
 public class AuthController
 {
     private readonly StaffService _staffService = new(new StaffRepo());
-    private const string AdminRole = "Administrator";
+    private const Roles AdminRole = Roles.Administrator;
 
-    public bool Auth(string role = "Administrator")
+    public bool Auth(Roles role = Roles.Administrator)
     {
         if (StaffService.IsLogged)
         {

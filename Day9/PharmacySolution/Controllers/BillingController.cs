@@ -22,7 +22,7 @@ public class BillingController
     public void Run()
     {
         Console.WriteLine("Welcome to Billing!!!");
-        if (_authController.Auth("Cashier"))
+        if (_authController.Auth(Roles.Cashier))
             ShowMainMenu();
     }
 

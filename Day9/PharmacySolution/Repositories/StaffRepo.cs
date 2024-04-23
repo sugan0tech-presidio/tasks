@@ -45,7 +45,7 @@ public class StaffRepo : BaseEntityRepo<Staff>
     /// </summary>
     /// <param name="role">The role of the staff members to find.</param>
     /// <returns>A list of staff members with the specified role.</returns>
-    public List<Staff> FindByRole(string role)
+    public List<Staff> FindByRole(Roles role)
     {
         return Entities.Values.Where(staff => staff.Role == role).ToList();
     }

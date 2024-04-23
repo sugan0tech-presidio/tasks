@@ -95,7 +95,7 @@ namespace PharmacyManagement
                 30,
                 "123 Main St"
             );
-            staff1.Role = "Administrator"; // Assigning role
+            staff1.Role = Roles.Administrator; // Assigning role
             staff1.Password = "1"; // Assigning password
 
             var staff2 = new Staff(
@@ -106,7 +106,7 @@ namespace PharmacyManagement
                 35,
                 "456 Oak St"
             );
-            staff2.Role = "Pharmacist"; // Assigning role
+            staff2.Role = Roles.Pharmacist; // Assigning role
             staff2.Password = "pharma@123"; // Assigning password
             
             var staff3 = new Staff(
@@ -117,7 +117,7 @@ namespace PharmacyManagement
                 35,
                 "456 Oak St"
             );
-            staff3.Role = "Cashier"; // Assigning role
+            staff3.Role = Roles.Cashier; // Assigning role
             staff3.Password = "2"; // Assigning password
 
             // Add staff to the repository

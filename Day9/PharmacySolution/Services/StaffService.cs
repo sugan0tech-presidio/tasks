@@ -134,7 +134,7 @@ public class StaffService
     /// <param name="id">The ID of the staff member.</param>
     /// <param name="role">The role to add.</param>
     /// <exception cref="KeyNotFoundException">Thrown if the staff member with the specified ID is not found.</exception>
-    public void AddRole(int id, string role)
+    public void AddRole(int id, Roles role)
     {
         var staff = GetById(id);
         staff.Role = role;
@@ -152,7 +152,7 @@ public class StaffService
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotLoggedInException">If there is no login attempt</exception>
-    public string getRole()
+    public Roles getRole()
     {
         if (LoggedStaff != null) return LoggedStaff.Role;
         throw new NotLoggedInException("Login first!!!");
