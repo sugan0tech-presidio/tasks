@@ -177,10 +177,12 @@ public class PrescriptionController
         var drug = _drugService.GetById(drugId);
         _drugService.ValidateDrug(drug);
 
-        Console.Write("\nEnter the Drug Quantity:");
+        Console.Write($"\nEnter Drug Quantity out of {drug.Count}:");
         var quantity = int.Parse(Console.ReadLine() ?? "0");
 
         _drugService.IsDrugAvailable(drug, quantity);
+        drug.Count -= quantity;
+        _drugService.Update(drug);
 
         prescription.Drug = _drugService.GetById(drugId);
         prescription.Quantity = quantity;

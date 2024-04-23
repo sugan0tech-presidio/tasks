@@ -24,12 +24,12 @@ public class Bill : BaseEntity
         var tmp = $"\nBill Id\t: {Id}\t Date:{time}" +
                   $"\nUser\t:\t\t{user.Name}" +
                   prescriptions +
-                  $"\nTotal\t:\t\t{Total}";
+                  $"\nTotal\t:\t\t{Total:F2}";
 
         if (score > 0)
         {
             return tmp +
-                   $"\nLoyality\t:\t- ${score}" +
+                   $"\nLoyality\t:\t- ${score:F2}" +
                    $"\nWithReduction\t:\t ${Total - score:F2}\n";
         }
 

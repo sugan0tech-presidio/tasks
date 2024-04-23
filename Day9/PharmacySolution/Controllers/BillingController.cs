@@ -9,6 +9,7 @@ public class BillingController
     private readonly BillService _billService;
     private readonly PrescriptionController _prescriptionController;
     private readonly PatientService _patientService;
+    private readonly AuthController _authController = new();
 
     public BillingController(BillService billService, PrescriptionController prescriptionController,
         PatientService patientService)
@@ -19,6 +20,13 @@ public class BillingController
     }
 
     public void Run()
+    {
+        Console.WriteLine("Welcome to Billing!!!");
+        if (_authController.Auth("Cashier"))
+            ShowMainMenu();
+    }
+
+    private void ShowMainMenu()
     {
         Console.WriteLine("Welcome to Bill Management!");
         while (true)
@@ -134,9 +142,19 @@ public class BillingController
 
     private void ViewAll()
     {
+        double total = 0;
+        double todaysTotal = 0;
         foreach (var bill in _billService.GetAll())
         {
             Console.WriteLine(bill);
+            total += bill.Total;
+            if (bill.time.Date.Equals(DateTime.Today))
+            {
+                todaysTotal += bill.Total;
+            }
         }
+
+        Console.WriteLine($"Total transaction occured\t: {total:F2}");
+        Console.WriteLine($"Today's Total transaction occured: {total:F2}");
     }
 }

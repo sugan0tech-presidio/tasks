@@ -91,7 +91,7 @@ namespace PharmacyManagement
                 new DateTime(1980, 1, 1),
                 "John Doe",
                 "1234567890",
-                "1",
+                "admin@gmail.com",
                 30,
                 "123 Main St"
             );
@@ -108,10 +108,22 @@ namespace PharmacyManagement
             );
             staff2.Role = "Pharmacist"; // Assigning role
             staff2.Password = "pharma@123"; // Assigning password
+            
+            var staff3 = new Staff(
+                new DateTime(1985, 2, 15),
+                "Wall Smith",
+                "0987654321",
+                "cashier@gmail.com",
+                35,
+                "456 Oak St"
+            );
+            staff3.Role = "Cashier"; // Assigning role
+            staff3.Password = "2"; // Assigning password
 
             // Add staff to the repository
             _staffService.Add(staff1);
             _staffService.Add(staff2);
+            _staffService.Add(staff3);
 
             // "Clopidogrel+PPIs" => "Clopidogrel" and "PPIs"
             var drug1 = new Drug(1, "Clopidogrel", "Provider", 10.99, true, "Antiplatelet Agent");
