@@ -1,4 +1,4 @@
-﻿namespace DoctorsAppointmentManager.Exceptions;
+﻿namespace DoctorAppointmentManager.Exceptions;
 
 public class DuplicateAppointmentException: Exception
 {

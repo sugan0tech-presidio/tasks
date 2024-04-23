@@ -1,6 +1,7 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+﻿using DoctorAppointmentManager.Entities;
+using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
-namespace DoctorsAppointmentManager.services;
+namespace DoctorAppointmentManager.Services;
 
 public interface IAppointmentService
 {

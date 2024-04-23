@@ -1,4 +1,6 @@
-﻿namespace DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+﻿using DoctorAppointmentManager.Entities;
+
+namespace DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
 public class Appointment
 {

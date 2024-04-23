@@ -1,7 +1,7 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
-using DoctorsAppointmentManager.Repository;
+﻿using DoctorAppointmentManager.Entities;
+using DoctorAppointmentManager.Repository;
 
-namespace DoctorsAppointmentManager;
+namespace DoctorAppointmentManager;
 
 internal class Program
 {

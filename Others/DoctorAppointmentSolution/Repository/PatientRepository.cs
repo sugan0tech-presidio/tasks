@@ -1,6 +1,6 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+﻿using DoctorAppointmentManager.Entities;
 
-namespace DoctorsAppointmentManager.Repository
+namespace DoctorAppointmentManager.Repository
 {
     public class PatientRepository : IRepository<int, Patient>
     {

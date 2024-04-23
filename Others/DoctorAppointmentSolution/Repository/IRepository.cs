@@ -1,4 +1,4 @@
-﻿namespace DoctorsAppointmentManager.Repository;
+﻿namespace DoctorAppointmentManager.Repository;
 
 public interface IRepository<K, T> where T : class
 {

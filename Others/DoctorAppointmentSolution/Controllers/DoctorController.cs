@@ -1,4 +1,4 @@
-﻿using DoctorsAppointmentManager.Repository;
+﻿using DoctorAppointmentManager.Repository;
 
 namespace DoctorsAppointmentManager.controllers;
 

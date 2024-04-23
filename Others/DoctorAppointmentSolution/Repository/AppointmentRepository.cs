@@ -1,7 +1,7 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
-using DoctorsAppointmentManager.Exceptions;
+﻿using DoctorAppointmentManager.Exceptions;
+using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
-namespace DoctorsAppointmentManager.Repository
+namespace DoctorAppointmentManager.Repository
 {
     public class AppointmentRepository : IRepository<int, Appointment>
     {

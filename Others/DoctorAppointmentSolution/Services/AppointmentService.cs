@@ -1,8 +1,11 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
-using DoctorsAppointmentManager.Repository;
-using DoctorsAppointmentManager.Exceptions; // Added exception namespace
+﻿using DoctorAppointmentManager.Entities;
+using DoctorAppointmentManager.Exceptions;
+using DoctorAppointmentManager.Repository;
+using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
-namespace DoctorsAppointmentManager.services
+// Added exception namespace
+
+namespace DoctorAppointmentManager.Services
 {
     /// <summary>
     /// Service for managing appointments between doctors and patients.
