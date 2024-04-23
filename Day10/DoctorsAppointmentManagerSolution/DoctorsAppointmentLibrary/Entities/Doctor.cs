@@ -64,4 +64,10 @@ public class Doctor : Person
                + $"\tDoctor Specialization\t:\t{specializations}\n"
                + $"\tDoctor Qualification\t:\t{qualifications}\n";
     }
+
+    public bool Equals(Doctor doctor)
+    {
+        return Name.Equals(doctor.Name) && DateOfBirth.Equals(doctor.DateOfBirth) &&
+               ContactNumber.Equals(doctor.ContactNumber);
+    }
 }

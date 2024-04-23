@@ -1,4 +1,5 @@
 ﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+using DoctorsAppointmentManager.Exceptions;
 
 namespace DoctorsAppointmentManager.Repository
 {
@@ -46,6 +47,10 @@ namespace DoctorsAppointmentManager.Repository
         public Doctor Get(int key)
         {
             _doctors.TryGetValue(key, out Doctor doctor);
+            if (doctor == null)
+            {
+                throw new DoctorNotFoundException($"Doctor with the Id: {key} doesn't exist!!!");
+            }
             return doctor;
         }
 
@@ -61,6 +66,11 @@ namespace DoctorsAppointmentManager.Repository
             if (item == null)
                 throw new ArgumentNullException(nameof(item), "Doctor cannot be null.");
 
+            foreach (var doctor in _doctors.Values)
+            {
+                if (doctor.Equals(item))
+                    throw new DuplicateDoctorException("Doctor with those fields already exists");
+            }
             var newId = _doctors.Count > 0 ? _doctors.Keys.Max() + 1 : 1;
             item.Id = newId;
             _doctors.Add(newId, item);
