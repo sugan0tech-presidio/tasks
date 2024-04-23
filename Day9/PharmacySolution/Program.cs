@@ -149,7 +149,7 @@ namespace PharmacyManagement
                 "Hypertension, Diabetes" // Medical History
             );
 
-// Second Patient object assignment
+            // Second Patient object assignment
             Patient patient2 = new Patient(
                 new DateTime(1975, 9, 20), // Date of Birth
                 1002, // ID

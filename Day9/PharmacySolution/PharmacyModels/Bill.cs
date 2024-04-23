@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PharmacyModels;
 
 public class Bill : BaseEntity
 {
     public List<Prescription> Prescriptions { get; } = new();
+    public DateTime time;
     public double Total { get; set; }
     public Patient user;
 
@@ -15,12 +17,12 @@ public class Bill : BaseEntity
         var score = user.LoyaltyScore;
         foreach (var prescription in Prescriptions)
         {
-            prescriptions += "\n" + prescription.Drug.Name + "\t\t" + prescription.Quantity + "x" +
+            prescriptions += "\n" + prescription.Drug.Name + "\t:\t\t" + prescription.Quantity + "x" +
                              prescription.Drug.price;
         }
 
-        var tmp = $"\nBill Id\t: {Id}" +
-                  $"\nUser\t:{user}" +
+        var tmp = $"\nBill Id\t: {Id}\t Date:{time}" +
+                  $"\nUser\t:\t\t{user.Name}" +
                   prescriptions +
                   $"\nTotal\t:\t\t{Total}";
 
@@ -28,7 +30,7 @@ public class Bill : BaseEntity
         {
             return tmp +
                    $"\nLoyality\t:\t- ${score}" +
-                   $"\nWithReduction\t:\t ${Total - score}\n";
+                   $"\nWithReduction\t:\t ${Total - score:F2}\n";
         }
 
         return tmp;

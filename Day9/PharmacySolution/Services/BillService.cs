@@ -74,4 +74,13 @@ public class BillService
             _billRepo.Add(bill);
         }
     }
+
+    /// <summary>
+    /// Deletes by given key
+    /// </summary>
+    /// <param name="id"></param>
+    public void Delete(int id)
+    {
+        _billRepo.Delete(id);
+    }
 }

@@ -76,11 +76,12 @@ public class BillingController
         Console.WriteLine("\n\t\t\tCreating Bill from Console...");
         // Here you can implement the logic to create a bill from user input
         // For example, you can ask for prescription details and generate the bill accordingly
-        Console.Write("\nEnter the Patient Id:");
+        Console.Write("\nEnter the Patient/User Id:");
         int userId = int.Parse(Console.ReadLine() ?? throw new InvalidIdFormatException());
 
         var patient = _patientService.GetById(userId);
         bill.user = patient;
+        bill.time = DateTime.Now;
 
         AddPrescription(bill);
 
@@ -109,7 +110,8 @@ public class BillingController
     private void DiscardBill()
     {
         Console.WriteLine("\nDiscarding Bill...");
-        // Here you can implement the logic to discard the current bill
+        var id = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+        _billService.Delete(id);
     }
 
     private void ViewById()
