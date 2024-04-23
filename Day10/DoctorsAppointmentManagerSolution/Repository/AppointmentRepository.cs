@@ -1,4 +1,5 @@
 ﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+using DoctorsAppointmentManager.Exceptions;
 
 namespace DoctorsAppointmentManager.Repository
 {
@@ -25,12 +26,12 @@ namespace DoctorsAppointmentManager.Repository
         /// </summary>
         /// <param name="key"></param>
         /// <returns>Matched appointment with the given key</returns>
-        /// <exception cref="Exception">If no appointment found with the given key</exception>
+        /// <exception cref="KeyNotFoundException">If no appointment found with the given key</exception>
         public Appointment Get(int key)
         {
             _appointments.TryGetValue(key, out Appointment appointment);
             if (appointment == null)
-                throw new Exception("Appointment not found!!!");
+                throw new KeyNotFoundException($"Appointment not found for Id: {key}");
             return appointment;
         }
 
@@ -47,7 +48,7 @@ namespace DoctorsAppointmentManager.Repository
                 throw new ArgumentNullException(nameof(item), "Appointment cannot be null.");
 
             if (_appointments.Values.Any(a => a.AppointmentDateTime == item.AppointmentDateTime && a.Doctor.Equals(item.Doctor)))
-                throw new ArgumentException("Appointment with the same date and doctor already exists.");
+                throw new DuplicateAppointmentException("Appointment with the same date and doctor already exists.");
 
             var newId = _appointments.Count > 0 ? _appointments.Keys.Max() + 1 : 1;
             item.Id = newId;
@@ -72,7 +73,7 @@ namespace DoctorsAppointmentManager.Repository
                 throw new KeyNotFoundException($"Appointment with ID {item.Id} not found.");
 
             if (_appointments.Values.Any(a => a.Id != item.Id && a.AppointmentDateTime == item.AppointmentDateTime && a.Doctor == item.Doctor))
-                throw new ArgumentException("Appointment with the same date and doctor already exists.");
+                throw new DuplicateAppointmentException("Appointment with the same date and doctor already exists.");
             
             _appointments[item.Id] = item;
             

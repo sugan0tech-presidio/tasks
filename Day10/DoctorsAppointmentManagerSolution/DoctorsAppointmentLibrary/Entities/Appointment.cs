@@ -2,6 +2,14 @@
 
 public class Appointment
 {
+    public Appointment(Doctor doctor, Patient patient, DateTime appointmentDateTime, string purpose)
+    {
+        Doctor = doctor;
+        Patient = patient;
+        AppointmentDateTime = appointmentDateTime;
+        Purpose = purpose;
+    }
+
     public int Id { get; set; }
     public Doctor Doctor { get; set; }
 
