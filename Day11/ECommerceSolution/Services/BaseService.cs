@@ -51,16 +51,13 @@ namespace ECommerceApp.Services
         /// <exception cref="ArgumentNullException">Thrown if the entity is null.</exception>
         public virtual TBaseEntity Add(TBaseEntity entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity), $"{typeof(TBaseEntity).Name} cannot be null.");
-
             try
             {
                 return Repository.Add(entity);
             }
-            catch (Exception ex)
+            catch (ArgumentNullException)
             {
-                throw new Exception($"Failed to add {typeof(TBaseEntity).Name}.", ex);
+                throw ;
             }
         }
 
@@ -80,10 +77,6 @@ namespace ECommerceApp.Services
             {
                 throw new KeyNotFoundException($"Failed to update {typeof(TBaseEntity).Name}. Entity not found.", ex);
             }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to update {typeof(TBaseEntity).Name}.", ex);
-            }
         }
 
         /// <summary>
@@ -100,10 +93,6 @@ namespace ECommerceApp.Services
             catch (KeyNotFoundException ex)
             {
                 throw new KeyNotFoundException($"Failed to delete {typeof(TBaseEntity).Name}. Entity not found.", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to delete {typeof(TBaseEntity).Name}.", ex);
             }
         }
     }

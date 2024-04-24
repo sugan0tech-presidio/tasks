@@ -33,7 +33,7 @@ public class BillService
         _userService.Update(user);
         return user.Cart;
     }
-    
+
     /// <summary>
     ///  Adds cart with shipping charge & discount;
     /// </summary>
@@ -46,7 +46,9 @@ public class BillService
             cart.ShippingCharge = 100;
         }
 
-        if (cart.Items.Count.Equals(3) && cart.TotalPrice.Equals(1500))
+        int totalItems = 0;
+        cart.Items.ForEach(card => { totalItems += card.Quantity; });
+        if (totalItems.Equals(3) && cart.TotalPrice.Equals(1500))
         {
             cart.Discount = 1500 * 0.05;
         }
