@@ -20,6 +20,8 @@ public class Cart : BaseEntity
     public List<CartItem> Items { get; }
     public double TotalPrice { get; set; }
 
+    public double Discount { get; set; } = 0;
+    public double ShippingCharge { get; set; } = 0;
     /// <summary>
     ///  Adds item to the Cart
     /// </summary>

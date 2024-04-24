@@ -22,6 +22,7 @@ public class User : BaseEntity
     public string Email { get; set; }
     public string Address { get; set; }
 
+    public Cart Cart { get; set; }
     public override bool Equals(object? obj)
     {
         var item = obj as User;
