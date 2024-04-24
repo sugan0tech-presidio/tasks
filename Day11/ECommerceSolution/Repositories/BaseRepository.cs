@@ -11,7 +11,7 @@ public abstract class BaseRepository<TBaseEntity> : IBaseRepository<TBaseEntity>
     /// <summary>
     /// The dictionary storing entities by their ID.
     /// </summary>
-    protected static readonly Dictionary<int, TBaseEntity> Entities = new();
+    protected readonly Dictionary<int, TBaseEntity> Entities = new();
 
     /// <summary>
     /// Retrieves an entity by its ID.
