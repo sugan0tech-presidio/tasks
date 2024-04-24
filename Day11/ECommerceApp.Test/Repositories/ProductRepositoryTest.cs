@@ -15,7 +15,6 @@ namespace ECommerceApp.Test.Repositories
         [SetUp]
         public void Setup()
         {
-            // Initialize the repository before each test
             _productRepository = new ProductRepository();
         }
 
@@ -73,10 +72,11 @@ namespace ECommerceApp.Test.Repositories
             // Arrange
             var product = new Product
             {
-                Id = 123, // Assuming this ID doesn't exist in the repository
+                Id = 123, 
                 Name = "Test Product",
                 Price = 10.99,
-                // Set other required properties
+                Category = "",
+                Brand = ""
             };
 
             // Act
@@ -94,29 +94,23 @@ namespace ECommerceApp.Test.Repositories
         public void UpdateProduct_NonExistingProduct_ThrowsKeyNotFoundException()
         {
             // Arrange
-            var product = new Product
-            {
-                Id = 123, // Assuming this ID doesn't exist in the repository
-                Name = "Test Product",
-                Price = 10.99,
-                // Set other required properties
-            };
+            var product = new Product("test product", 2, 5);
+            product.Brand = "";
+            product.Category = "";
+            product.Id = 1;
 
             // Act & Assert
             Assert.Throws<KeyNotFoundException>(() => _productRepository.Update(product));
         }
 
         [Test]
-        public void DeleteProduct_ExistingId_ThrowsKeyNotFoundException()
+        public void DeleteProduct_ExistingId_DeletesIt()
         {
             // Arrange
-            var product = new Product
-            {
-                Id = 123, // Assuming this ID doesn't exist in the repository
-                Name = "Test Product",
-                Price = 10.99,
-                // Set other required properties
-            };
+            var product = new Product("test product", 2, 5);
+            product.Brand = "";
+            product.Category = "";
+            
             _productRepository.Add(product);
 
             // Act & Assert

@@ -1,92 +1,96 @@
-﻿using ECommerceApp.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace ECommerceApp.Repositories;
+using ECommerceApp.Entities;
 
-/// <summary>
-/// A base repository implementation for entities.
-/// </summary>
-/// <typeparam name="TBaseEntity">The type of the entity.</typeparam>
-public abstract class BaseRepository<TBaseEntity> : IBaseRepository<TBaseEntity> where TBaseEntity : IEntity
+namespace ECommerceApp.Repositories
 {
     /// <summary>
-    /// The dictionary storing entities by their ID.
+    /// A base repository implementation for entities.
     /// </summary>
-    protected readonly Dictionary<int, TBaseEntity> Entities = new();
-
-    /// <summary>
-    /// Retrieves an entity by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the entity to retrieve.</param>
-    /// <returns>The entity with the specified ID.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
-    public TBaseEntity GetById(int id)
+    /// <typeparam name="TBaseEntity">The type of the entity.</typeparam>
+    public abstract class BaseRepository<TBaseEntity> : IBaseRepository<TBaseEntity> where TBaseEntity : IEntity
     {
-        if (!Entities.TryGetValue(id, out var entity))
-            throw new KeyNotFoundException($"{GetType()} with key {id} not found!!!");
+        /// <summary>
+        /// The list storing entities.
+        /// </summary>
+        protected readonly List<TBaseEntity> Entities = new();
 
-        return entity;
-    }
-
-    /// <summary>
-    /// Retrieves all entities.
-    /// </summary>
-    /// <returns>A list of all entities.</returns>
-    public List<TBaseEntity> GetAll()
-    {
-        return Entities.Values.ToList();
-    }
-
-    /// <summary>
-    /// Adds a new entity.
-    /// </summary>
-    /// <param name="entity">The entity to add.</param>
-    /// <returns>The added entity.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if the entity is null.</exception>
-    public TBaseEntity Add(TBaseEntity entity)
-    {
-        if (entity == null)
-            throw new ArgumentNullException(nameof(entity), $"{GetType()} cannot be null.");
-
-        var currSeq = 1;
-        while (Entities.ContainsKey(currSeq))
-            currSeq++;
-        entity.Id = currSeq;
-
-        Entities.Add(currSeq, entity);
-        return entity;
-    }
-
-    /// <summary>
-    /// Updates an existing entity.
-    /// </summary>
-    /// <param name="entity">The entity to update.</param>
-    /// <returns>The updated entity.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown if the entity to update is not found.</exception>
-    public TBaseEntity Update(TBaseEntity entity)
-    {
-        var id = entity.Id;
-        if (Entities.ContainsKey(id))
+        /// <summary>
+        /// Retrieves an entity by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to retrieve.</param>
+        /// <returns>The entity with the specified ID.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
+        public TBaseEntity GetById(int id)
         {
-            Entities[id] = entity;
-        }
-        else
-        {
-            throw new KeyNotFoundException($"{GetType()}'s Entity not found.");
+            var entity = Entities.FirstOrDefault(e => e.Id == id);
+            if (entity == null)
+                throw new KeyNotFoundException($"{GetType()} with key {id} not found!!!");
+
+            return entity;
         }
 
-        return Entities[id];
-    }
-
-    /// <summary>
-    /// Deletes an entity by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the entity to delete.</param>
-    /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
-    public void Delete(int id)
-    {
-        if (!Entities.Remove(id))
+        /// <summary>
+        /// Retrieves all entities.
+        /// </summary>
+        /// <returns>A list of all entities.</returns>
+        public List<TBaseEntity> GetAll()
         {
-            throw new KeyNotFoundException("Entity not found.");
+            return Entities.ToList();
+        }
+
+        /// <summary>
+        /// Adds a new entity.
+        /// </summary>
+        /// <param name="entity">The entity to add.</param>
+        /// <returns>The added entity.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the entity is null.</exception>
+        public TBaseEntity Add(TBaseEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), $"{GetType()} cannot be null.");
+
+            var currSeq = 1;
+            while (Entities.Any(e => e.Id == currSeq))
+                currSeq++;
+            entity.Id = currSeq;
+
+            Entities.Add(entity);
+            return entity;
+        }
+
+        /// <summary>
+        /// Updates an existing entity.
+        /// </summary>
+        /// <param name="entity">The entity to update.</param>
+        /// <returns>The updated entity.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown if the entity to update is not found.</exception>
+        public TBaseEntity Update(TBaseEntity entity)
+        {
+            var existingEntity = GetById(entity.Id);
+            if (existingEntity != null)
+            {
+                var index = Entities.IndexOf(existingEntity);
+                Entities[index] = entity;
+            }
+
+            return entity;
+        }
+
+        /// <summary>
+        /// Deletes an entity by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the entity to delete.</param>
+        /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
+        public void Delete(int id)
+        {
+            var entityToRemove = GetById(id);
+            if (entityToRemove != null)
+            {
+                Entities.Remove(entityToRemove);
+            }
         }
     }
 }
