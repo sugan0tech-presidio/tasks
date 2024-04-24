@@ -1,6 +1,7 @@
-﻿namespace ECommerceApp.Repositories;
+﻿using ECommerceApp.Entities;
 
-public class CartRepository
+namespace ECommerceApp.Repositories;
+
+public class CartRepository : BaseRepository<Cart>
 {
-    
 }

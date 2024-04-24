@@ -1,6 +1,7 @@
-﻿namespace ECommerceApp.Repositories;
+﻿using ECommerceApp.Entities;
 
-public class UserRepository
+namespace ECommerceApp.Repositories;
+
+public class UserRepository : BaseRepository<User>
 {
-    
 }
