@@ -88,6 +88,13 @@ public class CartService: BaseService<Cart>
 
     public override void Delete(int id)
     {
+        var cart = GetById(id);
+        cart.Items.ForEach(cartItem =>
+        {
+            var product = cartItem.Product;
+            product.Stock += cartItem.Quantity;
+            _productRepository.Update(product);
+        });
         base.Delete(id);
     }
 }

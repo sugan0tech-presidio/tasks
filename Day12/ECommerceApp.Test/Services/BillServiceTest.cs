@@ -2,11 +2,6 @@
 using ECommerceApp.Exceptions;
 using ECommerceApp.Repositories;
 using ECommerceApp.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerceApp.Test.Services
 {
@@ -20,7 +15,7 @@ namespace ECommerceApp.Test.Services
         public void SetUp()
         {
             userService = new UserService(new UserRepository());
-            cartservice = new CartService(new CartRepository());
+            cartservice = new CartService(new CartRepository(), new ProductRepository());
             billService = new BillService(cartservice, userService);
         }
 

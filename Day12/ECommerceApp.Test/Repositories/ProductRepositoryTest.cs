@@ -46,7 +46,7 @@ namespace ECommerceApp.Test.Repositories
         {
             // Arrange
             Product product1 = new Product("oil", 12, 12);
-            Product product2 = new Product("oil", 12, 12);
+            Product product2 = new Product("oil2", 12, 12);
 
             // Act
             _productRepository.Add(product1);

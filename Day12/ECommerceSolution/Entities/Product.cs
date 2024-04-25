@@ -3,7 +3,7 @@
 /// <summary>
 ///  Product Entity.
 /// </summary>
-public class Product : BaseEntity
+public class Product : BaseEntity, IComparable<Product>
 {
     public Product()
     {
@@ -53,5 +53,10 @@ public class Product : BaseEntity
                $"\n\tCategory\t: {Category}" +
                $"\n\tStock\t: {Stock}" +
                $"\n\tPrice\t: ${Price}";
+    }
+
+    public int CompareTo(Product? other)
+    {
+        return Name.CompareTo(other.Name);
     }
 }
