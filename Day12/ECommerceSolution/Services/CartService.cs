@@ -1,19 +1,31 @@
 ﻿using ECommerceApp.Entities;
+using ECommerceApp.Exceptions;
 using ECommerceApp.Repositories;
 
 namespace ECommerceApp.Services;
 
 public class CartService: BaseService<Cart>
 {
-    public CartService(BaseRepository<Cart> repository) : base(repository)
+    private ProductRepository _productRepository;
+    public CartService(BaseRepository<Cart> repository, ProductRepository productRepository) : base(repository)
     {
+        _productRepository = productRepository;
     }
     
     public void AddItemToCart(int cartId, Product product, int quantity)
     {
         var cart = Repository.GetById(cartId);
 
-        // Check if the product is already in the cart
+        if (product.Stock < quantity)
+        {
+            throw new TooMuchItemsException("Provided quantity is higher than the actual stock");
+        }
+
+        // updates product stock
+        product.Stock -= quantity;
+        _productRepository.Update(product);
+
+        // Check if the product is already in the cart, then updates the quantity
         var existingItem = cart.Items.FirstOrDefault(item => item.Product.Id == product.Id);
         if (existingItem != null)
         {
@@ -21,7 +33,7 @@ public class CartService: BaseService<Cart>
         }
         else
         {
-            var cartItem = new CartItem(product, 4, cart.User);
+            var cartItem = new CartItem(product, quantity, cart.User);
             cart.Items.Add(cartItem);
         }
         
@@ -32,38 +44,46 @@ public class CartService: BaseService<Cart>
     public void UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
     {
         var cart = Repository.GetById(cartId);
+        var product = _productRepository.GetById(productId);
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
         {
+            product.Stock += cartItem.Quantity;
+            if (product.Stock < newQuantity)
+            {
+            throw new TooMuchItemsException("Provided quantity is higher than the actual stock");
+            }
+
+            product.Stock -= newQuantity;
             cartItem.Quantity = newQuantity;
+            
+            _productRepository.Update(product);
             Repository.Update(cart);
         }
         else
         {
-            throw new ArgumentException("Item not found in cart.");
+            throw new CartItemNotFoundException("Item not found in cart.");
         }
     }
 
     public void RemoveItemFromCart(int cartId, int productId)
     {
         var cart = Repository.GetById(cartId);
+        var product = _productRepository.GetById(productId);
+        
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
         {
             cart.Items.Remove(cartItem);
+            product.Stock += cartItem.Quantity;
+            
+            _productRepository.Update(product);
             Repository.Update(cart);
         }
         else
         {
-            throw new ArgumentException("Item not found in cart.");
+            throw new CartItemNotFoundException("Item not found in cart.");
         }
-    }
-
-    public override Cart Update(Cart entity)
-    {
-        var id = entity.Id;
-        var oldCart = Repository.GetById(id);
-        return base.Update(entity);
     }
 
     public override void Delete(int id)
