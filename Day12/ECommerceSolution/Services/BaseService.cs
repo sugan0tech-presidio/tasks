@@ -9,7 +9,7 @@ namespace ECommerceApp.Services
     /// <typeparam name="TBaseEntity">The type of the entity.</typeparam>
     public abstract class BaseService<TBaseEntity> where TBaseEntity : IEntity
     {
-        private readonly BaseRepository<TBaseEntity> Repository;
+        protected readonly BaseRepository<TBaseEntity> Repository;
 
         protected BaseService(BaseRepository<TBaseEntity> repository)
         {

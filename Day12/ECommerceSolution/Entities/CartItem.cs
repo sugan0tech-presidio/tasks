@@ -32,7 +32,7 @@ public class CartItem : BaseEntity
     }
 
     public Product Product { get; private set; }
-    public int Quantity { get; private set; }
+    public int Quantity { get; set; }
     public User User { get; }
     public DateTime CreatedAt { get; private set; }
     public double Price { get; private set; }
