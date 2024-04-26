@@ -12,6 +12,13 @@ public class CartService: BaseService<Cart>
         _productRepository = productRepository;
     }
     
+    /// <summary>
+    /// To add a product to cart, with quantity
+    /// </summary>
+    /// <param name="cartId">Cart Id</param>
+    /// <param name="product">Product</param>
+    /// <param name="quantity">Quantity</param>
+    /// <exception cref="TooMuchItemsException">If product quantity exceeds it's stock count</exception>
     public void AddItemToCart(int cartId, Product product, int quantity)
     {
         var cart = Repository.GetById(cartId);
@@ -21,11 +28,9 @@ public class CartService: BaseService<Cart>
             throw new TooMuchItemsException("Provided quantity is higher than the actual stock");
         }
 
-        // updates product stock
         product.Stock -= quantity;
         _productRepository.Update(product);
 
-        // Check if the product is already in the cart, then updates the quantity
         var existingItem = cart.Items.FirstOrDefault(item => item.Product.Id == product.Id);
         if (existingItem != null)
         {
@@ -41,6 +46,14 @@ public class CartService: BaseService<Cart>
         Repository.Update(cart);
     }
 
+    /// <summary>
+    /// Update existing cart
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="productId"></param>
+    /// <param name="newQuantity"></param>
+    /// <exception cref="TooMuchItemsException">If product quantity exceeds it's stock count</exception>
+    /// <exception cref="CartItemNotFoundException">If updated cartite doesn't exixt</exception>
     public void UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
     {
         var cart = Repository.GetById(cartId);
@@ -66,6 +79,12 @@ public class CartService: BaseService<Cart>
         }
     }
 
+    /// <summary>
+    /// Remove a item from cart
+    /// </summary>
+    /// <param name="cartId"></param>
+    /// <param name="productId"></param>
+    /// <exception cref="CartItemNotFoundException"></exception>
     public void RemoveItemFromCart(int cartId, int productId)
     {
         var cart = Repository.GetById(cartId);
@@ -86,6 +105,10 @@ public class CartService: BaseService<Cart>
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
     public override void Delete(int id)
     {
         var cart = GetById(id);
