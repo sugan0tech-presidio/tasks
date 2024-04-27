@@ -20,9 +20,9 @@ public class CartService : BaseService<Cart>
     /// <param name="product">Product</param>
     /// <param name="quantity">Quantity</param>
     /// <exception cref="TooMuchItemsException">If product quantity exceeds it's stock count</exception>
-    public void AddItemToCart(int cartId, Product product, int quantity)
+    public async Task AddItemToCart(int cartId, Product product, int quantity)
     {
-        var cart = Repository.GetById(cartId);
+        var cart = Repository.GetByIdAsync(cartId).Result;
 
         if (product.Stock < quantity)
         {
@@ -30,7 +30,7 @@ public class CartService : BaseService<Cart>
         }
 
         product.Stock -= quantity;
-        _productRepository.Update(product);
+        _productRepository.UpdateAsync(product);
 
         var existingItem = cart.Items.FirstOrDefault(item => item.Product.Id == product.Id);
         if (existingItem != null)
@@ -43,7 +43,7 @@ public class CartService : BaseService<Cart>
             cart.Items.Add(cartItem);
         }
 
-        Repository.Update(cart);
+        await Repository.UpdateAsync(cart);
     }
 
     /// <summary>
@@ -54,10 +54,10 @@ public class CartService : BaseService<Cart>
     /// <param name="newQuantity"></param>
     /// <exception cref="TooMuchItemsException">If product quantity exceeds it's stock count</exception>
     /// <exception cref="CartItemNotFoundException">If updated cartite doesn't exixt</exception>
-    public void UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
+    public async Task UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
     {
-        var cart = Repository.GetById(cartId);
-        var product = _productRepository.GetById(productId);
+        var cart = Repository.GetByIdAsync(cartId).Result;
+        var product = _productRepository.GetByIdAsync(productId).Result;
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
         {
@@ -70,8 +70,8 @@ public class CartService : BaseService<Cart>
             product.Stock -= newQuantity;
             cartItem.Quantity = newQuantity;
 
-            _productRepository.Update(product);
-            Repository.Update(cart);
+            await _productRepository.UpdateAsync(product);
+            Repository.UpdateAsync(cart);
         }
         else
         {
@@ -85,10 +85,10 @@ public class CartService : BaseService<Cart>
     /// <param name="cartId"></param>
     /// <param name="productId"></param>
     /// <exception cref="CartItemNotFoundException"></exception>
-    public void RemoveItemFromCart(int cartId, int productId)
+    public async Task RemoveItemFromCart(int cartId, int productId)
     {
-        var cart = Repository.GetById(cartId);
-        var product = _productRepository.GetById(productId);
+        var cart = Repository.GetByIdAsync(cartId).Result;
+        var product = _productRepository.GetByIdAsync(productId).Result;
 
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
@@ -96,8 +96,8 @@ public class CartService : BaseService<Cart>
             cart.Items.Remove(cartItem);
             product.Stock += cartItem.Quantity;
 
-            _productRepository.Update(product);
-            Repository.Update(cart);
+            await _productRepository.UpdateAsync(product);
+            Repository.UpdateAsync(cart);
         }
         else
         {
@@ -109,15 +109,17 @@ public class CartService : BaseService<Cart>
     /// 
     /// </summary>
     /// <param name="id"></param>
-    public override void Delete(int id)
+    public override async Task DeleteAsync(int id)
     {
-        var cart = GetById(id);
+        var cart = GetByIdAsync(id).Result;
         cart.Items.ForEach(cartItem =>
         {
             var product = cartItem.Product;
             product.Stock += cartItem.Quantity;
-            _productRepository.Update(product);
+            _productRepository.UpdateAsync(product);
         });
-        base.Delete(id);
+        await base.DeleteAsync(id);
     }
+    
+    
 }

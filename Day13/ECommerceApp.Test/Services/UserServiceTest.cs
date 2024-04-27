@@ -26,10 +26,10 @@ namespace ECommerceApp.Test.Services
             // Arrange
             int userId = 1;
             var user = new User("Test User", "test@mail.com", "addr");
-            _userService.Add(user);
+            _userService.AddAsync(user);
 
             // Act
-            var result = _userService.GetById(userId);
+            var result = _userService.GetByIdAsync(userId);
 
             // Assert
             Assert.That(result, Is.EqualTo(result));
@@ -42,7 +42,7 @@ namespace ECommerceApp.Test.Services
             int userId = 999;
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => _userService.GetById(userId));
+            Assert.Throws<KeyNotFoundException>(() => _userService.GetByIdAsync(userId));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace ECommerceApp.Test.Services
             expectedUser.Id = 1;
 
             // Act
-            var result = _userService.Add(user);
+            var result = _userService.AddAsync(user);
 
             // Assert
             Assert.That(result, Is.EqualTo(expectedUser));
@@ -67,7 +67,7 @@ namespace ECommerceApp.Test.Services
             User user = null;
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => _userService.Add(user));
+            Assert.Throws<ArgumentNullException>(() => _userService.AddAsync(user));
         }
 
         // Add more tests to cover other scenarios such as GetAll, Update, and Delete methods
@@ -77,12 +77,12 @@ namespace ECommerceApp.Test.Services
         {
             // Arrange
             var user = new User("Test User", "test@mail.com", "addr");
-            _userService.Add(user);
+            _userService.AddAsync(user);
 
             // Act
             user.Id = 1;
             user.Name = "new name";
-            var result = _userService.Update(user);
+            var result = _userService.UpdateAsync(user);
 
             // Assert
             Assert.That(result, Is.EqualTo(user));
@@ -95,7 +95,7 @@ namespace ECommerceApp.Test.Services
             var user = new User("Test User", "test@mail.com", "addr");
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => _userService.Update(user));
+            Assert.Throws<KeyNotFoundException>(() => _userService.UpdateAsync(user));
         }
 
         [Test]
@@ -104,13 +104,13 @@ namespace ECommerceApp.Test.Services
             // Arrange
             int userId = 1;
             var user = new User("Test User", "test@mail.com", "addr");
-            _userService.Add(user);
+            _userService.AddAsync(user);
 
             // Act
-            _userService.Delete(userId);
+            _userService.DeleteAsync(userId);
 
             // Assert
-            Assert.That(_userService.GetAll().Count, Is.EqualTo(0));
+            Assert.That(_userService.GetAllAsync().Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace ECommerceApp.Test.Services
             int userId = 999;
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => _userService.Delete(userId));
+            Assert.Throws<KeyNotFoundException>(() => _userService.DeleteAsync(userId));
         }
 
         // Add more tests as needed to cover various scenarios and exceptions

@@ -13,21 +13,14 @@ namespace ECommerceApp.Services
 
         protected BaseService(BaseRepository<TBaseEntity> repository)
         {
-            Repository = repository ??
-                         throw new ArgumentNullException(nameof(repository), $"{GetType()} cannot be null.");
+            Repository = repository ?? throw new ArgumentNullException(nameof(repository), $"{GetType()} cannot be null.");
         }
 
-        /// <summary>
-        /// Retrieves an entity by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the entity to retrieve.</param>
-        /// <returns>The entity with the specified ID.</returns>
-        /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
-        public virtual TBaseEntity GetById(int id)
+        public async Task<TBaseEntity> GetByIdAsync(int id)
         {
             try
             {
-                return Repository.GetById(id);
+                return await Repository.GetByIdAsync(id);
             }
             catch (KeyNotFoundException ex)
             {
@@ -35,26 +28,16 @@ namespace ECommerceApp.Services
             }
         }
 
-        /// <summary>
-        /// Retrieves all entities.
-        /// </summary>
-        /// <returns>A list of all entities.</returns>
-        public virtual List<TBaseEntity> GetAll()
+        public async Task<List<TBaseEntity>> GetAllAsync()
         {
-            return Repository.GetAll();
+            return await Repository.GetAllAsync();
         }
 
-        /// <summary>
-        /// Adds a new entity.
-        /// </summary>
-        /// <param name="entity">The entity to add.</param>
-        /// <returns>The added entity.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the entity is null.</exception>
-        public virtual TBaseEntity Add(TBaseEntity entity)
+        public async Task<TBaseEntity> AddAsync(TBaseEntity entity)
         {
             try
             {
-                return Repository.Add(entity);
+                return await Repository.AddAsync(entity);
             }
             catch (ArgumentNullException)
             {
@@ -62,17 +45,11 @@ namespace ECommerceApp.Services
             }
         }
 
-        /// <summary>
-        /// Updates an existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update.</param>
-        /// <returns>The updated entity.</returns>
-        /// <exception cref="KeyNotFoundException">Thrown if the entity to update is not found.</exception>
-        public virtual TBaseEntity Update(TBaseEntity entity)
+        public async Task<TBaseEntity> UpdateAsync(TBaseEntity entity)
         {
             try
             {
-                return Repository.Update(entity);
+                return await Repository.UpdateAsync(entity);
             }
             catch (KeyNotFoundException ex)
             {
@@ -80,16 +57,11 @@ namespace ECommerceApp.Services
             }
         }
 
-        /// <summary>
-        /// Deletes an entity by its ID.
-        /// </summary>
-        /// <param name="id">The ID of the entity to delete.</param>
-        /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified ID is not found.</exception>
-        public virtual void Delete(int id)
+        public virtual async Task DeleteAsync(int id)
         {
             try
             {
-                Repository.Delete(id);
+                await Repository.DeleteAsync(id);
             }
             catch (KeyNotFoundException ex)
             {

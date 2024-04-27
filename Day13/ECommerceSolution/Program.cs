@@ -102,15 +102,15 @@ class Program
         c.Brand = "Rolex";
         c.Category = "Cussion";
 
-        ProductService.Add(a);
-        ProductService.Add(b);
-        ProductService.Add(c);
+        ProductService.AddAsync(a);
+        ProductService.AddAsync(b);
+        ProductService.AddAsync(c);
 
         User u1 = new User("sugan", "sugan@mail.com", "NY, salem");
         User u2 = new User("supramani", "mani_83@mail.com", "Eyb, San FB");
 
-        UserService.Add(u1);
-        UserService.Add(u2);
+        UserService.AddAsync(u1);
+        UserService.AddAsync(u2);
 
         Console.WriteLine("Seeds completed");
     }

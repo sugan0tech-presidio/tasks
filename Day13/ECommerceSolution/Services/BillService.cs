@@ -26,20 +26,20 @@ public class BillService : BaseService<Bill>
     /// <param name="user"></param>
     /// <returns></returns>
     /// <exception cref="CartNotFoundException">If the User don't have any cart associated with them</exception>
-    public Cart CheckoutUser(User user)
+    public async Task<Cart> CheckoutUser(User user)
     {
         if (user.Cart == null)
             throw new CartNotFoundException($"User {user.Name} doesn't have a cart");
 
-        user.Cart = CheckoutCartPrice(user.Cart);
-        _userService.Update(user);
+        user.Cart = await CheckoutCartPrice(user.Cart);
+        await _userService.UpdateAsync(user);
 
         var bill = new Bill
         {
             Cart = user.Cart
         };
 
-        Repository.Add(bill);
+        await Repository.AddAsync(bill);
         return user.Cart;
     }
 
@@ -48,7 +48,7 @@ public class BillService : BaseService<Bill>
     /// </summary>
     /// <param name="cart"></param>
     /// <returns></returns>
-    public Cart CheckoutCartPrice(Cart cart)
+    private async Task<Cart> CheckoutCartPrice(Cart cart)
     {
         if (cart.TotalPrice < 100)
         {
@@ -62,7 +62,7 @@ public class BillService : BaseService<Bill>
             cart.Discount = 1500 * 0.05;
         }
 
-        _cartService.Update(cart);
+        await _cartService.UpdateAsync(cart);
 
         return cart;
     }

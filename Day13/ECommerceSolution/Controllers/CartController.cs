@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using ECommerceApp.Entities;
+﻿using ECommerceApp.Entities;
 using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
@@ -81,15 +80,15 @@ public class CartController : BaseController<Cart>
         // todo to be done via login
         var userId = GetFromConsole<int>("User Id");
 
-        var user = UserService.GetById(userId);
+        var user = UserService.GetByIdAsync(userId);
 
         Cart cart = new Cart(user);
 
         var productId = GetFromConsole<int>("Product Id");
         var quantity = GetFromConsole<int>("Quantity");
 
-        CartService.AddItemToCart(cart.Id, ProductService.GetById(productId), quantity);
-        _entityService.Add(cart);
+        CartService.AddItemToCart(cart.Id, ProductService.GetByIdAsync(productId), quantity);
+        _entityService.AddAsync(cart);
     }
 
     private void DeleteItem()

@@ -32,8 +32,8 @@ namespace ECommerceApp.Test.Services
             // Act
             user.Cart = cart;
             cart.AddItem(cartItem);
-            user = userService.Add(user);
-            cartservice.Add(cart);
+            user = userService.AddAsync(user);
+            cartservice.AddAsync(cart);
             var res = billService.CheckoutUser(user);
 
             // Assert
@@ -46,7 +46,7 @@ namespace ECommerceApp.Test.Services
         {
             // Arrange
             User user = new User("test name", "", "");
-            user = userService.Add(user);
+            user = userService.AddAsync(user);
 
             // Act & Assert
             Assert.Throws<CartNotFoundException>(() => billService.CheckoutUser(user));
@@ -66,8 +66,8 @@ namespace ECommerceApp.Test.Services
             // Act
             user.Cart = cart;
             cart.AddItem(cartItem);
-            user = userService.Add(user);
-            cartservice.Add(cart);
+            user = userService.AddAsync(user);
+            cartservice.AddAsync(cart);
             var res = billService.CheckoutUser(user);
 
             // Assert

@@ -72,7 +72,7 @@ public class BaseController<TBaseEntity> where TBaseEntity : IEntity
 
     private void ListEntityMembers()
     {
-        var members = _entityService.GetAll();
+        var members = _entityService.GetAllAsync();
         if (members.Count == 0)
         {
             Console.WriteLine($"\n\t\t\tNo {_entityName}'s found !!!!\n");
@@ -108,7 +108,7 @@ public class BaseController<TBaseEntity> where TBaseEntity : IEntity
         var id = Convert.ToInt32(Console.ReadLine());
         try
         {
-            _entityService.Delete(id);
+            _entityService.DeleteAsync(id);
             Console.WriteLine($"{_entityName} deleted successfully.");
         }
         catch (KeyNotFoundException e)

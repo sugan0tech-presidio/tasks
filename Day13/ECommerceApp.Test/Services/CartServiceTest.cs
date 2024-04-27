@@ -23,7 +23,7 @@ public class CartServiceTest
             Category = "cat"
         };
         _cartService = new CartService(new CartRepository(), _productRepository);
-        _cartService.Add(_cart);
+        _cartService.AddAsync(_cart);
         _product = _productRepository.Add(_product);
     }
 
@@ -157,7 +157,7 @@ public class CartServiceTest
 
         // Act
         _cartService.AddItemToCart(_cart.Id, _product, quantityToAdd);
-        _cartService.Delete(1);
+        _cartService.DeleteAsync(1);
         _product = _productRepository.GetById(1);
 
         // Assert

@@ -16,13 +16,13 @@ public class UserController : BaseController<User>
         var address = GetFromConsole<string>("Address");
 
         User user = new User(name, email, address);
-        _entityService.Add(user);
+        _entityService.AddAsync(user);
     }
 
     protected override void UpdateEntityMember()
     {
         var id = GetFromConsole<int>($"{_entityName} Id");
-        var user = _entityService.GetById(id);
+        var user = _entityService.GetByIdAsync(id);
 
         Console.WriteLine("Enter the field's to update:");
         Console.WriteLine("1. Name");
@@ -47,6 +47,6 @@ public class UserController : BaseController<User>
                 break;
         }
 
-        _entityService.Update(user);
+        _entityService.UpdateAsync(user);
     }
 }

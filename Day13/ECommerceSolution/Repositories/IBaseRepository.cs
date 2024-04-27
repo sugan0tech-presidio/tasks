@@ -2,9 +2,9 @@
 
 public interface IBaseRepository<TEntity>
 {
-    TEntity GetById(int id);
-    List<TEntity> GetAll();
-    TEntity Add(TEntity entity);
-    TEntity Update(TEntity entity);
-    void Delete(int id);
+    Task<TEntity> GetByIdAsync(int id);
+    Task<List<TEntity>> GetAllAsync();
+    Task<TEntity> AddAsync(TEntity entity);
+    Task<TEntity> UpdateAsync(TEntity entity);
+    Task DeleteAsync(int id);
 }

@@ -25,13 +25,13 @@ public class ProductController : BaseController<Product>
             Brand = brand,
             Category = category
         };
-        _entityService.Add(product);
+        _entityService.AddAsync(product);
     }
 
     protected override void UpdateEntityMember()
     {
         var id = GetFromConsole<int>($"{_entityName} Id");
-        var product = _entityService.GetById(id);
+        var product = _entityService.GetByIdAsync(id);
 
         Console.WriteLine("Enter the field's to update:");
         Console.WriteLine("1. Name");
@@ -56,6 +56,6 @@ public class ProductController : BaseController<Product>
                 break;
         }
 
-        _entityService.Update(product);
+        _entityService.UpdateAsync(product);
     }
 }
