@@ -24,7 +24,7 @@ namespace ECommerceApp.Test.Services
         {
             // Arrange
             User user = new User("test name", "", "");
-            Cart cart = new Cart(user);
+            Cart cart = new Cart();
             Product product = new Product("test", 5, 5);
             CartItem cartItem = new CartItem();
             cartItem.updateItems(product, 5);
@@ -32,9 +32,9 @@ namespace ECommerceApp.Test.Services
             // Act
             user.Cart = cart;
             cart.AddItem(cartItem);
-            user = userService.AddAsync(user);
+            user = userService.AddAsync(user).Result;
             cartservice.AddAsync(cart);
-            var res = billService.CheckoutUser(user);
+            var res = billService.CheckoutUser(user).Result;
 
             // Assert
             Assert.IsNotNull(res);
@@ -46,10 +46,10 @@ namespace ECommerceApp.Test.Services
         {
             // Arrange
             User user = new User("test name", "", "");
-            user = userService.AddAsync(user);
+            user = userService.AddAsync(user).Result;
 
             // Act & Assert
-            Assert.Throws<CartNotFoundException>(() => billService.CheckoutUser(user));
+            Assert.ThrowsAsync<CartNotFoundException>(() => billService.CheckoutUser(user));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace ECommerceApp.Test.Services
         {
             // Arrange
             User user = new User("test name", "", "");
-            Cart cart = new Cart(user);
+            Cart cart = new Cart();
             Product product = new Product("test", 5, 500);
             CartItem cartItem = new CartItem();
             // Condition item should be equal to 3 with the amount of 1500
@@ -66,9 +66,9 @@ namespace ECommerceApp.Test.Services
             // Act
             user.Cart = cart;
             cart.AddItem(cartItem);
-            user = userService.AddAsync(user);
+            user = userService.AddAsync(user).Result;
             cartservice.AddAsync(cart);
-            var res = billService.CheckoutUser(user);
+            var res = billService.CheckoutUser(user).Result;
 
             // Assert
             Assert.That(res.Discount, Is.EqualTo(1500 * 0.05));

@@ -7,7 +7,6 @@ public class Bill : BaseEntity
     public override string ToString()
     {
         var res = $"Bill Id\t: {Id}" +
-                  $"\n\tFor User\t: {Cart.User.Name}" +
                   $"\n\tTotal Items\t: {Cart.Items.Count}" +
                   $"\n\tPrice\t: ${Cart.TotalPrice}";
         if (Cart.ShippingCharge > 0)

@@ -25,10 +25,10 @@ namespace ECommerceApp.Test.Repositories
             Product product = new Product("oil", 12, 12);
 
             // Act
-            _productRepository.Add(product);
+            _productRepository.AddAsync(product);
 
             // Assert
-            Assert.That(_productRepository.GetById(1), Is.EqualTo(product));
+            Assert.That(_productRepository.GetByIdAsync(1).Result, Is.EqualTo(product));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace ECommerceApp.Test.Repositories
             Product product = null;
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => _productRepository.Add(product));
+            Assert.Throws<ArgumentNullException>(() => _productRepository.AddAsync(product));
         }
 
         [Test]
@@ -49,11 +49,11 @@ namespace ECommerceApp.Test.Repositories
             Product product2 = new Product("oil2", 12, 12);
 
             // Act
-            _productRepository.Add(product1);
-            _productRepository.Add(product2);
+            _productRepository.AddAsync(product1);
+            _productRepository.AddAsync(product2);
 
             // Assert
-            Assert.That(_productRepository.GetAll().Count, Is.EqualTo(2));
+            Assert.That(_productRepository.GetAllAsync().Result.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace ECommerceApp.Test.Repositories
             var nonExistingId = 999;
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => _productRepository.GetById(nonExistingId));
+            Assert.ThrowsAsync<KeyNotFoundException>(() => _productRepository.GetByIdAsync(nonExistingId));
         }
 
         [Test]
@@ -80,14 +80,14 @@ namespace ECommerceApp.Test.Repositories
             };
 
             // Act
-            _productRepository.Add(product);
+            _productRepository.AddAsync(product);
             var updatedProduct = product;
             updatedProduct.Id = 1;
             updatedProduct.Name = "new name";
-            _productRepository.Update(updatedProduct);
+            _productRepository.UpdateAsync(updatedProduct);
 
             // Assert
-            Assert.That(_productRepository.GetById(updatedProduct.Id).Name, Is.EqualTo("new name"));
+            Assert.That(_productRepository.GetByIdAsync(updatedProduct.Id).Result.Name, Is.EqualTo("new name"));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace ECommerceApp.Test.Repositories
             product.Id = 1;
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => _productRepository.Update(product));
+            Assert.ThrowsAsync<KeyNotFoundException>(() => _productRepository.UpdateAsync(product));
         }
 
         [Test]
@@ -111,11 +111,11 @@ namespace ECommerceApp.Test.Repositories
             product.Brand = "";
             product.Category = "";
 
-            _productRepository.Add(product);
+            _productRepository.AddAsync(product);
 
             // Act & Assert
-            _productRepository.Delete(1);
-            Assert.That(_productRepository.GetAll().Count, Is.EqualTo(0));
+            _productRepository.DeleteAsync(1);
+            Assert.That(_productRepository.GetAllAsync().Result.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace ECommerceApp.Test.Repositories
             var nonExistingId = 999;
 
             // Act & Assert
-            Assert.Throws<KeyNotFoundException>(() => _productRepository.Delete(nonExistingId));
+            Assert.ThrowsAsync<KeyNotFoundException>(() => _productRepository.DeleteAsync(nonExistingId));
         }
     }
 }

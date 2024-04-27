@@ -8,7 +8,7 @@ public class CartController : BaseController<Cart>
     private readonly UserService UserService;
     private readonly ProductService ProductService;
     private readonly CartService CartService;
-    private readonly User user;
+    private User user;
 
     public CartController(BaseService<Cart> entityService, UserService userService, ProductService productService) :
         base(entityService)
@@ -16,6 +16,15 @@ public class CartController : BaseController<Cart>
         UserService = userService;
         ProductService = productService;
         CartService = entityService as CartService;
+    }
+
+    public new void Run()
+    {
+        if (AddUser())
+        {
+            Console.WriteLine($"Successfully Logged as {user.Name}");
+            ShowMainMenu();
+        }
     }
 
     private void ShowMainMenu()
@@ -53,6 +62,7 @@ public class CartController : BaseController<Cart>
                         Console.Clear();
                         break;
                     case "6":
+                        user = null;
                         return;
                     default:
                         Console.WriteLine("Invalid choice. Please try again.");
@@ -66,28 +76,59 @@ public class CartController : BaseController<Cart>
         }
     }
 
+    private bool AddUser()
+    {
+        var id = GetFromConsole<int>("User Id");
+        try
+        {
+            user = UserService.GetByIdAsync(id).Result;
+            return true;
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return false;
+    }
 
     private void ListCartItem()
     {
-        foreach (var cartItem in user.Cart.Items)
+        Console.WriteLine("here at lastCartItem");
+        if (user.Cart != null || user.Cart.Items.Count > 0)
         {
-            Console.WriteLine(cartItem);
+            foreach (var cartItem in user.Cart.Items)
+            {
+                Console.WriteLine(cartItem);
+            }
+        }
+        else
+        {
+            Console.WriteLine("No items in cart");
         }
     }
 
     private void AddCartItem()
     {
         // todo to be done via login
-        var userId = GetFromConsole<int>("User Id");
+        var userId = this.user.Id;
 
-        var user = UserService.GetByIdAsync(userId);
+        var user = UserService.GetByIdAsync(userId).Result;
 
-        Cart cart = new Cart(user);
+        Cart cart;
+        if (user.Cart == null)
+            cart = new Cart();
+        else
+            cart = user.Cart;
+        
+        user.Cart = cart;
+        Console.WriteLine(cart);
 
         var productId = GetFromConsole<int>("Product Id");
         var quantity = GetFromConsole<int>("Quantity");
 
-        CartService.AddItemToCart(cart.Id, ProductService.GetByIdAsync(productId), quantity);
+        CartService.AddItemToCart(cart.Id, ProductService.GetByIdAsync(productId).Result, quantity);
+        UserService.UpdateAsync(user);
         _entityService.AddAsync(cart);
     }
 

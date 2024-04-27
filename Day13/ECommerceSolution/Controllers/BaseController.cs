@@ -72,7 +72,7 @@ public class BaseController<TBaseEntity> where TBaseEntity : IEntity
 
     private void ListEntityMembers()
     {
-        var members = _entityService.GetAllAsync();
+        var members = _entityService.GetAllAsync().Result;
         if (members.Count == 0)
         {
             Console.WriteLine($"\n\t\t\tNo {_entityName}'s found !!!!\n");

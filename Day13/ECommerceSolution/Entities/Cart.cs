@@ -7,15 +7,13 @@ namespace ECommerceApp.Entities;
 /// </summary>
 public class Cart : BaseEntity
 {
-    public Cart(User user)
+    public Cart()
     {
-        User = user;
         Items = new List<CartItem>();
         UpdatedDate = DateTime.Now;
         TotalPrice = 0;
     }
 
-    public User User { get; set; }
     public DateTime UpdatedDate { get; set; }
     public List<CartItem> Items { get; }
     public double TotalPrice { get; set; }
@@ -52,7 +50,6 @@ public class Cart : BaseEntity
     public override string ToString()
     {
         var res = $"Cart \t: {Id}" +
-                  $"\n\tFor User\t: {User.Name}" +
                   $"\n\tTotal Items\t: {Items.Count}" +
                   $"\n\tPrice\t: ${TotalPrice}";
         if (ShippingCharge > 0)

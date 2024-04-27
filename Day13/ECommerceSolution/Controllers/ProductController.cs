@@ -31,7 +31,7 @@ public class ProductController : BaseController<Product>
     protected override void UpdateEntityMember()
     {
         var id = GetFromConsole<int>($"{_entityName} Id");
-        var product = _entityService.GetByIdAsync(id);
+        var product = _entityService.GetByIdAsync(id).Result;
 
         Console.WriteLine("Enter the field's to update:");
         Console.WriteLine("1. Name");

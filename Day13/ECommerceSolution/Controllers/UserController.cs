@@ -22,7 +22,7 @@ public class UserController : BaseController<User>
     protected override void UpdateEntityMember()
     {
         var id = GetFromConsole<int>($"{_entityName} Id");
-        var user = _entityService.GetByIdAsync(id);
+        var user = _entityService.GetByIdAsync(id).Result;
 
         Console.WriteLine("Enter the field's to update:");
         Console.WriteLine("1. Name");

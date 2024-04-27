@@ -19,21 +19,19 @@ public class CartItem : BaseEntity
     /// <param name="quantity">Quantity</param>
     /// <param name="user">User</param>
     /// <exception cref="TooMuchItemsException">If the required quantity is more  than the recommended max of 5</exception>
-    public CartItem(Product product, int quantity, User user)
+    public CartItem(Product product, int quantity)
     {
         if (quantity > 5)
             throw new TooMuchItemsException($"Product: {product.Name} quantity should not be greater than 5");
 
         Product = product;
         Quantity = quantity;
-        User = user;
         CreatedAt = DateTime.Now;
         Price = Product.Price * quantity;
     }
 
     public Product Product { get; private set; }
     public int Quantity { get; set; }
-    public User User { get; }
     public DateTime CreatedAt { get; private set; }
     public double Price { get; private set; }
 
@@ -58,7 +56,6 @@ public class CartItem : BaseEntity
     {
         return $"Cart Item\t: {Id}" +
                $"\n\tProduct\t: {Product.Name}" +
-               $"\t\tUser\t: {User.Name}" +
                $"\n\tQuantity\t: {Quantity}" +
                $"\t\tPrice\t: ${Price}";
     }

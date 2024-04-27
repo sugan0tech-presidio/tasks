@@ -39,7 +39,7 @@ public class CartService : BaseService<Cart>
         }
         else
         {
-            var cartItem = new CartItem(product, quantity, cart.User);
+            var cartItem = new CartItem(product, quantity);
             cart.Items.Add(cartItem);
         }
 
