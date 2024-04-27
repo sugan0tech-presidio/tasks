@@ -72,7 +72,7 @@ namespace ECommerceApp.Test.Repositories
             // Arrange
             var product = new Product
             {
-                Id = 123, 
+                Id = 123,
                 Name = "Test Product",
                 Price = 10.99,
                 Category = "",
@@ -110,7 +110,7 @@ namespace ECommerceApp.Test.Repositories
             var product = new Product("test product", 2, 5);
             product.Brand = "";
             product.Category = "";
-            
+
             _productRepository.Add(product);
 
             // Act & Assert

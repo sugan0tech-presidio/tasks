@@ -11,7 +11,7 @@ public class CartServiceTest
     private ProductRepository _productRepository;
     private Cart _cart;
     private Product _product;
-        
+
     [SetUp]
     public void Setup()
     {
@@ -33,7 +33,7 @@ public class CartServiceTest
         // Arrange
         int initialStock = _product.Stock;
         int quantityToAdd = 3;
-        
+
         // Act
         _cartService.AddItemToCart(_cart.Id, _product, quantityToAdd);
 
@@ -50,7 +50,7 @@ public class CartServiceTest
         int initialStock = _product.Stock;
         int quantityToAdd = 3;
         int updateQuantity = 2;
-        
+
         // Act
         _cartService.AddItemToCart(_cart.Id, _product, quantityToAdd);
 
@@ -99,7 +99,8 @@ public class CartServiceTest
         int newQuantity = 15;
 
         // Act & Assert
-        Assert.Throws<TooMuchItemsException>(() => _cartService.UpdateCartItemQuantity(_cart.Id, _product.Id, newQuantity));
+        Assert.Throws<TooMuchItemsException>(() =>
+            _cartService.UpdateCartItemQuantity(_cart.Id, _product.Id, newQuantity));
     }
 
     [Test]
@@ -109,7 +110,8 @@ public class CartServiceTest
         int newQuantity = 15;
 
         // Act & Assert
-        Assert.Throws<CartItemNotFoundException>(() => _cartService.UpdateCartItemQuantity(_cart.Id, _product.Id, newQuantity));
+        Assert.Throws<CartItemNotFoundException>(() =>
+            _cartService.UpdateCartItemQuantity(_cart.Id, _product.Id, newQuantity));
     }
 
     [Test]
@@ -152,7 +154,7 @@ public class CartServiceTest
         // Arrange
         int initialStock = _product.Stock;
         int quantityToAdd = 3;
-        
+
         // Act
         _cartService.AddItemToCart(_cart.Id, _product, quantityToAdd);
         _cartService.Delete(1);

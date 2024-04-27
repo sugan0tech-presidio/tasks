@@ -25,7 +25,7 @@ namespace ECommerceApp.Test.Services
             // Arrange
             User user = new User("test name", "", "");
             Cart cart = new Cart(user);
-            Product product = new Product("test", 5, 5); 
+            Product product = new Product("test", 5, 5);
             CartItem cartItem = new CartItem();
             cartItem.updateItems(product, 5);
 
@@ -50,7 +50,6 @@ namespace ECommerceApp.Test.Services
 
             // Act & Assert
             Assert.Throws<CartNotFoundException>(() => billService.CheckoutUser(user));
-
         }
 
         [Test]
@@ -59,7 +58,7 @@ namespace ECommerceApp.Test.Services
             // Arrange
             User user = new User("test name", "", "");
             Cart cart = new Cart(user);
-            Product product = new Product("test", 5, 500); 
+            Product product = new Product("test", 5, 500);
             CartItem cartItem = new CartItem();
             // Condition item should be equal to 3 with the amount of 1500
             cartItem.updateItems(product, 3);
@@ -74,6 +73,5 @@ namespace ECommerceApp.Test.Services
             // Assert
             Assert.That(res.Discount, Is.EqualTo(1500 * 0.05));
         }
-
     }
 }

@@ -4,14 +4,15 @@ using ECommerceApp.Repositories;
 
 namespace ECommerceApp.Services;
 
-public class CartService: BaseService<Cart>
+public class CartService : BaseService<Cart>
 {
     private ProductRepository _productRepository;
+
     public CartService(BaseRepository<Cart> repository, ProductRepository productRepository) : base(repository)
     {
         _productRepository = productRepository;
     }
-    
+
     /// <summary>
     /// To add a product to cart, with quantity
     /// </summary>
@@ -41,7 +42,7 @@ public class CartService: BaseService<Cart>
             var cartItem = new CartItem(product, quantity, cart.User);
             cart.Items.Add(cartItem);
         }
-        
+
         Repository.Update(cart);
     }
 
@@ -63,12 +64,12 @@ public class CartService: BaseService<Cart>
             product.Stock += cartItem.Quantity;
             if (product.Stock < newQuantity)
             {
-            throw new TooMuchItemsException("Provided quantity is higher than the actual stock");
+                throw new TooMuchItemsException("Provided quantity is higher than the actual stock");
             }
 
             product.Stock -= newQuantity;
             cartItem.Quantity = newQuantity;
-            
+
             _productRepository.Update(product);
             Repository.Update(cart);
         }
@@ -88,13 +89,13 @@ public class CartService: BaseService<Cart>
     {
         var cart = Repository.GetById(cartId);
         var product = _productRepository.GetById(productId);
-        
+
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
         {
             cart.Items.Remove(cartItem);
             product.Stock += cartItem.Quantity;
-            
+
             _productRepository.Update(product);
             Repository.Update(cart);
         }

@@ -2,7 +2,6 @@
 
 namespace ECommerceApp.Repositories;
 
-public class BillRepository: BaseRepository<Bill>
+public class BillRepository : BaseRepository<Bill>
 {
-    
 }

@@ -1,6 +1,6 @@
 ﻿namespace ECommerceApp.Exceptions;
 
-public class CartNotFoundException: Exception
+public class CartNotFoundException : Exception
 {
     public CartNotFoundException()
     {

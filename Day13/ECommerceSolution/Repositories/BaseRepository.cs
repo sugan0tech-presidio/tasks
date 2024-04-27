@@ -1,5 +1,4 @@
-﻿
-using ECommerceApp.Entities;
+﻿using ECommerceApp.Entities;
 
 namespace ECommerceApp.Repositories
 {

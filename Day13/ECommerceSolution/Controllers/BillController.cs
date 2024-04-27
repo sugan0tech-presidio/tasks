@@ -3,9 +3,8 @@ using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
 
-public class BillController: BaseController<Bill>
+public class BillController : BaseController<Bill>
 {
-
     private readonly BillService BillService;
     private readonly User _user;
 
@@ -28,7 +27,7 @@ public class BillController: BaseController<Bill>
             Console.WriteLine("1. Checkout Bill");
             Console.WriteLine("2. Clear Console");
             Console.WriteLine("3. exit to Main Menu");
-            
+
 
             Console.Write("\nEnter your choice: ");
             var choice = Console.ReadLine();

@@ -56,5 +56,4 @@ public class Product : BaseEntity
                $"\n\tStock\t: {Stock}" +
                $"\n\tPrice\t: ${Price}";
     }
-
 }

@@ -1,6 +1,6 @@
 ﻿namespace ECommerceApp.Exceptions;
 
-public class InvalidConsoleInputException: Exception
+public class InvalidConsoleInputException : Exception
 {
     public InvalidConsoleInputException()
     {

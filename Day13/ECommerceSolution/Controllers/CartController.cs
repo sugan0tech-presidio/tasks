@@ -4,13 +4,15 @@ using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
 
-public class CartController: BaseController<Cart>
+public class CartController : BaseController<Cart>
 {
     private readonly UserService UserService;
     private readonly ProductService ProductService;
     private readonly CartService CartService;
     private readonly User user;
-    public CartController(BaseService<Cart> entityService, UserService userService, ProductService productService) : base(entityService)
+
+    public CartController(BaseService<Cart> entityService, UserService userService, ProductService productService) :
+        base(entityService)
     {
         UserService = userService;
         ProductService = productService;
@@ -73,9 +75,9 @@ public class CartController: BaseController<Cart>
             Console.WriteLine(cartItem);
         }
     }
+
     private void AddCartItem()
     {
-        
         // todo to be done via login
         var userId = GetFromConsole<int>("User Id");
 
@@ -85,7 +87,7 @@ public class CartController: BaseController<Cart>
 
         var productId = GetFromConsole<int>("Product Id");
         var quantity = GetFromConsole<int>("Quantity");
-        
+
         CartService.AddItemToCart(cart.Id, ProductService.GetById(productId), quantity);
         _entityService.Add(cart);
     }
@@ -94,7 +96,6 @@ public class CartController: BaseController<Cart>
     {
         var productId = GetFromConsole<int>("Product Id");
         CartService.RemoveItemFromCart(user.Cart.Id, productId);
-        
     }
 
     private void UpdateItem()
@@ -103,5 +104,4 @@ public class CartController: BaseController<Cart>
         var quantity = GetFromConsole<int>("Quantity");
         CartService.UpdateCartItemQuantity(user.Cart.Id, productId, quantity);
     }
-    
 }

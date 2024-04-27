@@ -3,7 +3,7 @@ using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
 
-public class ProductController: BaseController<Product>
+public class ProductController : BaseController<Product>
 {
     public ProductController(BaseService<Product> entityService) : base(entityService)
     {
@@ -30,10 +30,9 @@ public class ProductController: BaseController<Product>
 
     protected override void UpdateEntityMember()
     {
-
         var id = GetFromConsole<int>($"{_entityName} Id");
         var product = _entityService.GetById(id);
-        
+
         Console.WriteLine("Enter the field's to update:");
         Console.WriteLine("1. Name");
         Console.WriteLine("2. Price");
@@ -58,6 +57,5 @@ public class ProductController: BaseController<Product>
         }
 
         _entityService.Update(product);
-
     }
 }

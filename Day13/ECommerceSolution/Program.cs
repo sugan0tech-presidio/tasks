@@ -22,17 +22,16 @@ class Program
                 Console.WriteLine($"By {Thread.CurrentThread.ManagedThreadId} num: {i}");
                 Thread.Sleep(1000);
             }
-            
         }
     }
-    
+
 
     private static readonly ProductService ProductService = new ProductService(new ProductRepository());
     private static readonly CartService CartService = new CartService(new CartRepository(), new ProductRepository());
     private static readonly UserService UserService = new UserService(new UserRepository());
     private static readonly BillService BillService = new BillService(new BillRepository(), CartService, UserService);
-    
-    
+
+
     static async Task Main(string[] args)
     {
         seed();
@@ -93,12 +92,12 @@ class Program
         Product a = new Product("pencil", 50, 5);
         a.Brand = "Natraj";
         a.Category = "Stationary";
-        
+
         Product b = new Product("powder", 10, 50);
         b.Brand = "Ponds";
         b.Category = "Makeup";
-        
-        Product c = new Product("Pillow", 15,500);
+
+        Product c = new Product("Pillow", 15, 500);
         c.Brand = "Rolex";
         c.Category = "Cussion";
 
@@ -108,10 +107,10 @@ class Program
 
         User u1 = new User("sugan", "sugan@mail.com", "NY, salem");
         User u2 = new User("supramani", "mani_83@mail.com", "Eyb, San FB");
-        
+
         UserService.Add(u1);
         UserService.Add(u2);
-        
+
         Console.WriteLine("Seeds completed");
     }
 }

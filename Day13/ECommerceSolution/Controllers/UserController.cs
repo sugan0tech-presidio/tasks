@@ -3,7 +3,7 @@ using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
 
-public class UserController: BaseController<User>
+public class UserController : BaseController<User>
 {
     public UserController(BaseService<User> entityService) : base(entityService)
     {
@@ -21,10 +21,9 @@ public class UserController: BaseController<User>
 
     protected override void UpdateEntityMember()
     {
-
         var id = GetFromConsole<int>($"{_entityName} Id");
         var user = _entityService.GetById(id);
-        
+
         Console.WriteLine("Enter the field's to update:");
         Console.WriteLine("1. Name");
         Console.WriteLine("2. Email");
@@ -49,6 +48,5 @@ public class UserController: BaseController<User>
         }
 
         _entityService.Update(user);
-
     }
 }

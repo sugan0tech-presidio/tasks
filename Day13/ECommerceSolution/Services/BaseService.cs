@@ -13,7 +13,8 @@ namespace ECommerceApp.Services
 
         protected BaseService(BaseRepository<TBaseEntity> repository)
         {
-            Repository = repository ?? throw new ArgumentNullException(nameof(repository), $"{GetType()} cannot be null.");
+            Repository = repository ??
+                         throw new ArgumentNullException(nameof(repository), $"{GetType()} cannot be null.");
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace ECommerceApp.Services
             }
             catch (ArgumentNullException)
             {
-                throw ;
+                throw;
             }
         }
 
