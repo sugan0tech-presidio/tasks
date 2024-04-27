@@ -6,4 +6,5 @@
 public interface IEntity
 {
     public int Id { get; set; }
+    public int CompareTo(BaseEntity baseEntity);
 }

@@ -4,9 +4,14 @@
 /// Base entity Implements IEntity
 /// Only carries Id -> can corelate with most of the CRUD operations
 /// </summary>
-public abstract class BaseEntity : IEntity
+public abstract class BaseEntity : IEntity, IComparable<BaseEntity>
 {
     public int Id { get; set; }
+
+    public int CompareTo(BaseEntity? other)
+    {
+        return Id.CompareTo(other.Id);
+    }
 
     /// <summary>
     ///  Compares Id from Base Entity

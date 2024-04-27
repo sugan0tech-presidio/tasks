@@ -1,6 +1,11 @@
-﻿namespace ECommerceApp.Controllers;
+﻿using ECommerceApp.Entities;
+using ECommerceApp.Services;
 
-public class UserController
+namespace ECommerceApp.Controllers;
+
+public class UserController: BaseController<User>
 {
-    
+    public UserController(BaseService<User> entityService) : base(entityService)
+    {
+    }
 }

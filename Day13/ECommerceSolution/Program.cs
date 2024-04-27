@@ -36,8 +36,55 @@ class Program
     static async Task Main(string[] args)
     {
         seed();
-        ProductController productController = new ProductController(ProductService);
-        productController.Run();
+        ShowMainMenu();
+    }
+
+    static void ShowMainMenu()
+    {
+        while (true)
+        {
+            Console.WriteLine("\nWelcome to EKart");
+            Console.WriteLine("1. ProductManagement");
+            Console.WriteLine("2. CartManagement");
+            Console.WriteLine("3. UserManagement");
+            Console.WriteLine("4. BillManagement");
+            Console.WriteLine("5. Clear Console");
+            Console.WriteLine("6. exit the application");
+
+            Console.Write("\nEnter your choice: ");
+            var choice = Console.ReadLine();
+
+            try
+            {
+                switch (choice)
+                {
+                    case "1":
+                        new ProductController(ProductService).Run();
+                        break;
+                    case "2":
+                        new CartController(CartService).Run();
+                        break;
+                    case "3":
+                        new UserController(UserService).Run();
+                        break;
+                    case "4":
+                        Console.WriteLine("Bill Controller");
+                        break;
+                    case "5":
+                        Console.Clear();
+                        break;
+                    case "6":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+            catch (KeyNotFoundException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
     }
 
 
