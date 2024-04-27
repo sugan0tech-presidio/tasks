@@ -30,7 +30,7 @@ class Program
     private static readonly ProductService ProductService = new ProductService(new ProductRepository());
     private static readonly CartService CartService = new CartService(new CartRepository(), new ProductRepository());
     private static readonly UserService UserService = new UserService(new UserRepository());
-    private static readonly BillService BillService = new BillService(CartService, UserService);
+    private static readonly BillService BillService = new BillService(new BillRepository(), CartService, UserService);
     
     
     static async Task Main(string[] args)
@@ -62,7 +62,7 @@ class Program
                         new ProductController(ProductService).Run();
                         break;
                     case "2":
-                        new CartController(CartService).Run();
+                        new CartController(CartService, UserService, ProductService).Run();
                         break;
                     case "3":
                         new UserController(UserService).Run();

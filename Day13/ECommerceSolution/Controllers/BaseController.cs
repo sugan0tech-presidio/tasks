@@ -1,17 +1,18 @@
 ﻿using ECommerceApp.Entities;
+using ECommerceApp.Exceptions;
 using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
 
-public class BaseController<TBaseEntity> where TBaseEntity: IEntity
+public class BaseController<TBaseEntity> where TBaseEntity : IEntity
 {
-    private readonly BaseService<TBaseEntity> _entityService;
-    private readonly string _entityName = typeof(TBaseEntity).Name;
+    protected readonly BaseService<TBaseEntity> _entityService;
+    protected readonly string _entityName = typeof(TBaseEntity).Name;
 
     public BaseController(BaseService<TBaseEntity> entityService)
     {
         _entityService = entityService ??
-                        throw new ArgumentNullException(nameof(entityService), "Staff service cannot be null.");
+                         throw new ArgumentNullException(nameof(entityService), "Staff service cannot be null.");
         _entityService = entityService;
     }
 
@@ -72,6 +73,12 @@ public class BaseController<TBaseEntity> where TBaseEntity: IEntity
     private void ListEntityMembers()
     {
         var members = _entityService.GetAll();
+        if (members.Count == 0)
+        {
+            Console.WriteLine($"\n\t\t\tNo {_entityName}'s found !!!!\n");
+            return;
+        }
+
         Console.WriteLine($"\nList of {_entityName}'s:");
         foreach (var entity in members)
         {
@@ -79,15 +86,15 @@ public class BaseController<TBaseEntity> where TBaseEntity: IEntity
         }
     }
 
-    // todo
-    private void AddEntityMember()
+    protected virtual void AddEntityMember()
     {
         Console.WriteLine($"\nEnter {_entityName} Details:");
-        
-        Console.WriteLine("Staff member added successfully.");
+
+        // todo: has to be async
+        // Console.WriteLine(" member added successfully.");
     }
 
-    private void UpdateEntityMember()
+    protected virtual void UpdateEntityMember()
     {
         Console.Write($"\nEnter {_entityName} ID to update: ");
         var id = Convert.ToInt32(Console.ReadLine());
@@ -107,6 +114,41 @@ public class BaseController<TBaseEntity> where TBaseEntity: IEntity
         catch (KeyNotFoundException e)
         {
             Console.WriteLine(e);
+        }
+    }
+
+    protected T GetFromConsole<T>(string message)
+    {
+        while (true)
+        {
+            Console.Write($"\nEnter {message} :");
+            var value = Console.ReadLine();
+            try
+            {
+                if (typeof(T) == typeof(int))
+                {
+                    if (int.TryParse(value, out int intValue))
+                        return (T)(object)intValue;
+                }
+                else if (typeof(T) == typeof(double))
+                {
+                    if (double.TryParse(value, out double doubleValue))
+                        return (T)(object)doubleValue;
+                }
+                else if (typeof(T) == typeof(string))
+                {
+                    if (value.Length > 0)
+                        return (T)(object)value;
+
+                    throw new InvalidConsoleInputException("String value cannot be empty");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine($"Invalid Entry for the type {typeof(T)}");
+                Console.WriteLine("Enter again!!");
+            }
         }
     }
 }

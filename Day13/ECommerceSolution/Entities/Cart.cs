@@ -50,9 +50,22 @@ public class Cart : BaseEntity
 
     public override string ToString()
     {
-        return $"Cart \t: {Id}" +
+        var res =  $"Cart \t: {Id}" +
                $"\n\tFor User\t: {User.Name}" +
                $"\n\tTotal Items\t: {Items.Count}" +
                $"\n\tPrice\t: ${TotalPrice}";
+        if (ShippingCharge > 0)
+        {
+            return res + $"\n\tShipping Charge: ${ShippingCharge}" +
+                   $"\n\tTotal: ${(TotalPrice + ShippingCharge):F2}";
+        }
+        
+        if (Discount > 0)
+        {
+            return res + $"\n\tDiscount\t: -${Discount:F2}" +
+                   $"\n\tTotal: ${(TotalPrice - Discount):F2}";
+        }
+
+        return res;
     }
 }

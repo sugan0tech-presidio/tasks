@@ -57,9 +57,9 @@ public class CartItem : BaseEntity
     public override string ToString()
     {
         return $"Cart Item\t: {Id}" +
-               $"\n\tFor User\t: {User.Name}" +
                $"\n\tProduct\t: {Product.Name}" +
+               $"\t\tUser\t: {User.Name}" +
                $"\n\tQuantity\t: {Quantity}" +
-               $"\n\tPrice\t: ${Price}";
+               $"\t\tPrice\t: ${Price}";
     }
 }

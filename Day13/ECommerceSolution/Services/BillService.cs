@@ -1,5 +1,6 @@
 ﻿using ECommerceApp.Entities;
 using ECommerceApp.Exceptions;
+using ECommerceApp.Repositories;
 
 namespace ECommerceApp.Services;
 
@@ -7,12 +8,12 @@ namespace ECommerceApp.Services;
 /// Processes User Bills with discount & Shipment charge.
 /// Bill be used as Cart
 /// </summary>
-public class BillService
+public class BillService: BaseService<Bill>
 {
     private readonly CartService _cartService;
     private readonly UserService _userService;
 
-    public BillService(CartService cartService, UserService userService)
+    public BillService(BaseRepository<Bill> repository, CartService cartService, UserService userService) : base(repository)
     {
         _cartService = cartService;
         _userService = userService;
@@ -31,6 +32,13 @@ public class BillService
         
         user.Cart = CheckoutCartPrice(user.Cart);
         _userService.Update(user);
+
+        var bill = new Bill
+        {
+            Cart = user.Cart
+        };
+        
+        Repository.Add(bill);
         return user.Cart;
     }
 

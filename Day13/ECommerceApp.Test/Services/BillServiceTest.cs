@@ -16,7 +16,7 @@ namespace ECommerceApp.Test.Services
         {
             userService = new UserService(new UserRepository());
             cartservice = new CartService(new CartRepository(), new ProductRepository());
-            billService = new BillService(cartservice, userService);
+            billService = new BillService(new BillRepository(), cartservice, userService);
         }
 
         [Test]
