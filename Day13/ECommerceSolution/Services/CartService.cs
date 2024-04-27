@@ -37,11 +37,13 @@ public class CartService : BaseService<Cart>
                 throw new TooMuchItemsException($"Product: {product.Name} quantity should not be greater than 5");
             
             existingItem.Quantity += quantity;
+            cart.TotalPrice += product.Price * quantity;
         }
         else
         {
             var cartItem = new CartItem(product, quantity);
             cart.Items.Add(cartItem);
+            cart.TotalPrice += product.Price * quantity;
         }
 
         await Repository.UpdateAsync(cart);
@@ -73,6 +75,7 @@ public class CartService : BaseService<Cart>
 
             product.Stock -= newQuantity;
             cartItem.Quantity = newQuantity;
+            cart.TotalPrice = product.Price * newQuantity;
 
             await ProductService.UpdateAsync(product);
             Repository.UpdateAsync(cart);
@@ -100,6 +103,7 @@ public class CartService : BaseService<Cart>
         {
             cart.Items.Remove(cartItem);
             product.Stock += cartItem.Quantity;
+            cart.TotalPrice -= product.Price * cartItem.Quantity;
 
             await ProductService.UpdateAsync(product);
             Repository.UpdateAsync(cart);

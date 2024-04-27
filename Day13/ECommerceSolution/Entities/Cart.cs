@@ -49,21 +49,27 @@ public class Cart : BaseEntity
 
     public override string ToString()
     {
-        var res = $"Cart \t: {Id}" +
+        var cartItems = "";
+        Items.ForEach(item =>
+        {
+            cartItems += $"\n\t{item.Product.Name}\t\t{item.Quantity} x {item.Product.Price}";
+        });
+        var res = $"\nCart \t: {Id}" +
+                  $"{cartItems}"+
                   $"\n\tTotal Items\t: {Items.Count}" +
-                  $"\n\tPrice\t: ${TotalPrice}";
+                  $"\n\tPrice\t\t: ${TotalPrice}";
         if (ShippingCharge > 0)
         {
-            return res + $"\n\tShipping Charge: ${ShippingCharge}" +
-                   $"\n\tTotal: ${(TotalPrice + ShippingCharge):F2}";
+            return res + $"\n\tShipping Charge\t: ${ShippingCharge}" +
+                   $"\n\tTotal\t\t: ${(TotalPrice + ShippingCharge):F2}\n";
         }
 
         if (Discount > 0)
         {
-            return res + $"\n\tDiscount\t: -${Discount:F2}" +
-                   $"\n\tTotal: ${(TotalPrice - Discount):F2}";
+            return res + $"\n\tDiscount\t:-${Discount:F2}" +
+                   $"\n\tTotal\t\t: ${(TotalPrice - Discount):F2}\n";
         }
 
-        return res;
+        return res + "\n";
     }
 }

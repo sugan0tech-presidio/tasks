@@ -68,7 +68,7 @@ class Program
                     task = Task.Run(() => new UserController(UserService).Run());
                     break;
                 case "4":
-                    task = Task.Run(() => new BillController(BillService).Run());
+                    task = Task.Run(() => new BillController(BillService, UserService).Run());
                     break;
                 case "5":
                     Console.Clear();
@@ -87,10 +87,10 @@ class Program
     private static void DisplayOptions()
     {
         Console.WriteLine("\nWelcome to EKart");
-        Console.WriteLine("1. ProductManagement");
-        Console.WriteLine("2. CartManagement");
-        Console.WriteLine("3. UserManagement");
-        Console.WriteLine("4. BillManagement");
+        Console.WriteLine("1. Product Management");
+        Console.WriteLine("2. Cart Management");
+        Console.WriteLine("3. User Management");
+        Console.WriteLine("4. Bill Management");
         Console.WriteLine("5. Clear Console");
         Console.WriteLine("6. exit the application");
     }
