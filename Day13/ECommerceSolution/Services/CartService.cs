@@ -20,7 +20,7 @@ public class CartService : BaseService<Cart>
     /// <param name="product">Product</param>
     /// <param name="quantity">Quantity</param>
     /// <exception cref="TooMuchItemsException">If product quantity exceeds it's stock count</exception>
-    public async Task AddItemToCart(int cartId, Product product, int quantity)
+    public async Task<Cart> AddItemToCart(int cartId, Product product, int quantity)
     {
         var cart = Repository.GetByIdAsync(cartId).Result;
 
@@ -44,6 +44,7 @@ public class CartService : BaseService<Cart>
         }
 
         await Repository.UpdateAsync(cart);
+        return cart;
     }
 
     /// <summary>
@@ -54,7 +55,7 @@ public class CartService : BaseService<Cart>
     /// <param name="newQuantity"></param>
     /// <exception cref="TooMuchItemsException">If product quantity exceeds it's stock count</exception>
     /// <exception cref="CartItemNotFoundException">If updated cartite doesn't exixt</exception>
-    public async Task UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
+    public async Task<Cart> UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
     {
         var cart = Repository.GetByIdAsync(cartId).Result;
         var product = _productRepository.GetByIdAsync(productId).Result;
@@ -72,6 +73,7 @@ public class CartService : BaseService<Cart>
 
             await _productRepository.UpdateAsync(product);
             Repository.UpdateAsync(cart);
+            return cart;
         }
         else
         {

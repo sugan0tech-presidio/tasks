@@ -117,17 +117,19 @@ public class CartController : BaseController<Cart>
 
         Cart cart;
         if (user.Cart == null)
-            cart = new Cart();
+        {
+            cart = CartService.AddAsync(new Cart()).Result;
+        }
         else
             cart = user.Cart;
-        
+
         user.Cart = cart;
-        Console.WriteLine(cart);
 
         var productId = GetFromConsole<int>("Product Id");
         var quantity = GetFromConsole<int>("Quantity");
 
-        CartService.AddItemToCart(cart.Id, ProductService.GetByIdAsync(productId).Result, quantity);
+        user.Cart = CartService.AddItemToCart(cart.Id, ProductService.GetByIdAsync(productId).Result, quantity).Result;
+        Console.WriteLine(user.Cart);
         UserService.UpdateAsync(user);
         _entityService.AddAsync(cart);
     }
