@@ -41,7 +41,7 @@ public class BaseController<TBaseEntity> where TBaseEntity: IEntity
                 switch (choice)
                 {
                     case "1":
-                        ListEntiyMembers();
+                        ListEntityMembers();
                         break;
                     case "2":
                         AddEntityMember();
@@ -69,10 +69,10 @@ public class BaseController<TBaseEntity> where TBaseEntity: IEntity
         }
     }
 
-    private void ListEntiyMembers()
+    private void ListEntityMembers()
     {
         var members = _entityService.GetAll();
-        Console.WriteLine("\nList of Staff Members:");
+        Console.WriteLine($"\nList of {_entityName}'s:");
         foreach (var entity in members)
         {
             Console.WriteLine(entity);
@@ -82,47 +82,27 @@ public class BaseController<TBaseEntity> where TBaseEntity: IEntity
     // todo
     private void AddEntityMember()
     {
-        Console.WriteLine("\nEnter Staff Member Details:");
-        Console.Write("Name: ");
-        var name = Console.ReadLine();
-        // Add other staff member details input here
-
-        // Call staff service to add staff member
-        // _staffService.Add(new Staff(...));
-
+        Console.WriteLine($"\nEnter {_entityName} Details:");
+        
         Console.WriteLine("Staff member added successfully.");
     }
 
     private void UpdateEntityMember()
     {
-        Console.Write("\nEnter Staff Member ID to update: ");
+        Console.Write($"\nEnter {_entityName} ID to update: ");
         var id = Convert.ToInt32(Console.ReadLine());
-
-        // Check if the staff member exists and user has permission to update it
-        // var staffMember = _staffService.GetById(id);
-        // if (staffMember == null)
-        // {
-        //     Console.WriteLine("Staff member not found.");
-        //     return;
-        // }
-        // Add permission check here
-
-        Console.WriteLine("\nEnter Updated Staff Member Details:");
-        // Get updated details from user input
-        // Update staff member properties
-        // Call staff service to update staff member
 
         Console.WriteLine("Staff member updated successfully.");
     }
 
     private void DeleteEntityMember()
     {
-        Console.Write("\nEnter Staff Member ID to delete: ");
+        Console.Write($"\nEnter {_entityName} ID to delete: ");
         var id = Convert.ToInt32(Console.ReadLine());
         try
         {
             _entityService.Delete(id);
-            Console.WriteLine("Staff member deleted successfully.");
+            Console.WriteLine($"{_entityName} deleted successfully.");
         }
         catch (KeyNotFoundException e)
         {
