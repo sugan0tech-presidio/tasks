@@ -15,7 +15,7 @@ namespace ECommerceApp.Test.Services
         public void SetUp()
         {
             userService = new UserService(new UserRepository());
-            cartservice = new CartService(new CartRepository(), new ProductRepository());
+            cartservice = new CartService(new CartRepository(), new ProductService(new ProductRepository()));
             billService = new BillService(new BillRepository(), cartservice, userService);
         }
 

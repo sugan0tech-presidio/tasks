@@ -67,6 +67,22 @@ public class BaseController<TBaseEntity> where TBaseEntity : IEntity
             {
                 Console.WriteLine(e);
             }
+            catch (TooMuchItemsException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (CartNotFoundException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (InvalidConsoleInputException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (AggregateException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 

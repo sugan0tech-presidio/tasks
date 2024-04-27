@@ -27,7 +27,7 @@ class Program
 
 
     private static readonly ProductService ProductService = new ProductService(new ProductRepository());
-    private static readonly CartService CartService = new CartService(new CartRepository(), new ProductRepository());
+    private static readonly CartService CartService = new CartService(new CartRepository(), ProductService);
     private static readonly UserService UserService = new UserService(new UserRepository());
     private static readonly BillService BillService = new BillService(new BillRepository(), CartService, UserService);
 
@@ -35,7 +35,14 @@ class Program
     static async Task Main(string[] args)
     {
         seed();
-        ShowMainMenu();
+        try
+        {
+            ShowMainMenu();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 
     static void ShowMainMenu()

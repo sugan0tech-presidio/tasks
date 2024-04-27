@@ -6,11 +6,11 @@ namespace ECommerceApp.Services;
 
 public class CartService : BaseService<Cart>
 {
-    private ProductRepository _productRepository;
+    private ProductService ProductService;
 
-    public CartService(BaseRepository<Cart> repository, ProductRepository productRepository) : base(repository)
+    public CartService(BaseRepository<Cart> repository, ProductService productService) : base(repository)
     {
-        _productRepository = productRepository;
+        ProductService = productService;
     }
 
     /// <summary>
@@ -29,12 +29,13 @@ public class CartService : BaseService<Cart>
             throw new TooMuchItemsException("Provided quantity is higher than the actual stock");
         }
 
-        product.Stock -= quantity;
-        _productRepository.UpdateAsync(product);
 
         var existingItem = cart.Items.FirstOrDefault(item => item.Product.Id == product.Id);
         if (existingItem != null)
         {
+            if (existingItem.Quantity + quantity > 5)
+                throw new TooMuchItemsException($"Product: {product.Name} quantity should not be greater than 5");
+            
             existingItem.Quantity += quantity;
         }
         else
@@ -44,6 +45,8 @@ public class CartService : BaseService<Cart>
         }
 
         await Repository.UpdateAsync(cart);
+        product.Stock -= quantity;
+        await ProductService.UpdateAsync(product);
         return cart;
     }
 
@@ -58,7 +61,7 @@ public class CartService : BaseService<Cart>
     public async Task<Cart> UpdateCartItemQuantity(int cartId, int productId, int newQuantity)
     {
         var cart = Repository.GetByIdAsync(cartId).Result;
-        var product = _productRepository.GetByIdAsync(productId).Result;
+        var product = ProductService.GetByIdAsync(productId).Result;
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
         {
@@ -71,7 +74,7 @@ public class CartService : BaseService<Cart>
             product.Stock -= newQuantity;
             cartItem.Quantity = newQuantity;
 
-            await _productRepository.UpdateAsync(product);
+            await ProductService.UpdateAsync(product);
             Repository.UpdateAsync(cart);
             return cart;
         }
@@ -90,7 +93,7 @@ public class CartService : BaseService<Cart>
     public async Task RemoveItemFromCart(int cartId, int productId)
     {
         var cart = Repository.GetByIdAsync(cartId).Result;
-        var product = _productRepository.GetByIdAsync(productId).Result;
+        var product = ProductService.GetByIdAsync(productId).Result;
 
         var cartItem = cart.Items.FirstOrDefault(item => item.Product.Id == productId);
         if (cartItem != null)
@@ -98,7 +101,7 @@ public class CartService : BaseService<Cart>
             cart.Items.Remove(cartItem);
             product.Stock += cartItem.Quantity;
 
-            await _productRepository.UpdateAsync(product);
+            await ProductService.UpdateAsync(product);
             Repository.UpdateAsync(cart);
         }
         else
@@ -118,7 +121,7 @@ public class CartService : BaseService<Cart>
         {
             var product = cartItem.Product;
             product.Stock += cartItem.Quantity;
-            _productRepository.UpdateAsync(product);
+            ProductService.UpdateAsync(product);
         });
         await base.DeleteAsync(id);
     }

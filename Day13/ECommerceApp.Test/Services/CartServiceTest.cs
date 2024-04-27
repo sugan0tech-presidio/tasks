@@ -23,7 +23,7 @@ public class CartServiceTest
             Brand = "test",
             Category = "cat"
         };
-        _cartService = new CartService(new CartRepository(), _productRepository);
+        _cartService = new CartService(new CartRepository(), new ProductService(new ProductRepository()));
         _cartService.AddAsync(_cart);
         _product = _productRepository.AddAsync(_product).Result;
         _user = new User("name", "didi", "idi");

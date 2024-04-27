@@ -1,4 +1,5 @@
 ﻿using ECommerceApp.Entities;
+using ECommerceApp.Exceptions;
 using ECommerceApp.Services;
 
 namespace ECommerceApp.Controllers;
@@ -69,9 +70,25 @@ public class CartController : BaseController<Cart>
                         break;
                 }
             }
+            catch (TooMuchItemsException e)
+            {
+                Console.WriteLine(e);
+            }
             catch (KeyNotFoundException e)
             {
                 Console.WriteLine(e);
+            }
+            catch (CartNotFoundException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (InvalidConsoleInputException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (AggregateException ae)
+            {
+                Console.WriteLine(ae.Message);
             }
         }
     }
@@ -94,8 +111,7 @@ public class CartController : BaseController<Cart>
 
     private void ListCartItem()
     {
-        Console.WriteLine("here at lastCartItem");
-        if (user.Cart != null || user.Cart.Items.Count > 0)
+        if (user != null && user.Cart != null && user.Cart.Items != null && user.Cart.Items.Count > 0)
         {
             foreach (var cartItem in user.Cart.Items)
             {
@@ -110,7 +126,6 @@ public class CartController : BaseController<Cart>
 
     private void AddCartItem()
     {
-        // todo to be done via login
         var userId = this.user.Id;
 
         var user = UserService.GetByIdAsync(userId).Result;
@@ -129,7 +144,7 @@ public class CartController : BaseController<Cart>
         var quantity = GetFromConsole<int>("Quantity");
 
         user.Cart = CartService.AddItemToCart(cart.Id, ProductService.GetByIdAsync(productId).Result, quantity).Result;
-        Console.WriteLine(user.Cart);
+        
         UserService.UpdateAsync(user);
         _entityService.AddAsync(cart);
     }
