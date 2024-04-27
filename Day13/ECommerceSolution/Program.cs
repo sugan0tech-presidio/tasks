@@ -42,50 +42,51 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("\nWelcome to EKart");
-            Console.WriteLine("1. ProductManagement");
-            Console.WriteLine("2. CartManagement");
-            Console.WriteLine("3. UserManagement");
-            Console.WriteLine("4. BillManagement");
-            Console.WriteLine("5. Clear Console");
-            Console.WriteLine("6. exit the application");
-
+            Task task = Task.Run(() => DisplayOptions());
+            task.Wait();
+            
             Console.Write("\nEnter your choice: ");
             var choice = Console.ReadLine();
 
-            try
+
+            switch (choice)
             {
-                switch (choice)
-                {
-                    case "1":
-                        new ProductController(ProductService).Run();
-                        break;
-                    case "2":
-                        new CartController(CartService, UserService, ProductService).Run();
-                        break;
-                    case "3":
-                        new UserController(UserService).Run();
-                        break;
-                    case "4":
-                        Console.WriteLine("Bill Controller");
-                        break;
-                    case "5":
-                        Console.Clear();
-                        break;
-                    case "6":
-                        return;
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
-                }
+                case "1":
+                    task = Task.Run(() => new ProductController(ProductService).Run());
+                    break;
+                case "2":
+                    task = Task.Run(() => new CartController(CartService, UserService, ProductService).Run());
+                    break;
+                case "3":
+                    task = Task.Run(() => new UserController(UserService).Run());
+                    break;
+                case "4":
+                    task = Task.Run(() => new BillController(BillService).Run());
+                    break;
+                case "5":
+                    Console.Clear();
+                    break;
+                case "6":
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    break;
             }
-            catch (KeyNotFoundException e)
-            {
-                Console.WriteLine(e);
-            }
+
+            task.Wait();
         }
     }
 
+    private static void DisplayOptions()
+    {
+        Console.WriteLine("\nWelcome to EKart");
+        Console.WriteLine("1. ProductManagement");
+        Console.WriteLine("2. CartManagement");
+        Console.WriteLine("3. UserManagement");
+        Console.WriteLine("4. BillManagement");
+        Console.WriteLine("5. Clear Console");
+        Console.WriteLine("6. exit the application");
+    }
 
     public static void seed()
     {
