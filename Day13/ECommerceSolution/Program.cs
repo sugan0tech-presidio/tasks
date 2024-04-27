@@ -1,4 +1,8 @@
-﻿namespace ECommerceApp;
+﻿using ECommerceApp.Controllers;
+using ECommerceApp.Repositories;
+using ECommerceApp.Services;
+
+namespace ECommerceApp;
 
 class Program
 {
@@ -23,15 +27,7 @@ class Program
     
     static async Task Main(string[] args)
     {
-        var program = new Program();
-        var number = await program.GetResultFromDatabaseServer();
-        Console.WriteLine($"from server {number}");
-        Console.WriteLine($"from here {new Random().Next()}");
-        var number2 = await program.GetResultFromDatabaseServer();
-        Console.WriteLine(number2);
-        Thread t1 = new Thread(program.PrintNum);
-        Thread t2 = new Thread(program.PrintNum);
-        t1.Start();
-        t2.Start();
+        ProductController productController = new ProductController(new ProductService(new ProductRepository()));
+        productController.Run();
     }
 }
