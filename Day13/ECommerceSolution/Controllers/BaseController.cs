@@ -135,7 +135,8 @@ public class BaseController<TBaseEntity> where TBaseEntity : IEntity
 
     protected T GetFromConsole<T>(string message)
     {
-        while (true)
+        var maxTries = 5;
+        while (maxTries > 0)
         {
             Console.Write($"\nEnter {message} :");
             var value = Console.ReadLine();
@@ -165,6 +166,10 @@ public class BaseController<TBaseEntity> where TBaseEntity : IEntity
                 Console.WriteLine($"Invalid Entry for the type {typeof(T)}");
                 Console.WriteLine("Enter again!!");
             }
+            maxTries--;
+            Console.WriteLine($"\t\t\tTries left {maxTries}!!!");
         }
+
+        throw new InvalidConsoleInputException("You are exhausted with max number of tries");
     }
 }
