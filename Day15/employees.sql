@@ -1,8 +1,15 @@
-DROP DATABASE EMP;
+USE master;
+GO
+
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = 'EMP')
+    DROP DATABASE EMP;
+GO
 
 CREATE DATABASE EMP;
+GO
 
 USE EMP;
+GO
 
 CREATE TABLE ITEM (
     itemname VARCHAR(50) PRIMARY KEY,
