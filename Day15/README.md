@@ -12,6 +12,10 @@ Points for consideration
   6) These are just details of one shop
  
 Note:- you do not have to store the shop details.
+
+### ER Diagram
+
+![ShoppingER](./ShoppingER.png)
  
 Question2
 
@@ -28,5 +32,9 @@ Scenario:
   - Golden Members:
   - Bronze Members:
 - Using  their credit cards gold members can rent one or more movies and bronze members max. of one movie.  
-- A member may have a number of dependents (with known names).
+- A member may have a number of dependents (with known names).|
+
+
+## ER Diagram
+![MovieStoreER](./MovieStoreER.png)
 - Each dependent is allowed to rent one (1) movie at a time.
