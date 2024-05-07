@@ -1,4 +1,4 @@
-create procedure proc_GreetWithName(@cname varchar(20))
+create procedure proc_GreetWithName(@cname varchar(20), @edob datetime)
 as 
 begin
 	print 'Hllo' +@cname

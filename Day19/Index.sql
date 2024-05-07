@@ -1,4 +1,8 @@
 sp_help Employees
 
-create index indexEmpEmail on Employee(email)
+select * from Employees
+create index indexEmpAddr on Employees(Address)
 
+select * from Employees where Address like'a%'
+
+drop index indexEmpAddr on Employees
