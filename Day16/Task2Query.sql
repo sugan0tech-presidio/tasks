@@ -64,3 +64,4 @@ where state = 'CA'
 -- Question 15: Print the count of authors from every state
 select state, count(au_id) as 'count' from authors
 group by state
+
