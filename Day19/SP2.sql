@@ -1,17 +1,25 @@
-create procedure get_titles_sold
+-- Create a sp that will take the employee's firtname and 
+-- print all the titles sold by him/her, price, quantity and the cost.
+CREATE PROCEDURE get_titles_sold
     @employee_firstname varchar(50)
-as
-begin
-    select titles.title "Title", titles.price, sales.qty, titles.price * sales.qty  "Cost"
+AS
+BEGIN
+
+    select titles.title "Title", titles.price, sum(sales.qty) "Sales", titles.price * sum(sales.qty)  "Cost"
     from sales
     join titles on sales.title_id = titles.title_id
     join employee on employee.pub_id = titles.pub_id
-    where employee.fname = @employee_firstname;
-end;
+    where employee.fname = @employee_firstname
+	group by titles.title, titles.price;
 
-go
+END;
 
-execute get_titles_sold 'Victoria';
+GO
 
-go
-drop procedure get_titles_sold
+EXECUTE get_titles_sold 'Victoria';
+
+GO
+DROP PROCEDURE get_titles_sold
+
+GO
+SELECT * FROM employee
