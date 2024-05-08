@@ -1,96 +1,66 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
 namespace DoctorsAppointmentManager.Repository
 {
     public class AppointmentRepository : IRepository<int, Appointment>
     {
-        private readonly Dictionary<int, Appointment?> _appointments;
+        private readonly DoctorsAppointmentContext _context;
 
-        public AppointmentRepository()
+        public AppointmentRepository(DoctorsAppointmentContext context)
         {
-            _appointments = new Dictionary<int, Appointment?>();
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        /// <summary>
-        /// Get all appointments.
-        /// </summary>
-        /// <returns>List of Appointment</returns>
         public List<Appointment> GetAll()
         {
-            return new List<Appointment>(_appointments.Values);
+            return _context.Appointments.ToList();
         }
 
-        /// <summary>
-        ///  Get specific appointment with the given Id
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns>Matched appointment with the given key</returns>
-        /// <exception cref="Exception">If no appointment found with the given key</exception>
         public Appointment Get(int key)
         {
-            _appointments.TryGetValue(key, out Appointment appointment);
-            if (appointment == null)
-                throw new Exception("Appointment not found!!!");
-            return appointment;
+            return _context.Appointments.Find(key);
         }
 
-        /// <summary>
-        ///  To create new appointment.
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">If the incoming Appointment object is null</exception>
-        /// <exception cref="ArgumentException">If we had a appointment with that date</exception>
         public Appointment Add(Appointment item)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item), "Appointment cannot be null.");
 
-            if (_appointments.Values.Any(a => a.AppointmentDateTime == item.AppointmentDateTime && a.Doctor.Equals(item.Doctor)))
+            if (_context.Appointments.Any(a => a.AppointmentDateTime == item.AppointmentDateTime && a.DoctorId == item.DoctorId))
                 throw new ArgumentException("Appointment with the same date and doctor already exists.");
 
-            var newId = _appointments.Count > 0 ? _appointments.Keys.Max() + 1 : 1;
-            item.Id = newId;
-            _appointments.Add(newId, item);
+            _context.Appointments.Add(item);
+            _context.SaveChanges();
             return item;
         }
-        
-        /// <summary>
-        /// To adjust Appointment.
-        /// </summary>
-        /// <param name="item">updated appointment with correct Id</param>
-        /// <returns>Updated appointment</returns>
-        /// <exception cref="ArgumentNullException">If the input is null</exception>
-        /// <exception cref="KeyNotFoundException">If appointment not present with the given Id</exception>
-        /// <exception cref="ArgumentException">If there is a appointment with same time</exception>
+
         public Appointment Update(Appointment item)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item), "Appointment cannot be null.");
 
-            if (!_appointments.ContainsKey(item.Id))
+            if (!_context.Appointments.Any(a => a.Id == item.Id))
                 throw new KeyNotFoundException($"Appointment with ID {item.Id} not found.");
 
-            if (_appointments.Values.Any(a => a.Id != item.Id && a.AppointmentDateTime == item.AppointmentDateTime && a.Doctor == item.Doctor))
+            if (_context.Appointments.Any(a => a.Id != item.Id && a.AppointmentDateTime == item.AppointmentDateTime && a.DoctorId == item.DoctorId))
                 throw new ArgumentException("Appointment with the same date and doctor already exists.");
-            
-            _appointments[item.Id] = item;
-            
+
+            _context.Appointments.Update(item);
+            _context.SaveChanges();
             return item;
         }
 
-        /// <summary>
-        /// Deletes appointment
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns>Appointment</returns>
-        /// <exception cref="KeyNotFoundException">If no appointment presents for the given appointment.</exception>
         public Appointment Delete(int key)
         {
-            if (!_appointments.TryGetValue(key, out var appointment))
+            var appointment = _context.Appointments.Find(key);
+            if (appointment == null)
                 throw new KeyNotFoundException($"Appointment with ID {key} not found.");
 
-            _appointments.Remove(key);
+            _context.Appointments.Remove(appointment);
+            _context.SaveChanges();
             return appointment;
         }
     }

@@ -1,114 +1,63 @@
-﻿using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DoctorsAppointmentManager.DoctorsAppointmentLibrary.Entities;
 
 namespace DoctorsAppointmentManager.Repository
 {
     public class DoctorRepository : IRepository<int, Doctor>
     {
-        public static readonly string[] Specializations =
-        {
-            "General Medicine",
-            "Pediatrics",
-            "Cardiology",
-            "Orthopedics",
-            "Neurology",
-            "Dermatology",
-            "Ophthalmology"
-        };
+        private readonly DoctorsAppointmentContext _context;
 
-        public static readonly string[] Qualifications =
+        public DoctorRepository(DoctorsAppointmentContext context)
         {
-            "MBBS",
-            "MD",
-            "MS",
-            "DM"
-        };
-
-        private readonly Dictionary<int, Doctor> _doctors;
-
-        public DoctorRepository()
-        {
-            _doctors = new Dictionary<int, Doctor>();
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns>List of Doctors</returns>
         public List<Doctor> GetAll()
         {
-            return new List<Doctor>(_doctors.Values);
+            return _context.Doctors.ToList();
         }
 
-        /// <summary>
-        /// Fetches specific Doctor.
-        /// </summary>
-        /// <param name="key">Doctor's Id</param>
-        /// <returns></returns>
         public Doctor Get(int key)
         {
-            _doctors.TryGetValue(key, out Doctor doctor);
-            return doctor;
+            return _context.Doctors.Find(key);
         }
 
-        /// <summary>
-        /// Adds new Doctor to the store ( dict as of now )
-        /// No need of id, since it's auto generated
-        /// </summary>
-        /// <param name="item">Provided Doctor Object</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">If the provided is null</exception>
         public Doctor Add(Doctor item)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item), "Doctor cannot be null.");
 
-            var newId = _doctors.Count > 0 ? _doctors.Keys.Max() + 1 : 1;
-            item.Id = newId;
-            _doctors.Add(newId, item);
+            _context.Doctors.Add(item);
+            _context.SaveChanges();
             return item;
         }
 
-        /// <summary>
-        /// Updates existing doctor with the given Id.
-        /// </summary>
-        /// <param name="item">Updated doctors object with Id.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">If the provided object is null</exception>
-        /// <exception cref="KeyNotFoundException">If the key doesn't exist anymore</exception>
         public Doctor Update(Doctor item)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item), "Doctor cannot be null.");
 
-            if (!_doctors.ContainsKey(item.Id))
-                throw new KeyNotFoundException($"Doctor with ID {item.Id} not found.");
-
-            _doctors[item.Id] = item;
+            _context.Doctors.Update(item);
+            _context.SaveChanges();
             return item;
         }
 
-        /// <summary>
-        /// Deletes Doctor from the store.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns>Deleted doctor object</returns>
-        /// <exception cref="KeyNotFoundException">If the object doesn't exist</exception>
         public Doctor Delete(int key)
         {
-            if (!_doctors.TryGetValue(key, out var doctor))
+            var doctor = _context.Doctors.Find(key);
+            if (doctor == null)
                 throw new KeyNotFoundException($"Doctor with ID {key} not found.");
 
-            _doctors.Remove(key);
+            _context.Doctors.Remove(doctor);
+            _context.SaveChanges();
             return doctor;
         }
 
-        /// <summary>
-        /// Filter doctors based on the speciality.
-        /// </summary>
-        /// <param name="speciality">string of speciality</param>
-        /// <returns>selected list of doctors</returns>
         public List<Doctor> FilterBySpeciality(string speciality)
         {
-            return _doctors.Values.Where(d => d.Specialization.Contains(speciality)).ToList();
+            return _context.Doctors.Where(d => d.Specialization.Contains(speciality)).ToList();
         }
     }
 }
