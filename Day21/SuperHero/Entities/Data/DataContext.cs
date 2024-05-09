@@ -15,7 +15,7 @@ namespace SuperHero.Entities.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=7TXBBX3\SQLEXPRESS;Integrated Security=true;Initial Catalog=SuperHero;");
+            optionsBuilder.UseSqlServer(@"Data Source=B4RBBX3\SQLEXPRESS;Integrated Security=true;Initial Catalog=SuperHero;Encrypt=false");
             base.OnConfiguring(optionsBuilder);
         }
     }

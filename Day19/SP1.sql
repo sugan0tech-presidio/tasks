@@ -1,3 +1,6 @@
+-- Create a stored procedure that will take the author firstname and print all 
+-- the books polished by him with the publisher's name
+
 CREATE PROCEDURE GetBooksByAuthor
     @AuthorFirstName NVARCHAR(50)
 AS
@@ -10,6 +13,7 @@ BEGIN
     WHERE authors.au_fname = @AuthorFirstName;
 END
 
+go
 
 execute GetBooksByAuthor 'Dean'
 drop procedure GetBooksByAuthor
