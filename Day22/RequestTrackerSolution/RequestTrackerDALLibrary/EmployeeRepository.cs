@@ -32,7 +32,7 @@ namespace RequestTrackerDALLibrary
 
         public async Task<Employee> Get(int key)
         {
-            var employee = _context.Employees.SingleOrDefault(e => e.Id == key);
+            var employee = _context.Employees.Include(e => e.RequestsRaised).SingleOrDefault(e => e.Id == key);
             return employee;
         }
 
