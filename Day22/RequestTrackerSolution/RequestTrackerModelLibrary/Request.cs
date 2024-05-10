@@ -30,5 +30,7 @@ namespace RequestTrackerModelLibrary
 
         public ICollection<RequestSolution> RequestSolutions { get; set; }
 
+        public SolutionFeedback solutionFeedback { get; set; }
+
     }
 }

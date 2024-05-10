@@ -15,6 +15,8 @@ namespace RequestTrackerModelLibrary
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Request> Requests { get; set; }
+        public DbSet<RequestSolution> RequestSolutions { get; set; }
+        public DbSet<SolutionFeedback> Feedbacks { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>().HasData(
@@ -52,6 +54,19 @@ namespace RequestTrackerModelLibrary
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
+            modelBuilder.Entity<SolutionFeedback>()
+                .HasOne(sf => sf.Solution)
+                .WithMany(s => s.Feedbacks)
+                .HasForeignKey(sf => sf.SolutionId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            modelBuilder.Entity<SolutionFeedback>()
+                .HasOne(sf => sf.FeedbackByEmployee)
+                .WithMany(e => e.FeedbacksGiven)
+                .HasForeignKey(sf => sf.FeedbackBy)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
 
         }
     }
