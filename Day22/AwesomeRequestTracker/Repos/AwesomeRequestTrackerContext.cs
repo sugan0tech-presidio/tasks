@@ -19,6 +19,31 @@ public class AwesomeRequestTrackerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Employee>().HasData(
+            new
+            {
+                Id = 1, Name = "ramu", password = "123", Role = Role.Admin, Email = "ramu@gmail.com",
+                ContactNumber = "6855339922"
+            },
+            new
+            {
+                Id = 2, Name = "somu", password = "456", Role = Role.Intern, Email = "somu@gmail.com",
+                ContactNumber = "6855339922"
+            },
+            new
+            {
+                Id = 3, Name = "vembu", password = "789", Role = Role.Manager, Email = "vembu@gmail.com",
+                ContactNumber = "6855339922"
+            }
+        );
+
+        modelBuilder.Entity<User>().HasData(
+            new
+            {
+                Id = 4, Name = "sugu", password = "123", Role = Role.BaseUser, Email = "sugu@gmail.com",
+                ContactNumber = "6855339922"
+            }
+        );
         modelBuilder.Entity<Employee>()
             .HasMany(e => e.SolutionPrvided)
             .WithOne(rs => rs.SolvedByEmployee)
