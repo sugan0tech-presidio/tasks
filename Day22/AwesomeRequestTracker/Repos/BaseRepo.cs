@@ -57,6 +57,8 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
         if (entity == null)
             throw new ArgumentNullException(nameof(entity), $"{typeof(TBaseEntity)} cannot be null.");
 
+        Console.WriteLine(entity);
+        entity.Id = GetAll().Result.Max(entity => entity.Id) + 1;
         lock (_lock)
         {
             _context.Add(entity);

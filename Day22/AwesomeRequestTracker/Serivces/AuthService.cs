@@ -33,28 +33,20 @@ public class AuthService
             throw new ArgumentException("Password cannot be empty or null.", nameof(password));
 
         Person authenticatedPerson;
-        try
-        {
-            authenticatedPerson = _employeeService.GetAll().Result
-                .Find(emp => emp.Email.Equals(email) && emp.password.Equals(password));
-        }
-        catch (ArgumentNullException e)
-        {
-            Console.WriteLine(e);
-            authenticatedPerson = _userService.GetAll().Result
-                .Find(emp => emp.Email.Equals(email) && emp.password.Equals(password));
-        }
+        authenticatedPerson = _employeeService.GetAll().Result
+            .Find(emp => emp.Email.Equals(email) && emp.password.Equals(password))!;
 
         if (authenticatedPerson == null)
-            throw new AuthenticationException("Invalid email or password.");
+            authenticatedPerson = _userService.GetAll().Result
+                .Find(emp => emp.Email.Equals(email) && emp.password.Equals(password)) ?? throw new AuthenticationException("No one found!!!");
 
         IsLogged = true;
         LoggedUser = authenticatedPerson;
 
         return authenticatedPerson;
     }
-    
-    public void Logout()
+
+    public static void Logout()
     {
         IsLogged = false;
     }
@@ -65,7 +57,7 @@ public class AuthService
         {
             throw new AuthenticationException("No logged person found!!!");
         }
+
         return LoggedUser.Role.Equals(role);
     }
-
 }

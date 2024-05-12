@@ -16,4 +16,8 @@ public class Request : BaseEntity
 
     public Employee RequestClosedByEmployee { get; set; }
     public ICollection<RequestSolution> RequestSolutions { get; set; }
+    public override string ToString()
+    {
+        return $"{Id} {RequestMessage}";
+    }
 }

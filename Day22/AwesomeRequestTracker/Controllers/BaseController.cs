@@ -5,7 +5,7 @@ using AwesomeRequestTracker.Serivces;
 namespace AwesomeRequestTracker.Controllers;
 
 
-public class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
+public abstract class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
 {
     protected readonly BaseService<TBaseEntity> _entityService;
     protected readonly string _entityName = typeof(TBaseEntity).Name;
@@ -20,64 +20,12 @@ public class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
     public void Run()
     {
         Console.WriteLine($"Welcome to {_entityName} Management System!");
-        ShowMainMenu();
+        if (AuthService.IsLogged)
+            ShowMainMenu();
     }
 
-    private void ShowMainMenu()
-    {
-        while (true)
-        {
-            Console.WriteLine($"\n{_entityName}'s Menu:");
-            Console.WriteLine($"1. List {_entityName}'s ");
-            Console.WriteLine($"2. Add {_entityName} ");
-            Console.WriteLine($"3. Update {_entityName} ");
-            Console.WriteLine($"4. Delete {_entityName} ");
-            Console.WriteLine("5. Clear Console");
-            Console.WriteLine("6. exit to Main Menu");
-
-            Console.Write("\nEnter your choice: ");
-            var choice = Console.ReadLine();
-
-            try
-            {
-                switch (choice)
-                {
-                    case "1":
-                        ListEntityMembers();
-                        break;
-                    case "2":
-                        AddEntityMember();
-                        break;
-                    case "3":
-                        UpdateEntityMember();
-                        break;
-                    case "4":
-                        DeleteEntityMember();
-                        break;
-                    case "5":
-                        Console.Clear();
-                        break;
-                    case "6":
-                        return;
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
-                }
-            }
-            catch (KeyNotFoundException e)
-            {
-                Console.WriteLine(e);
-            }
-            catch (InvalidConsoleInputException e)
-            {
-                Console.WriteLine(e);
-            }
-            catch (AggregateException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-    }
+    public abstract void ShowMainMenu();
+    
 
     private void ListEntityMembers()
     {
@@ -140,10 +88,10 @@ public class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
                     if (int.TryParse(value, out int intValue))
                         return (T)(object)intValue;
                 }
-                else if (typeof(T) == typeof(double))
+                else if (typeof(T) == typeof(float))
                 {
-                    if (double.TryParse(value, out double doubleValue))
-                        return (T)(object)doubleValue;
+                    if (float.TryParse(value, out float floatValue))
+                        return (T)(object)floatValue;
                 }
                 else if (typeof(T) == typeof(string))
                 {

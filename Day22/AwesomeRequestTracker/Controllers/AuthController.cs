@@ -5,25 +5,20 @@ namespace AwesomeRequestTracker.Controllers;
 
 public class AuthController
 {
-    private readonly AuthService _staffService;
+    private readonly AuthService _authService;
     private const Role AdminRole = Role.Admin;
 
-    public AuthController(AuthService staffService)
+    public AuthController(AuthService authService)
     {
-        _staffService = staffService;
+        _authService = authService;
     }
 
-    public bool Auth(Role role = Role.Admin)
+    public bool Auth()
     {
         if (AuthService.IsLogged)
         {
-            if (!AuthService.LoggedUser!.Role.Equals(role))
-                Console.WriteLine($"you don't have authority here, please login as {role}");
-            else
-            {
-                Console.WriteLine($"Logged as\t: {AuthService.LoggedUser.Name} {AuthService.LoggedUser.Role}\n");
-                return true;
-            }
+            Console.WriteLine($"Logged as\t: {AuthService.LoggedUser.Name} {AuthService.LoggedUser.Role}\n");
+            return true;
         }
 
         try
@@ -34,12 +29,7 @@ public class AuthController
             Console.Write("Password: ");
             var password = Console.ReadLine();
 
-            var authenticatedStaff = _staffService.Authenticate(email, password);
-            if (!(authenticatedStaff.Role.Equals(role) || authenticatedStaff.Role.Equals(AdminRole)))
-            {
-                Console.WriteLine($"You as {authenticatedStaff.Role} do not have permission to access this system.");
-                return false;
-            }
+            var authenticatedStaff = _authService.Authenticate(email, password);
 
             Console.WriteLine($"\nLogged in successfully as {authenticatedStaff.Role}.");
             return true;
@@ -60,7 +50,7 @@ public class AuthController
             return;
         }
 
-        _staffService.Logout();
+        AuthService.Logout();
         Console.WriteLine("Logging out...");
     }
 
