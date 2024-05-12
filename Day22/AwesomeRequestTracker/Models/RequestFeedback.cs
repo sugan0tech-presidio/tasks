@@ -1,6 +1,8 @@
-﻿namespace AwesomeRequestTracker.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class RequestFeedback: BaseEntity
+namespace AwesomeRequestTracker.Models;
+
+[Table("RequestFeedbacks")]
+public class RequestFeedback : BaseEntity
 {
-    
 }

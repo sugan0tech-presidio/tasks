@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AwesomeRequestTracker.Repos;
 
-public class AwesomeRequestTrackerContext: DbContext
+public class AwesomeRequestTrackerContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -13,10 +13,10 @@ public class AwesomeRequestTrackerContext: DbContext
 
     public DbSet<Employee> Employees { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<Request>  Requests { get; set; }
+    public DbSet<Request> Requests { get; set; }
     public DbSet<RequestFeedback> RequestFeedbacks { get; set; }
     public DbSet<RequestSolution> RequestSolutions { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
     }

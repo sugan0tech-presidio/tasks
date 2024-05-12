@@ -1,5 +1,8 @@
-﻿namespace AwesomeRequestTracker.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class User: Person
+namespace AwesomeRequestTracker.Models;
+
+[Table("Users")]
+public class User : Person
 {
 }

@@ -2,7 +2,7 @@
 
 namespace AwesomeRequestTracker.Models;
 
-public class BaseEntity: IBase
+public class BaseEntity : IBase
 {
     public BaseEntity(int id)
     {

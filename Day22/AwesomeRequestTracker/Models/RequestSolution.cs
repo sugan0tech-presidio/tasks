@@ -1,6 +1,8 @@
-﻿namespace AwesomeRequestTracker.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class RequestSolution: BaseEntity
+namespace AwesomeRequestTracker.Models;
+
+[Table("RequestSolutions")]
+public class RequestSolution : BaseEntity
 {
-    
 }

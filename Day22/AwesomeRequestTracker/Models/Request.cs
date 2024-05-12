@@ -1,7 +1,9 @@
-﻿namespace AwesomeRequestTracker.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-public class Request: BaseEntity
+namespace AwesomeRequestTracker.Models;
+
+[Table("Requests")]
+public class Request : BaseEntity
 {
     public Person RequestRaisedBy { get; set; }
-
 }
