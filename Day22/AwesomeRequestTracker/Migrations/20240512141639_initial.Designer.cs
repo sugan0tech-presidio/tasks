@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AwesomeRequestTracker.Migrations
 {
     [DbContext(typeof(AwesomeRequestTrackerContext))]
-    [Migration("20240512074445_global-relations")]
-    partial class globalrelations
+    [Migration("20240512141639_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,19 +24,6 @@ namespace AwesomeRequestTracker.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AwesomeRequestTracker.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-                });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.Person", b =>
                 {
@@ -76,13 +63,7 @@ namespace AwesomeRequestTracker.Migrations
                     b.Property<DateTime?>("ClosedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RaisedById")
-                        .HasColumnType("int");
-
                     b.Property<int>("RequestClosedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RequestClosedByEmployeeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RequestDate")
@@ -92,7 +73,7 @@ namespace AwesomeRequestTracker.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestRaisedBy")
+                    b.Property<int>("RequestRaisedById")
                         .HasColumnType("int");
 
                     b.Property<string>("RequestStatus")
@@ -101,9 +82,9 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RaisedById");
+                    b.HasIndex("RequestClosedBy");
 
-                    b.HasIndex("RequestClosedByEmployeeId");
+                    b.HasIndex("RequestRaisedById");
 
                     b.ToTable("Requests");
                 });
@@ -155,14 +136,8 @@ namespace AwesomeRequestTracker.Migrations
                     b.Property<int>("FeedbackBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("FeedbackByEmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FeedbackDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("PersonId")
-                        .HasColumnType("int");
 
                     b.Property<float>("Rating")
                         .HasColumnType("real");
@@ -175,13 +150,18 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FeedbackByEmployeeId");
-
-                    b.HasIndex("PersonId");
+                    b.HasIndex("FeedbackBy");
 
                     b.HasIndex("SolutionId");
 
                     b.ToTable("SolutionFeedbacks");
+                });
+
+            modelBuilder.Entity("AwesomeRequestTracker.Models.Employee", b =>
+                {
+                    b.HasBaseType("AwesomeRequestTracker.Models.Person");
+
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.User", b =>
@@ -193,16 +173,16 @@ namespace AwesomeRequestTracker.Migrations
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.Request", b =>
                 {
-                    b.HasOne("AwesomeRequestTracker.Models.Person", "RaisedBy")
-                        .WithMany("RequestsRaised")
-                        .HasForeignKey("RaisedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AwesomeRequestTracker.Models.Employee", "RequestClosedByEmployee")
                         .WithMany("RequestsClosed")
-                        .HasForeignKey("RequestClosedByEmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("RequestClosedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AwesomeRequestTracker.Models.Person", "RaisedBy")
+                        .WithMany("RequestsRaised")
+                        .HasForeignKey("RequestRaisedById")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("RaisedBy");
@@ -215,13 +195,13 @@ namespace AwesomeRequestTracker.Migrations
                     b.HasOne("AwesomeRequestTracker.Models.Request", "RequestRaised")
                         .WithMany("RequestSolutions")
                         .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AwesomeRequestTracker.Models.Employee", "SolvedByEmployee")
                         .WithMany("SolutionPrvided")
                         .HasForeignKey("SolvedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("RequestRaised");
@@ -231,25 +211,30 @@ namespace AwesomeRequestTracker.Migrations
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.SolutionFeedback", b =>
                 {
-                    b.HasOne("AwesomeRequestTracker.Models.Employee", "FeedbackByEmployee")
-                        .WithMany()
-                        .HasForeignKey("FeedbackByEmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AwesomeRequestTracker.Models.Person", null)
+                    b.HasOne("AwesomeRequestTracker.Models.Person", "FeedbackByPerson")
                         .WithMany("FeedbacksGiven")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("FeedbackBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("AwesomeRequestTracker.Models.RequestSolution", "Solution")
                         .WithMany("Feedbacks")
                         .HasForeignKey("SolutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("FeedbackByEmployee");
+                    b.Navigation("FeedbackByPerson");
 
                     b.Navigation("Solution");
+                });
+
+            modelBuilder.Entity("AwesomeRequestTracker.Models.Employee", b =>
+                {
+                    b.HasOne("AwesomeRequestTracker.Models.Person", null)
+                        .WithOne()
+                        .HasForeignKey("AwesomeRequestTracker.Models.Employee", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.User", b =>
@@ -259,13 +244,6 @@ namespace AwesomeRequestTracker.Migrations
                         .HasForeignKey("AwesomeRequestTracker.Models.User", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AwesomeRequestTracker.Models.Employee", b =>
-                {
-                    b.Navigation("RequestsClosed");
-
-                    b.Navigation("SolutionPrvided");
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.Person", b =>
@@ -283,6 +261,13 @@ namespace AwesomeRequestTracker.Migrations
             modelBuilder.Entity("AwesomeRequestTracker.Models.RequestSolution", b =>
                 {
                     b.Navigation("Feedbacks");
+                });
+
+            modelBuilder.Entity("AwesomeRequestTracker.Models.Employee", b =>
+                {
+                    b.Navigation("RequestsClosed");
+
+                    b.Navigation("SolutionPrvided");
                 });
 #pragma warning restore 612, 618
         }

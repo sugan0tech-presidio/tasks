@@ -19,10 +19,17 @@ public class AwesomeRequestTrackerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Employee>()
+            .HasMany(e => e.SolutionPrvided)
+            .WithOne(rs => rs.SolvedByEmployee)
+            .HasForeignKey(e => e.Id)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
+
         modelBuilder.Entity<Request>()
             .HasOne(r => r.RaisedBy)
             .WithMany(e => e.RequestsRaised)
-            .HasForeignKey(r => r.RequestRaisedBy)
+            .HasForeignKey(r => r.RequestRaisedById)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
@@ -36,14 +43,14 @@ public class AwesomeRequestTrackerContext : DbContext
             .HasOne(rs => rs.RequestRaised)
             .WithMany(r => r.RequestSolutions)
             .HasForeignKey(rs => rs.RequestId)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
 
         modelBuilder.Entity<RequestSolution>()
             .HasOne(rs => rs.SolvedByEmployee)
             .WithMany(e => e.SolutionPrvided)
             .HasForeignKey(rs => rs.SolvedBy)
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
         
         modelBuilder.Entity<SolutionFeedback>()

@@ -70,7 +70,7 @@ namespace AwesomeRequestTracker.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestRaisedBy")
+                    b.Property<int>("RequestRaisedById")
                         .HasColumnType("int");
 
                     b.Property<string>("RequestStatus")
@@ -81,7 +81,7 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasIndex("RequestClosedBy");
 
-                    b.HasIndex("RequestRaisedBy");
+                    b.HasIndex("RequestRaisedById");
 
                     b.ToTable("Requests");
                 });
@@ -178,7 +178,7 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasOne("AwesomeRequestTracker.Models.Person", "RaisedBy")
                         .WithMany("RequestsRaised")
-                        .HasForeignKey("RequestRaisedBy")
+                        .HasForeignKey("RequestRaisedById")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -192,13 +192,13 @@ namespace AwesomeRequestTracker.Migrations
                     b.HasOne("AwesomeRequestTracker.Models.Request", "RequestRaised")
                         .WithMany("RequestSolutions")
                         .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AwesomeRequestTracker.Models.Employee", "SolvedByEmployee")
                         .WithMany("SolutionPrvided")
                         .HasForeignKey("SolvedBy")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("RequestRaised");
