@@ -11,6 +11,7 @@ public abstract class Person : BaseEntity
     public ICollection<Request> RequestsRaised { get; set; }
     public ICollection<SolutionFeedback> FeedbacksGiven { get; set; }
     public Role Role { get; set; } = Role.BaseUser;
+    [Required] public string password { get; set; }
 
     public override bool Equals(object? obj)
     {
