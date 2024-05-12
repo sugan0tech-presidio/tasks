@@ -8,6 +8,8 @@ public abstract class Person : BaseEntity
     [MaxLength(12)] public string ContactNumber { get; }
     [Required] public string Email { get; set; }
     public string? Address { get; set; }
+    public ICollection<Request> RequestsRaised { get; set; }
+    public ICollection<SolutionFeedback> FeedbacksGiven { get; set; }
 
     public override bool Equals(object? obj)
     {

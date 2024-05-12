@@ -14,7 +14,7 @@ public class AwesomeRequestTrackerContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Request> Requests { get; set; }
-    public DbSet<RequestFeedback> RequestFeedbacks { get; set; }
+    public DbSet<SolutionFeedback> RequestFeedbacks { get; set; }
     public DbSet<RequestSolution> RequestSolutions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
