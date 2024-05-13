@@ -15,6 +15,7 @@ class Program
     private readonly AuthService _authService;
     private readonly AwesomeRequestTrackerContext _context;
     private readonly UserRequestController _userRequestController;
+    private readonly AdminRequestController _adminRequestController;
     private readonly AuthController _authController;
 
     public Program()
@@ -27,6 +28,8 @@ class Program
         _userService = new UserService(new UserRepo(_context));
         _authService = new AuthService(_employeeService, _userService);
         _userRequestController = new UserRequestController(_requestService, _requestSolutionService, _solutionFeedbackService);
+        _adminRequestController = new AdminRequestController(_userRequestController, _requestService,
+            _requestSolutionService, _solutionFeedbackService);
         _authController = new AuthController(_authService);
     }
 
@@ -50,6 +53,7 @@ class Program
                         _userRequestController.Run();
                         break;
                     case Role.Admin :
+                        _adminRequestController.Run();
                         break;
                     default:
                         return;

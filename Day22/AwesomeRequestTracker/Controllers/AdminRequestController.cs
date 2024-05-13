@@ -1,6 +1,5 @@
 ﻿using AwesomeRequestTracker.Exceptions;
 using AwesomeRequestTracker.Models;
-using AwesomeRequestTracker.Repos;
 using AwesomeRequestTracker.Serivces;
 
 namespace AwesomeRequestTracker.Controllers;
@@ -123,7 +122,8 @@ public class AdminRequestController : BaseController<Request>
 
     private void ViewAllRequest()
     {
-        _requestService.GetAll().Result.ForEach(request => { Console.WriteLine(request); });
+        var requests = _requestService.GetAll().Result;
+        requests.ForEach(Console.WriteLine);
     }
 
     private void ViewSolutions()
@@ -172,6 +172,13 @@ public class AdminRequestController : BaseController<Request>
 
     private void ViewFeedback()
     {
-        throw new NotImplementedException();
+        Employee usr = (Employee)AuthService.LoggedUser;
+        foreach (var requestSolution in usr.SolutionPrvided)
+        {
+            foreach (var requestSolutionFeedback in requestSolution.Feedbacks)
+            {
+                Console.WriteLine(requestSolutionFeedback);
+            }
+        }
     }
 }
