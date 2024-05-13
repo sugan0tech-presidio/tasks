@@ -4,13 +4,14 @@ using AwesomeRequestTracker.Serivces;
 
 namespace AwesomeRequestTracker.Controllers;
 
-public class RequestController : BaseController<Request>
+public class UserRequestController : BaseController<Request>
 {
     private readonly RequestService _requestService;
     private readonly RequestSolutionService _requestSolution;
     private readonly SolutionFeedbackService _solutionFeedbackService;
 
-    public RequestController(RequestService requestService, RequestSolutionService requestSolution, SolutionFeedbackService solutionFeedbackService) : base(requestService)
+    public UserRequestController(RequestService requestService, RequestSolutionService requestSolution,
+        SolutionFeedbackService solutionFeedbackService) : base(requestService)
     {
         _requestService = requestService;
         _requestSolution = requestSolution;
@@ -81,7 +82,7 @@ public class RequestController : BaseController<Request>
         request.RaisedBy = AuthService.LoggedUser;
         Console.WriteLine(_requestService.Add(request).Result);
     }
-    
+
     public void ViewRequestStatus()
     {
         var id = GetFromConsole<int>("Request Id");
@@ -91,12 +92,20 @@ public class RequestController : BaseController<Request>
     public void ViewSolutions()
     {
         var id = GetFromConsole<int>("Request Id");
-        var solutions = _requestService.GetById(id).Result.RequestSolutions;
+        var requests = _requestService.GetById(id).Result;
+
+        if (AuthService.LoggedUser.RequestsRaised.Contains(requests))
+        {
+            throw new AuthenticationException("You can't access this Request");
+        }
+
+        var solutions = requests.RequestSolutions;
         if (solutions == null || solutions.Count.Equals(0))
         {
             Console.WriteLine("No solutions found!!!");
             return;
         }
+
         foreach (var requestSolution in solutions)
         {
             Console.WriteLine(requestSolution);
@@ -123,6 +132,5 @@ public class RequestController : BaseController<Request>
         var sln = _requestSolution.GetById(id).Result;
         sln.RequestRaiserComment = GetFromConsole<string>("Solution Comment");
         _requestSolution.Update(sln);
-
     }
 }

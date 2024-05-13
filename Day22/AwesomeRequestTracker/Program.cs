@@ -14,7 +14,7 @@ class Program
     private readonly UserService _userService;
     private readonly AuthService _authService;
     private readonly AwesomeRequestTrackerContext _context;
-    private readonly RequestController _requestController;
+    private readonly UserRequestController _userRequestController;
     private readonly AuthController _authController;
 
     public Program()
@@ -26,7 +26,7 @@ class Program
         _employeeService = new EmployeeService(new EmployeeRepo(_context));
         _userService = new UserService(new UserRepo(_context));
         _authService = new AuthService(_employeeService, _userService);
-        _requestController = new RequestController(_requestService, _requestSolutionService, _solutionFeedbackService);
+        _userRequestController = new UserRequestController(_requestService, _requestSolutionService, _solutionFeedbackService);
         _authController = new AuthController(_authService);
     }
 
@@ -47,7 +47,7 @@ class Program
                 switch (AuthService.LoggedUser!.Role)
                 {
                     case Role.BaseUser :
-                        _requestController.Run();
+                        _userRequestController.Run();
                         break;
                     case Role.Admin :
                         break;
