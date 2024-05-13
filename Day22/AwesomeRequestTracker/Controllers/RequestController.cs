@@ -68,7 +68,7 @@ public class RequestController : BaseController<Request>
             }
             catch (AggregateException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e);
             }
         }
     }
@@ -92,7 +92,7 @@ public class RequestController : BaseController<Request>
     {
         var id = GetFromConsole<int>("Request Id");
         var solutions = _requestService.GetById(id).Result.RequestSolutions;
-        if (solutions.Count.Equals(0))
+        if (solutions == null || solutions.Count.Equals(0))
         {
             Console.WriteLine("No solutions found!!!");
             return;

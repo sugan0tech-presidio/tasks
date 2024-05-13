@@ -12,4 +12,12 @@ public class SolutionFeedback : BaseEntity
     [ForeignKey("FeedbackPerson")] public int FeedbackBy { get; set; }
     public Person FeedbackByPerson { get; set; }
     public DateTime FeedbackDate { get; set; }
+    
+    public override string ToString()
+    {
+        return $"Id: {Id}\tRating: {Rating}" +
+               $"\nRemarks: {Remarks}" +
+               $"\nSolution: {Solution.SolutionDescription}" +
+               $"\nBy: {FeedbackByPerson.Name}";
+    }
 }

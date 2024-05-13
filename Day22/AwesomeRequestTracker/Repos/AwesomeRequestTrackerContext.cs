@@ -9,6 +9,7 @@ public class AwesomeRequestTrackerContext : DbContext
     {
         optionsBuilder.UseSqlServer(
             @"Data Source=B4RBBX3\SQLEXPRESS;Integrated Security=true;TrustServerCertificate=True;Initial Catalog=AwesomeDB;");
+        optionsBuilder.EnableSensitiveDataLogging();
     }
 
     public DbSet<Employee> Employees { get; set; }
