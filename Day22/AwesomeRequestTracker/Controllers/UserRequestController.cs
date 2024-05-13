@@ -94,7 +94,7 @@ public class UserRequestController : BaseController<Request>
         var id = GetFromConsole<int>("Request Id");
         var requests = _requestService.GetById(id).Result;
 
-        if (AuthService.LoggedUser.RequestsRaised.Contains(requests))
+        if (!AuthService.LoggedUser.RequestsRaised.Contains(requests))
         {
             throw new AuthenticationException("You can't access this Request");
         }

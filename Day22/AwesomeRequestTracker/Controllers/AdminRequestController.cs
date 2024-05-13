@@ -123,7 +123,15 @@ public class AdminRequestController : BaseController<Request>
     private void ViewAllRequest()
     {
         var requests = _requestService.GetAll().Result;
-        requests.ForEach(Console.WriteLine);
+        foreach (var request in requests)
+        {
+            var val = $"Id: {request.Id}\tMsg: {request.RequestMessage}" +
+                      $"\nRaisedBy: {request.RequestRaisedById}" +
+                      $"\nSolutions: {request.RequestSolutions?.Count}" +
+                      $"\nClosed By: {request.RequestClosedByEmployee?.Name}";
+            Console.WriteLine(val);
+        }
+        // requests.ForEach(Console.WriteLine);
     }
 
     private void ViewSolutions()
