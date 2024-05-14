@@ -172,12 +172,13 @@ public class AdminRequestController : BaseController<Request>
     {
         var id = GetFromConsole<int>("Request Id");
         var request = _requestService.GetById(id).Result;
-        
+
         if (request.RequestSolutions.FirstOrDefault(s => s.IsSolved) == null)
         {
             Console.WriteLine("\nNot able to close it, the solution not been marked as solved!!!\n\n");
             return;
         }
+
         request.RequestClosedBy = AuthService.LoggedUser.Id;
         request.ClosedDate = DateTime.Now;
         request.RequestClosedByEmployee = AuthService.LoggedUser as Employee;

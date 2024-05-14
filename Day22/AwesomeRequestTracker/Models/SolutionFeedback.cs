@@ -12,7 +12,7 @@ public class SolutionFeedback : BaseEntity
     [ForeignKey("FeedbackPerson")] public int FeedbackBy { get; set; }
     public Person FeedbackByPerson { get; set; }
     public DateTime FeedbackDate { get; set; } = DateTime.Now;
-    
+
     public override string ToString()
     {
         return $"Id: {Id}\tRating: {Rating}" +

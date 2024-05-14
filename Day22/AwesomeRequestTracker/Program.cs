@@ -27,7 +27,8 @@ class Program
         _employeeService = new EmployeeService(new EmployeeRepo(_context));
         _userService = new UserService(new UserRepo(_context));
         _authService = new AuthService(_employeeService, _userService);
-        _userRequestController = new UserRequestController(_requestService, _requestSolutionService, _solutionFeedbackService);
+        _userRequestController =
+            new UserRequestController(_requestService, _requestSolutionService, _solutionFeedbackService);
         _adminRequestController = new AdminRequestController(_userRequestController, _requestService,
             _requestSolutionService, _solutionFeedbackService);
         _authController = new AuthController(_authService);
@@ -49,10 +50,10 @@ class Program
             {
                 switch (AuthService.LoggedUser!.Role)
                 {
-                    case Role.BaseUser :
+                    case Role.BaseUser:
                         _userRequestController.Run();
                         break;
-                    case Role.Admin :
+                    case Role.Admin:
                         _adminRequestController.Run();
                         break;
                     default:

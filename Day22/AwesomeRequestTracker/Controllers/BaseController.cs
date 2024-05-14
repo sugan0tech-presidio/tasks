@@ -4,7 +4,6 @@ using AwesomeRequestTracker.Serivces;
 
 namespace AwesomeRequestTracker.Controllers;
 
-
 public abstract class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
 {
     protected readonly BaseService<TBaseEntity> _entityService;
@@ -25,7 +24,7 @@ public abstract class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
     }
 
     public abstract void ShowMainMenu();
-    
+
 
     private void ListEntityMembers()
     {
@@ -107,6 +106,7 @@ public abstract class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
                 Console.WriteLine($"Invalid Entry for the type {typeof(T)}");
                 Console.WriteLine("Enter again!!");
             }
+
             maxTries--;
             Console.WriteLine($"\t\t\tTries left {maxTries}!!!");
         }

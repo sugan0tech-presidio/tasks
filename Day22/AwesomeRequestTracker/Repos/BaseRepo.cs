@@ -15,7 +15,7 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
     }
 
     protected readonly AwesomeRequestTrackerContext _context;
-    private readonly object _lock = new ();
+    private readonly object _lock = new();
 
     /// <summary>
     /// Retrieves an entity by its unique identifier asynchronously.
@@ -65,7 +65,7 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
         // {
         //     entity.Id = 1;
         // }
-        
+
         lock (_lock)
         {
             _context.Add(entity);
@@ -89,6 +89,7 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
                 _context.Entry(entity).State = EntityState.Modified;
                 _context.SaveChangesAsync();
             }
+
             return entity;
         }
     }
@@ -107,6 +108,8 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
                 _context.Set<TBaseEntity>().Remove(entity);
                 _context.SaveChangesAsync();
             }
-            return entity;        }
+
+            return entity;
+        }
     }
 }

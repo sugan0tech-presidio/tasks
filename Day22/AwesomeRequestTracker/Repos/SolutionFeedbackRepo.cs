@@ -2,7 +2,7 @@
 
 namespace AwesomeRequestTracker.Repos;
 
-public class SolutionFeedbackRepo: BaseRepo<SolutionFeedback>
+public class SolutionFeedbackRepo : BaseRepo<SolutionFeedback>
 {
     public SolutionFeedbackRepo(AwesomeRequestTrackerContext context) : base(context)
     {

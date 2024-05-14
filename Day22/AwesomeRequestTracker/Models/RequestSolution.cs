@@ -18,7 +18,7 @@ public class RequestSolution : BaseEntity
     public bool IsSolved { get; set; } = false;
     public string? RequestRaiserComment { get; set; }
     public ICollection<SolutionFeedback> Feedbacks { get; set; }
-    
+
     public override string ToString()
     {
         return $"Id: {Id}\tIsSolved: {IsSolved}" +

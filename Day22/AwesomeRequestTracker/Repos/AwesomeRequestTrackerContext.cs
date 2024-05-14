@@ -72,7 +72,7 @@ public class AwesomeRequestTrackerContext : DbContext
         modelBuilder.Entity<Request>()
             .Navigation(request => request.RaisedBy)
             .AutoInclude();
-        
+
         modelBuilder.Entity<Request>()
             .Navigation(request => request.RequestClosedByEmployee)
             .AutoInclude();
@@ -95,22 +95,22 @@ public class AwesomeRequestTrackerContext : DbContext
         modelBuilder.Entity<RequestSolution>()
             .Navigation(rs => rs.RequestRaised)
             .AutoInclude();
-        
+
         modelBuilder.Entity<RequestSolution>()
             .Navigation(rs => rs.SolvedByEmployee)
             .AutoInclude();
-        
+
         modelBuilder.Entity<RequestSolution>()
             .Navigation(rs => rs.Feedbacks)
             .AutoInclude();
-        
+
         modelBuilder.Entity<SolutionFeedback>()
-            .HasOne(sf=>sf.Solution)
-            .WithMany(s=>s.Feedbacks)
-            .HasForeignKey(sf=>sf.SolutionId)
+            .HasOne(sf => sf.Solution)
+            .WithMany(s => s.Feedbacks)
+            .HasForeignKey(sf => sf.SolutionId)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
-        
+
         modelBuilder.Entity<SolutionFeedback>()
             .HasOne(sf => sf.FeedbackByPerson)
             .WithMany(p => p.FeedbacksGiven)
@@ -121,7 +121,7 @@ public class AwesomeRequestTrackerContext : DbContext
         modelBuilder.Entity<SolutionFeedback>()
             .Navigation(sf => sf.Solution)
             .AutoInclude();
-        
+
         modelBuilder.Entity<SolutionFeedback>()
             .Navigation(sf => sf.FeedbackByPerson)
             .AutoInclude();
