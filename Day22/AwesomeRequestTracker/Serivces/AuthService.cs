@@ -47,11 +47,21 @@ public class AuthService
         return authenticatedPerson;
     }
 
+    /// <summary>
+    /// To logout
+    /// sets logged flag as flase
+    /// </summary>
     public static void Logout()
     {
         IsLogged = false;
     }
 
+    /// <summary>
+    /// Authorise given Role with current logged user
+    /// </summary>
+    /// <param name="role"></param>
+    /// <returns>Boolean represents authroization statsu</returns>
+    /// <exception cref="AuthenticationException">if not logged in</exception>
     public static bool Authorize(Role role)
     {
         if (IsLogged == false)

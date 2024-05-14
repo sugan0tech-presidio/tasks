@@ -120,6 +120,9 @@ public class AdminRequestController : BaseController<Request>
         }
     }
 
+    /// <summary>
+    ///  To view all the requests raised.
+    /// </summary>
     private void ViewAllRequest()
     {
         var requests = _requestService.GetAll().Result;
@@ -134,6 +137,9 @@ public class AdminRequestController : BaseController<Request>
         // requests.ForEach(Console.WriteLine);
     }
 
+    /// <summary>
+    /// To list all the solution for given request.
+    /// </summary>
     private void ViewSolutions()
     {
         var id = GetFromConsole<int>("Request Id");
@@ -150,6 +156,9 @@ public class AdminRequestController : BaseController<Request>
         }
     }
 
+    /// <summary>
+    ///  To proivide a solution for a request.
+    /// </summary>
     private void ProvideSolution()
     {
         var id = GetFromConsole<int>("Request Id");
@@ -168,6 +177,9 @@ public class AdminRequestController : BaseController<Request>
         _requestService.Update(request);
     }
 
+    /// <summary>
+    ///  To close a solved request.
+    /// </summary>
     private void CloseRequest()
     {
         var id = GetFromConsole<int>("Request Id");
@@ -185,6 +197,9 @@ public class AdminRequestController : BaseController<Request>
         _requestService.Update(request);
     }
 
+    /// <summary>
+    /// View feedback provied for  current employees solution.
+    /// </summary>
     private void ViewFeedback()
     {
         Employee usr = (Employee)AuthService.LoggedUser;

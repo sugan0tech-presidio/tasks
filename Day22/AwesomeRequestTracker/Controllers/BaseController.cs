@@ -73,6 +73,14 @@ public abstract class BaseController<TBaseEntity> where TBaseEntity : BaseEntity
         }
     }
 
+    /// <summary>
+    /// Special tool utility for handeling console level input V1 ( from day 9 )
+    /// has default max tries of 5
+    /// </summary>
+    /// <param name="message">content to displayed for input</param>
+    /// <typeparam name="T">can be of int, float and string types</typeparam>
+    /// <returns>generated & validated type T</returns>
+    /// <exception cref="InvalidConsoleInputException">If the console input mismatches</exception>
     protected T GetFromConsole<T>(string message)
     {
         var maxTries = 5;

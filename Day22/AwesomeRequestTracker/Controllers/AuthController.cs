@@ -13,6 +13,10 @@ public class AuthController
         _authService = authService;
     }
 
+    /// <summary>
+    ///  Authenticates user from console
+    /// </summary>
+    /// <returns></returns>
     public bool Auth()
     {
         if (AuthService.IsLogged)
@@ -42,6 +46,9 @@ public class AuthController
         return false;
     }
 
+    /// <summary>
+    /// Logs out with auth service
+    /// </summary>
     public void Logout()
     {
         if (!AuthService.IsLogged)
@@ -54,6 +61,11 @@ public class AuthController
         Console.WriteLine("Logging out...");
     }
 
+    /// <summary>
+    ///  Check for authorization
+    /// </summary>
+    /// <param name="level">level as string</param>
+    /// <returns>verified auth</returns>
     public bool HasAuthority(string level)
     {
         Enum.TryParse(level, out Role value);

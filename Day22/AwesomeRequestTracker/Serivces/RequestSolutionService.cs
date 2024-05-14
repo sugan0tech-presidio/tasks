@@ -9,6 +9,11 @@ public class RequestSolutionService : BaseService<RequestSolution>
     {
     }
 
+    /// <summary>
+    /// Adds given feedback to it's solution
+    /// </summary>
+    /// <param name="solutionFeedback">Solution feedback object</param>
+    /// <returns>Request solution</returns>
     public async Task<RequestSolution> AddFeedback(SolutionFeedback solutionFeedback)
     {
         RequestSolution requestSolution = GetById(solutionFeedback.SolutionId).Result;

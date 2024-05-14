@@ -74,6 +74,9 @@ public class UserRequestController : BaseController<Request>
         }
     }
 
+    /// <summary>
+    ///  To raise a request
+    /// </summary>
     public void RaiseRequest()
     {
         Request request = new Request();
@@ -83,12 +86,19 @@ public class UserRequestController : BaseController<Request>
         Console.WriteLine(_requestService.Add(request).Result);
     }
 
+    /// <summary>
+    ///  To view status of a request
+    /// </summary>
     public void ViewRequestStatus()
     {
         var id = GetFromConsole<int>("Request Id");
         Console.WriteLine(_requestService.GetById(id).Result);
     }
 
+    /// <summary>
+    ///  View solutions provided for the given request Id
+    /// </summary>
+    /// <exception cref="AuthenticationException"></exception>
     public void ViewSolutions()
     {
         var id = GetFromConsole<int>("Request Id");
@@ -112,6 +122,9 @@ public class UserRequestController : BaseController<Request>
         }
     }
 
+    /// <summary>
+    /// To give feedback for the given solution
+    /// </summary>
     public void GiveFeedback()
     {
         var id = GetFromConsole<int>("Solution Id");
@@ -126,6 +139,9 @@ public class UserRequestController : BaseController<Request>
         _requestSolution.AddFeedback(solutionFeedback);
     }
 
+    /// <summary>
+    /// To respond to a solution ( accepting it )
+    /// </summary>
     public void RespondToSolution()
     {
         var id = GetFromConsole<int>("Solution Id");
