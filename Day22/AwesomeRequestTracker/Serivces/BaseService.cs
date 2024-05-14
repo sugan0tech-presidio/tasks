@@ -34,9 +34,9 @@ public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
         {
             return await Repository.GetById(id);
         }
-        catch (KeyNotFoundException ex)
+        catch (KeyNotFoundException)
         {
-            throw new KeyNotFoundException($"Failed to retrieve {typeof(TBaseEntity).Name} with ID {id}.", ex);
+            throw new KeyNotFoundException($"Failed to retrieve {typeof(TBaseEntity).Name} with ID {id}.");
         }
     }
 
@@ -57,14 +57,11 @@ public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
     /// <exception cref="ArgumentNullException">Thrown if the provided entity is null.</exception>
     public async Task<TBaseEntity> Add(TBaseEntity entity)
     {
-        try
+        if (entity == null)
         {
-            return await Repository.Add(entity);
+            throw new ArgumentNullException($"Entity {typeof(TBaseEntity).Name} is null");
         }
-        catch (ArgumentNullException)
-        {
-            throw;
-        }
+        return await Repository.Add(entity);
     }
 
     /// <summary>
@@ -79,9 +76,9 @@ public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
         {
             return await Repository.Update(entity);
         }
-        catch (KeyNotFoundException ex)
+        catch (KeyNotFoundException)
         {
-            throw new KeyNotFoundException($"Failed to update {typeof(TBaseEntity).Name}. Entity not found.", ex);
+            throw new KeyNotFoundException($"Failed to update {typeof(TBaseEntity).Name}. Entity not found.");
         }
     }
 
@@ -97,9 +94,9 @@ public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
         {
             await Repository.DeleteById(id);
         }
-        catch (KeyNotFoundException ex)
+        catch (KeyNotFoundException)
         {
-            throw new KeyNotFoundException($"Failed to delete {typeof(TBaseEntity).Name}. Entity not found.", ex);
+            throw new KeyNotFoundException($"Failed to delete {typeof(TBaseEntity).Name}. Entity not found.");
         }
     }
 }

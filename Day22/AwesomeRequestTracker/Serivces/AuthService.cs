@@ -39,7 +39,7 @@ public class AuthService
         if (authenticatedPerson == null)
             authenticatedPerson = _userService.GetAll().Result
                                       .Find(emp => emp.Email.Equals(email) && emp.password.Equals(password)) ??
-                                  throw new AuthenticationException("No one found!!!");
+                                  throw new AuthenticationException($"Login Failed\nNo user with this mail {email} or password");
 
         IsLogged = true;
         LoggedUser = authenticatedPerson;

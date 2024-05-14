@@ -1,4 +1,5 @@
-﻿using AwesomeRequestTracker.Models;
+﻿using AwesomeRequestTracker.Exceptions;
+using AwesomeRequestTracker.Models;
 using AwesomeRequestTracker.Serivces;
 
 namespace AwesomeRequestTracker.Controllers;
@@ -38,9 +39,13 @@ public class AuthController
             Console.WriteLine($"\nLogged in successfully as {authenticatedStaff.Role}.");
             return true;
         }
-        catch (Exception e)
+        catch (ArgumentException e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(e.Message);
+        }
+        catch (AuthenticationException ae)
+        {
+            Console.WriteLine(ae.Message);
         }
 
         return false;

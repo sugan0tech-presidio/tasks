@@ -15,9 +15,10 @@ public class SolutionFeedback : BaseEntity
 
     public override string ToString()
     {
-        return $"Id: {Id}\tRating: {Rating}" +
-               $"\nRemarks: {Remarks}" +
-               $"\nSolution: {Solution.SolutionDescription}" +
-               $"\nBy: {FeedbackByPerson.Name}";
+        return $"\n\nId: {Id}\t\tRating: {Rating}" +
+               $"\n\tRemarks: {Remarks}" +
+               $"\n\tSolutionID: {Solution.Id} Description: {Solution.SolutionDescription}" +
+               $"\n\tBy: {FeedbackByPerson.Name}\n" +
+               $"\n\tOn: {FeedbackDate}\n\n";
     }
 }

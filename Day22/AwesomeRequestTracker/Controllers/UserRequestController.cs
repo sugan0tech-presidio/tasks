@@ -71,6 +71,10 @@ public class UserRequestController : BaseController<Request>
             {
                 Console.WriteLine(e);
             }
+            catch (AuthenticationException aue)
+            {
+                Console.WriteLine(aue);
+            }
         }
     }
 
@@ -128,6 +132,10 @@ public class UserRequestController : BaseController<Request>
     public void GiveFeedback()
     {
         var id = GetFromConsole<int>("Solution Id");
+        var solution = _requestSolution.GetById(id).Result;
+        if (solution.RequestRaised.RaisedBy.Id != AuthService.LoggedUser.Id)
+            throw new System.Security.Authentication.AuthenticationException("you don't have access to this solution");
+        
         SolutionFeedback solutionFeedback = new SolutionFeedback();
         solutionFeedback.FeedbackBy = AuthService.LoggedUser.Id;
         solutionFeedback.FeedbackByPerson = AuthService.LoggedUser;

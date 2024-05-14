@@ -51,15 +51,15 @@ public class AdminRequestController : BaseController<Request>
             }
             catch (KeyNotFoundException e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
             }
             catch (InvalidConsoleInputException e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
             }
             catch (AggregateException e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
             }
         }
     }
@@ -126,15 +126,15 @@ public class AdminRequestController : BaseController<Request>
     private void ViewAllRequest()
     {
         var requests = _requestService.GetAll().Result;
-        foreach (var request in requests)
-        {
-            // var val = $"Id: {request.Id}\tMsg: {request.RequestMessage}" +
-            //           $"\nRaisedBy: {request.RequestRaisedById}" +
-            //           $"\nSolutions: {request.RequestSolutions?.Count}" +
-            //           $"\nClosed By: {request.RequestClosedByEmployee?.Name}";
-            Console.WriteLine(request);
-        }
-        // requests.ForEach(Console.WriteLine);
+        // foreach (var request in requests)
+        // {
+        //     // var val = $"Id: {request.Id}\tMsg: {request.RequestMessage}" +
+        //     //           $"\nRaisedBy: {request.RequestRaisedById}" +
+        //     //           $"\nSolutions: {request.RequestSolutions?.Count}" +
+        //     //           $"\nClosed By: {request.RequestClosedByEmployee?.Name}";
+        //     Console.WriteLine(request);
+        // }
+        requests.ForEach(Console.WriteLine);
     }
 
     /// <summary>
@@ -192,6 +192,7 @@ public class AdminRequestController : BaseController<Request>
         }
 
         request.RequestClosedBy = AuthService.LoggedUser.Id;
+        request.RequestStatus = "Closed";
         request.ClosedDate = DateTime.Now;
         request.RequestClosedByEmployee = AuthService.LoggedUser as Employee;
         _requestService.Update(request);

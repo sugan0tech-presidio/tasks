@@ -6,8 +6,8 @@ namespace AwesomeRequestTracker.Models;
 public class Request : BaseEntity
 {
     public string RequestMessage { get; set; }
-    public DateTime RequestDate { get; set; } = System.DateTime.Now;
-    public DateTime? ClosedDate { get; set; } = null;
+    public DateTime RequestDate { get; set; } = DateTime.Now;
+    public DateTime? ClosedDate { get; set; }
     public string RequestStatus { get; set; } = "Created";
     [ForeignKey("RaisedPerson")] public int RequestRaisedById { get; set; }
     public Person RaisedBy { get; set; }
@@ -19,9 +19,17 @@ public class Request : BaseEntity
 
     public override string ToString()
     {
-        return $"Id: {Id}\tMsg: {RequestMessage}" +
-               $"\nRaisedBy: {RaisedBy.Name}" +
-               $"\nSolutions: {RequestSolutions?.Count}" +
-               $"\nClosed By: {RequestClosedByEmployee?.Name}";
+        var tmp = $"\n\tId: {Id}\t\tMsg: {RequestMessage}" +
+                  $"\n\tReqested On: {RequestDate}" +
+                  $"\n\tStatus : {RequestStatus}" +
+                  $"\n\tRaisedBy: {RaisedBy.Name}" +
+                  $"\n\tSolutions: {RequestSolutions?.Count}";
+
+        if (RequestClosedByEmployee != null)
+            return tmp +
+                   $"\n\tClosed On: {ClosedDate}\n" +
+                   $"\n\tClosed By: {RequestClosedByEmployee?.Name}\n\n";
+
+        return tmp + "\n\n";
     }
 }
