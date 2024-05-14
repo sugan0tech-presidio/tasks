@@ -7,7 +7,7 @@ namespace DoctorsAppointmentManager.Services;
 /// A base service implementation for entities.
 /// </summary>
 /// <typeparam name="TBaseEntity">The type of the entity.</typeparam>
-public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
+public abstract class BaseService<TBaseEntity> : IService<TBaseEntity> where TBaseEntity : BaseEntity
 {
     protected readonly BaseRepo<TBaseEntity> Repository;
 

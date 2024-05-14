@@ -1,4 +1,7 @@
 using DoctorsAppointmentManager.Contexts;
+using DoctorsAppointmentManager.Models;
+using DoctorsAppointmentManager.Repos;
+using DoctorsAppointmentManager.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorsAppointmentManager
@@ -18,6 +21,10 @@ namespace DoctorsAppointmentManager
 
             builder.Services.AddDbContext<DoctorAppointmentManagerContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+            builder.Services.AddScoped<IBaseRepo<Doctor>, DoctorRepo>();
+            builder.Services.AddScoped<IService<Doctor>, DoctorService>();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
