@@ -11,7 +11,7 @@ public class SolutionFeedback : BaseEntity
     public RequestSolution Solution { get; set; }
     [ForeignKey("FeedbackPerson")] public int FeedbackBy { get; set; }
     public Person FeedbackByPerson { get; set; }
-    public DateTime FeedbackDate { get; set; }
+    public DateTime FeedbackDate { get; set; } = DateTime.Now;
     
     public override string ToString()
     {

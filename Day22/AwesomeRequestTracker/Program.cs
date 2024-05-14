@@ -61,7 +61,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Please Login");
+                Console.WriteLine("Please Login or Ctrl + C to exit program");
                 _authController.Auth();
             }
         }

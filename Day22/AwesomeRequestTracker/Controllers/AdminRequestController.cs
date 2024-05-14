@@ -181,12 +181,10 @@ public class AdminRequestController : BaseController<Request>
     private void ViewFeedback()
     {
         Employee usr = (Employee)AuthService.LoggedUser;
-        foreach (var requestSolution in usr.SolutionPrvided)
+        var feedbacks = _solutionFeedbackService.GetAll().Result.FindAll(sf => sf.Solution.SolvedBy.Equals(usr.Id));
+        foreach (var feedback in feedbacks)
         {
-            foreach (var requestSolutionFeedback in requestSolution.Feedbacks)
-            {
-                Console.WriteLine(requestSolutionFeedback);
-            }
+            Console.WriteLine(feedback);
         }
     }
 }
