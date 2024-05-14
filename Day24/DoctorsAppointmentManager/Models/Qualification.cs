@@ -1,9 +1,7 @@
 ﻿namespace DoctorsAppointmentManager.Models;
 
-public enum Qualification
+public class Qualification: BaseEntity
 {
-    MBBS,
-    BDS,
-    MD,
-    MS
+    public string Name { get; set; }
+    public ICollection<Doctor> Doctors { get; set; }
 }

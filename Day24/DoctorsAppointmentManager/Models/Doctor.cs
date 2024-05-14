@@ -4,7 +4,7 @@ public class Doctor: Person
 {
 
     public int Experience { get; set; }
-    public List<Qualification> Qualification { get; set; }
-    public List<Speciality> Specialities { get; set; }
+    public ICollection<Qualification> Qualification { get; set; }
+    public ICollection<Speciality> Specialities { get; set; }
     
 }

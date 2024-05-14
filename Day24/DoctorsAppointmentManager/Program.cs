@@ -1,3 +1,6 @@
+using DoctorsAppointmentManager.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 namespace DoctorsAppointmentManager
 {
     public class Program
@@ -13,6 +16,8 @@ namespace DoctorsAppointmentManager
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<DoctorAppointmentManagerContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
