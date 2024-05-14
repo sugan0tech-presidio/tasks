@@ -22,7 +22,7 @@ public class Request : BaseEntity
         var tmp = $"\n\tId: {Id}\t\tMsg: {RequestMessage}" +
                   $"\n\tReqested On: {RequestDate}" +
                   $"\n\tStatus : {RequestStatus}" +
-                  $"\n\tRaisedBy: {RaisedBy.Name}" +
+                  $"\n\tRaisedBy: {RaisedBy.Name} \t AS: {RaisedBy.Role}" +
                   $"\n\tSolutions: {RequestSolutions?.Count}";
 
         if (RequestClosedByEmployee != null)

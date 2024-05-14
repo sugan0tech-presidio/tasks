@@ -95,8 +95,19 @@ public class UserRequestController : BaseController<Request>
     /// </summary>
     public void ViewRequestStatus()
     {
+        DisplayAccessibleRequestsId();
         var id = GetFromConsole<int>("Request Id");
-        Console.WriteLine(_requestService.GetById(id).Result);
+        var request = _requestService.GetById(id).Result;
+        if (AuthService.LoggedUser.Role.Equals(Role.Admin))
+            Console.WriteLine(request);
+        else
+        {
+            if (request.RaisedBy.Id.Equals(AuthService.LoggedUser.Id))
+                Console.WriteLine(request);
+            else
+                throw new AuthenticationException("You don't have permission to access this request");
+        }
+
     }
 
     /// <summary>
@@ -105,6 +116,7 @@ public class UserRequestController : BaseController<Request>
     /// <exception cref="AuthenticationException"></exception>
     public void ViewSolutions()
     {
+        DisplayAccessibleRequestsId();
         var id = GetFromConsole<int>("Request Id");
         var requests = _requestService.GetById(id).Result;
 
@@ -157,5 +169,17 @@ public class UserRequestController : BaseController<Request>
         sln.RequestRaiserComment = GetFromConsole<string>("Solution Comment");
         sln.IsSolved = true;
         _requestSolution.Update(sln);
+    }
+
+    public void DisplayAccessibleRequestsId()
+    {
+        Console.Write("\nAccessible Requests :");
+        var usrId = AuthService.LoggedUser.Id;
+        _requestService.GetAll().Result.AsEnumerable().ToList().ForEach(request =>
+        {
+            if (request.RaisedBy.Id.Equals(usrId))
+                Console.Write(request.Id + " ");
+        } );
+        Console.WriteLine("");
     }
 }

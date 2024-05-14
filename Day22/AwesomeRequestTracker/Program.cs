@@ -57,6 +57,7 @@ class Program
                         _adminRequestController.Run();
                         break;
                     default:
+                        _userRequestController.Run();
                         return;
                 }
             }
