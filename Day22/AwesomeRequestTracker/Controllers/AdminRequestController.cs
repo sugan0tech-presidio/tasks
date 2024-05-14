@@ -125,11 +125,11 @@ public class AdminRequestController : BaseController<Request>
         var requests = _requestService.GetAll().Result;
         foreach (var request in requests)
         {
-            var val = $"Id: {request.Id}\tMsg: {request.RequestMessage}" +
-                      $"\nRaisedBy: {request.RequestRaisedById}" +
-                      $"\nSolutions: {request.RequestSolutions?.Count}" +
-                      $"\nClosed By: {request.RequestClosedByEmployee?.Name}";
-            Console.WriteLine(val);
+            // var val = $"Id: {request.Id}\tMsg: {request.RequestMessage}" +
+            //           $"\nRaisedBy: {request.RequestRaisedById}" +
+            //           $"\nSolutions: {request.RequestSolutions?.Count}" +
+            //           $"\nClosed By: {request.RequestClosedByEmployee?.Name}";
+            Console.WriteLine(request);
         }
         // requests.ForEach(Console.WriteLine);
     }
@@ -172,6 +172,12 @@ public class AdminRequestController : BaseController<Request>
     {
         var id = GetFromConsole<int>("Request Id");
         var request = _requestService.GetById(id).Result;
+        
+        if (request.RequestSolutions.FirstOrDefault(s => s.IsSolved) == null)
+        {
+            Console.WriteLine("\nNot able to close it, the solution not been marked as solved!!!\n\n");
+            return;
+        }
         request.RequestClosedBy = AuthService.LoggedUser.Id;
         request.ClosedDate = DateTime.Now;
         request.RequestClosedByEmployee = AuthService.LoggedUser as Employee;

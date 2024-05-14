@@ -25,7 +25,7 @@ public class UserRequestController : BaseController<Request>
             Console.WriteLine("1. Raise Request");
             Console.WriteLine("2. View Request Status");
             Console.WriteLine("3. View Solutions");
-            Console.WriteLine("4. View Feedback");
+            Console.WriteLine("4. Give Feedback");
             Console.WriteLine("5. Respond to Solution");
             Console.WriteLine("6. exit to Main Menu");
 
@@ -131,6 +131,7 @@ public class UserRequestController : BaseController<Request>
         var id = GetFromConsole<int>("Solution Id");
         var sln = _requestSolution.GetById(id).Result;
         sln.RequestRaiserComment = GetFromConsole<string>("Solution Comment");
+        sln.IsSolved = true;
         _requestSolution.Update(sln);
     }
 }

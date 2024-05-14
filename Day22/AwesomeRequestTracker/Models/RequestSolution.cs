@@ -23,7 +23,7 @@ public class RequestSolution : BaseEntity
     {
         return $"Id: {Id}\tIsSolved: {IsSolved}" +
                $"\nSolvedBy: {SolvedByEmployee.Name}" +
-               $"\nComments: {RequestRaiserComment}" +
+               $"\nDescription: {SolutionDescription}" +
                $"\nFeedbacks: {Feedbacks?.Count}";
     }
 }
