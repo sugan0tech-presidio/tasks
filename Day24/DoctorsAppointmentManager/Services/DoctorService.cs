@@ -24,8 +24,9 @@ public class DoctorService : BaseService<Doctor>, IDoctorService
     /// <returns>A list of doctors with the specified speciality.</returns>
     public async Task<List<Doctor>> GetAllBySpeciality(Speciality speciality)
     {
-        return Repository.GetAll().Result
+        var repos =  Repository.GetAll().Result
             .ToList().FindAll(doc => doc.Speciality.Equals(speciality));
+        return repos;
     }
 
     /// <summary>

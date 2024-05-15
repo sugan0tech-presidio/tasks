@@ -25,20 +25,45 @@ public class DoctorController : ControllerBase
     [Route("Speciality")]
     public async Task<ActionResult<List<Doctor>>> GetAllDoctors(Speciality speciality)
     {
-        return Ok(DoctorService.GetAllBySpeciality(speciality));
+        try
+        {
+            return Ok(DoctorService.GetAllBySpeciality(speciality));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
     }
 
     [HttpGet("{id:int}")] // Same as with seperate route with that path
     public async Task<ActionResult<Doctor>> GetDoctorById(int id)
     {
-        return Ok(DoctorService.GetById(id));
+        try
+        {
+            return Ok(DoctorService.GetById(id));
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
     [HttpPost]
     public async Task<ActionResult<Doctor>> CreateDoctor([FromBody] Doctor doctor)
     {
-        DoctorService.Add(doctor);
-        return Ok(doctor);
+        try
+        {
+            DoctorService.Add(doctor);
+            return Ok(doctor);
+        }
+        catch (Exception e)
+        {
+            return UnprocessableEntity(e.Message);
+        }
     }
 
     [HttpPut]
@@ -58,7 +83,18 @@ public class DoctorController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<bool>> DeleteById(int id)
     {
-        var status = DoctorService.Delete(id);
-        return Ok(status);
+        try
+        {
+            var status = DoctorService.Delete(id);
+            return Ok(status);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 }
