@@ -5,7 +5,7 @@ namespace DoctorsAppointmentManager.Services;
 
 public class DoctorService: BaseService<Doctor>
 {
-    public DoctorService(BaseRepo<Doctor> repository) : base(repository)
+    public DoctorService(IBaseRepo<Doctor> repository) : base(repository)
     {
     }
 }

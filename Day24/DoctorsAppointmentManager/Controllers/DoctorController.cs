@@ -8,9 +8,9 @@ namespace DoctorsAppointmentManager.Controllers;
 [Route("api/[controller]")]
 public class DoctorController: ControllerBase
 {
-    private readonly DoctorService DoctorService;
+    private readonly IService<Doctor> DoctorService;
 
-    public DoctorController(DoctorService doctorService)
+    public DoctorController(IService<Doctor> doctorService)
     {
         DoctorService = doctorService;
     }
