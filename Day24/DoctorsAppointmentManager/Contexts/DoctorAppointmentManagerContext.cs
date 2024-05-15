@@ -26,6 +26,7 @@ public class DoctorAppointmentManagerContext: DbContext
             new { Id = 3, Name = "Neuro"},
             new { Id = 4, Name = "Ortho"}
             );
+
         
         modelBuilder.Entity<Doctor>().HasData(
             new
@@ -40,6 +41,10 @@ public class DoctorAppointmentManagerContext: DbContext
             }
         );
 
+        modelBuilder.Entity<Doctor>()
+            .Navigation(d => d.Qualification)
+            .AutoInclude();
+        
         modelBuilder.Entity<Doctor>()
             .HasMany(d => d.Qualification)
             .WithMany(q => q.Doctors);
