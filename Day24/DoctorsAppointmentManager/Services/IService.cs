@@ -6,5 +6,5 @@ public interface IService<TBaseEntity>
     public Task<List<TBaseEntity>> GetAll();
     public Task<TBaseEntity> Add(TBaseEntity entity);
     public Task<TBaseEntity> Update(TBaseEntity entity);
-    public Task Delete(int id);
+    public Task<bool> Delete(int id);
 }

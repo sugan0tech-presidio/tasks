@@ -89,11 +89,12 @@ public abstract class BaseService<TBaseEntity> : IService<TBaseEntity> where TBa
     /// <param name="id">The unique identifier of the entity to delete.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     /// <exception cref="KeyNotFoundException">Thrown if the entity to delete is not found.</exception>
-    public virtual async Task Delete(int id)
+    public virtual async Task<bool> Delete(int id)
     {
         try
         {
             await Repository.DeleteById(id);
+            return true;
         }
         catch (KeyNotFoundException)
         {
