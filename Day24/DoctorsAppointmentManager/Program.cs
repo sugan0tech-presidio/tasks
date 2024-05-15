@@ -23,7 +23,7 @@ namespace DoctorsAppointmentManager
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
             builder.Services.AddScoped<IBaseRepo<Doctor>, DoctorRepo>();
-            builder.Services.AddScoped<IService<Doctor>, DoctorService>();
+            builder.Services.AddScoped<IDoctorService, DoctorService>();
 
             var app = builder.Build();
 

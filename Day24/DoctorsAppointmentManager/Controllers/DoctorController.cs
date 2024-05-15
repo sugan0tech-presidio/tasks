@@ -8,9 +8,9 @@ namespace DoctorsAppointmentManager.Controllers;
 [Route("api/[controller]")]
 public class DoctorController : ControllerBase
 {
-    private readonly IService<Doctor> DoctorService;
+    private readonly IDoctorService DoctorService;
 
-    public DoctorController(IService<Doctor> doctorService)
+    public DoctorController(IDoctorService doctorService)
     {
         DoctorService = doctorService;
     }
@@ -25,8 +25,7 @@ public class DoctorController : ControllerBase
     [Route("Speciality")]
     public async Task<ActionResult<List<Doctor>>> GetAllDoctors(Speciality speciality)
     {
-        return Ok(DoctorService.GetAll().Result
-            .ToList().FindAll(doc => doc.Speciality.Equals(speciality)));
+        return Ok(DoctorService.GetAllBySpeciality(speciality));
     }
     
     [HttpGet("{id:int}")] // Same as with seperate route with that path
@@ -46,20 +45,14 @@ public class DoctorController : ControllerBase
     [Route("Experience")]
     public async Task<ActionResult<Doctor>> UpdateExperience(int id, int experience)
     {
-        var doctor = DoctorService.GetById(id).Result;
-        doctor.Experience = experience;
-        await DoctorService.Update(doctor);
-        return Ok(doctor);
+        return Ok(DoctorService.UpdateExperience(id, experience));
     }
 
     [HttpPut]
     [Route("Speciality")]
     public async Task<ActionResult<Doctor>> UpdateSpeciality(int id, Speciality speciality)
     {
-        var doctor = DoctorService.GetById(id).Result;
-        doctor.Speciality = speciality;
-        await DoctorService.Update(doctor);
-        return Ok(doctor);
+        return Ok(DoctorService.UpdateSpeciality(id, speciality));
     }
     
     [HttpDelete("{id:int}")]
