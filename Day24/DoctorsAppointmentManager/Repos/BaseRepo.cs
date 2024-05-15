@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DoctorsAppointmentManager.Repos;
 
-
 /// <summary>
 /// A base repository implementation for entities.
 /// </summary>

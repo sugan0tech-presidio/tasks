@@ -35,15 +35,15 @@ public class DoctorController : ControllerBase
     public async Task<ActionResult<List<Doctor>>> GetAllDoctors([FromBody] string speciality)
     {
         return Ok(DoctorService.GetAll().Result
-            .ToList().FindAll(doc => doc.Specialities.ToList().FindAll(spl => spl.Name.Equals(speciality)).Count > 0));
+            .ToList().FindAll(doc => doc.Speciality.ToString().Equals(speciality)));
     }
 
     [HttpPut]
     [Route("Speciality")]
-    public async Task<ActionResult<Doctor>> UpdateSpeciality(int id)
+    public async Task<ActionResult<Doctor>> UpdateSpeciality(int id, Speciality speciality)
     {
         var doctor = DoctorService.GetById(id).Result;
-        doctor.Specialities.Add(new Speciality{Id = 1, Name = "MBBS"});
+        doctor.Speciality = speciality;
         await DoctorService.Update(doctor);
         return Ok(doctor);
     }

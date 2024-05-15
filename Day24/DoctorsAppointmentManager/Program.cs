@@ -24,7 +24,7 @@ namespace DoctorsAppointmentManager
 
             builder.Services.AddScoped<IBaseRepo<Doctor>, DoctorRepo>();
             builder.Services.AddScoped<IService<Doctor>, DoctorService>();
-            
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

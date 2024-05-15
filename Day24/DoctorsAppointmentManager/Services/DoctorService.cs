@@ -3,7 +3,7 @@ using DoctorsAppointmentManager.Repos;
 
 namespace DoctorsAppointmentManager.Services;
 
-public class DoctorService: BaseService<Doctor>
+public class DoctorService : BaseService<Doctor>
 {
     public DoctorService(IBaseRepo<Doctor> repository) : base(repository)
     {

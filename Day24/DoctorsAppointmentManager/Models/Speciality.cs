@@ -1,7 +1,11 @@
 ﻿namespace DoctorsAppointmentManager.Models;
 
-public class Speciality: BaseEntity
+public enum Speciality
 {
-    public string Name { get; set; }
-    public ICollection<Doctor> Doctors { get; set; }
+    GENERAL,
+    CARDIO,
+    ORTHO,
+    DENTAL,
+    ENT,
+    GASTRO
 }
