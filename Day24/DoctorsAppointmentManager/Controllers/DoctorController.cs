@@ -20,22 +20,22 @@ public class DoctorController : ControllerBase
     {
         return Ok(DoctorService.GetAll());
     }
-    
+
     [HttpGet]
     [Route("Speciality")]
     public async Task<ActionResult<List<Doctor>>> GetAllDoctors(Speciality speciality)
     {
         return Ok(DoctorService.GetAllBySpeciality(speciality));
     }
-    
+
     [HttpGet("{id:int}")] // Same as with seperate route with that path
     public async Task<ActionResult<Doctor>> GetDoctorById(int id)
     {
         return Ok(DoctorService.GetById(id));
     }
-    
+
     [HttpPost]
-    public async Task<ActionResult<Doctor>> CreateDoctor([FromBody]Doctor doctor)
+    public async Task<ActionResult<Doctor>> CreateDoctor([FromBody] Doctor doctor)
     {
         DoctorService.Add(doctor);
         return Ok(doctor);
@@ -54,11 +54,11 @@ public class DoctorController : ControllerBase
     {
         return Ok(DoctorService.UpdateSpeciality(id, speciality));
     }
-    
+
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<bool>> DeleteById(int id)
     {
-        var status  = DoctorService.Delete(id);
+        var status = DoctorService.Delete(id);
         return Ok(status);
     }
 }

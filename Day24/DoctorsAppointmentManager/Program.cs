@@ -19,11 +19,24 @@ namespace DoctorsAppointmentManager
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            #region DBContextConfig
+
             builder.Services.AddDbContext<DoctorAppointmentManagerContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
+            #endregion
+
+            #region Repos
+
             builder.Services.AddScoped<IBaseRepo<Doctor>, DoctorRepo>();
+
+            #endregion
+
+            #region Services
+
             builder.Services.AddScoped<IDoctorService, DoctorService>();
+
+            #endregion
 
             var app = builder.Build();
 
