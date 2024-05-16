@@ -2,7 +2,7 @@
 
 namespace AwesomePizzas.Models;
 
-public class Order: BaseEntity
+public class Order : BaseEntity
 {
     public DateTime OrderDate { get; set; }
     [ForeignKey("UserId")] public int UserId { get; set; }
@@ -10,6 +10,9 @@ public class Order: BaseEntity
     public OrderStatus Status { get; set; } = OrderStatus.Placed;
     public string? address { get; set; }
 
-    public ICollection<Pizza> Pizzas { get; set; }
+    [ForeignKey("PizzaId")] public int PizzaId { get; set; }
+    public Pizza Pizza { get; set; }
+    
+    public int Quantity { get; set; }
     public double Price { get; set; }
 }

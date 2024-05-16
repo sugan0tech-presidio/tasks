@@ -2,7 +2,7 @@
 
 namespace AwesomePizzas.Models;
 
-public class Pizza: BaseEntity
+public class Pizza : BaseEntity
 {
     [Required] [MaxLength(50)] public string Name { get; set; }
     public string Description { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace AwesomePizzas.Exceptions;
 
-public class EntityNotFoundException: Exception
+public class EntityNotFoundException : Exception
 {
     public EntityNotFoundException()
     {

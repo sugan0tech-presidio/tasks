@@ -1,6 +1,6 @@
 ﻿namespace AwesomePizzas.Exceptions;
 
-public class OutOfStockExceptions: Exception
+public class OutOfStockExceptions : Exception
 {
     public OutOfStockExceptions()
     {
