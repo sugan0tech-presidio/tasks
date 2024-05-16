@@ -8,7 +8,7 @@ public class Order : BaseEntity
     [ForeignKey("UserId")] public int UserId { get; set; }
     public User User { get; set; }
     public OrderStatus Status { get; set; } = OrderStatus.Placed;
-    public string? address { get; set; }
+    public string? Address { get; set; }
 
     [ForeignKey("PizzaId")] public int PizzaId { get; set; }
     public Pizza Pizza { get; set; }

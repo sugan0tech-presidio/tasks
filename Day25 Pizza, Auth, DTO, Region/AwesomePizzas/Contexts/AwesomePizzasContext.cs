@@ -22,7 +22,7 @@ public class AwesomePizzasContext : DbContext
                 Name = "Margherita",
                 Description = "Classic pizza with tomatoes and mozzarella cheese",
                 Price = 8.99,
-                stock = 50
+                Stock = 50
             },
             new Pizza
             {
@@ -30,7 +30,7 @@ public class AwesomePizzasContext : DbContext
                 Name = "Pepperoni",
                 Description = "Pizza with pepperoni slices and mozzarella cheese",
                 Price = 10.99,
-                stock = 40
+                Stock = 40
             },
             new Pizza
             {
@@ -38,7 +38,7 @@ public class AwesomePizzasContext : DbContext
                 Name = "Vegetarian",
                 Description = "Pizza with assorted vegetables and mozzarella cheese",
                 Price = 9.99,
-                stock = 30
+                Stock = 30
             }
         );
 
