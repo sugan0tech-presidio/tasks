@@ -14,10 +14,10 @@ namespace AwesomePizzas
             var builder = WebApplication.CreateBuilder(args);
 
             #region Context
-            
+
             builder.Services.AddDbContext<AwesomePizzasContext>(optionsBuilder =>
                 optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
-            
+
             #endregion
 
             #region Repos

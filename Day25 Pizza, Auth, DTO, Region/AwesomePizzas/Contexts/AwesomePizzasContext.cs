@@ -75,7 +75,7 @@ public class AwesomePizzasContext : DbContext
         modelBuilder.Entity<User>()
             .Navigation(u => u.Orders)
             .AutoInclude();
-        
+
         #endregion
 
         #region Index

@@ -12,7 +12,7 @@ public class Order : BaseEntity
 
     [ForeignKey("PizzaId")] public int PizzaId { get; set; }
     public Pizza Pizza { get; set; }
-    
+
     public int Quantity { get; set; }
     public double Price { get; set; }
 }
