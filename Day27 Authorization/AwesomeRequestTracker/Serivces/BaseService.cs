@@ -1,5 +1,6 @@
 ﻿using AwesomeRequestTracker.Models;
 using AwesomeRequestTracker.Repos;
+using AwesomeRequestTracker.Services;
 
 namespace AwesomeRequestTracker.Serivces;
 
@@ -7,16 +8,16 @@ namespace AwesomeRequestTracker.Serivces;
 /// A base service implementation for entities.
 /// </summary>
 /// <typeparam name="TBaseEntity">The type of the entity.</typeparam>
-public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
+public abstract class BaseService<TBaseEntity> : IBaseService<TBaseEntity> where TBaseEntity : BaseEntity
 {
-    protected readonly BaseRepo<TBaseEntity> Repository;
+    protected readonly IBaseRepo<TBaseEntity> Repository;
 
     /// <summary>
     /// Constructs a new instance of the BaseService class.
     /// </summary>
     /// <param name="repository">The repository instance to be used by the service.</param>
     /// <exception cref="ArgumentNullException">Thrown if the provided repository is null.</exception>
-    protected BaseService(BaseRepo<TBaseEntity> repository)
+    protected BaseService(IBaseRepo<TBaseEntity> repository)
     {
         Repository = repository ?? throw new ArgumentNullException(nameof(repository),
             $"{typeof(BaseService<TBaseEntity>)} cannot be null.");

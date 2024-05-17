@@ -5,7 +5,7 @@ namespace AwesomeRequestTracker.Serivces;
 
 public class UserService : BaseService<User>
 {
-    public UserService(BaseRepo<User> repository) : base(repository)
+    public UserService(IBaseRepo<User> repository) : base(repository)
     {
     }
 }

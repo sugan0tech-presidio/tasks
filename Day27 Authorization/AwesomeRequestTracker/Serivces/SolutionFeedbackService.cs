@@ -5,7 +5,7 @@ namespace AwesomeRequestTracker.Serivces;
 
 public class SolutionFeedbackService : BaseService<SolutionFeedback>
 {
-    public SolutionFeedbackService(BaseRepo<SolutionFeedback> repository) : base(repository)
+    public SolutionFeedbackService(IBaseRepo<SolutionFeedback> repository) : base(repository)
     {
     }
 }

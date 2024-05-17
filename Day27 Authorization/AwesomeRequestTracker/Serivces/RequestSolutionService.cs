@@ -5,7 +5,7 @@ namespace AwesomeRequestTracker.Serivces;
 
 public class RequestSolutionService : BaseService<RequestSolution>
 {
-    public RequestSolutionService(BaseRepo<RequestSolution> repository) : base(repository)
+    public RequestSolutionService(IBaseRepo<RequestSolution> repository) : base(repository)
     {
     }
 

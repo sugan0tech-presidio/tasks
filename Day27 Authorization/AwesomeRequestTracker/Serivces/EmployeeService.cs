@@ -5,7 +5,7 @@ namespace AwesomeRequestTracker.Serivces;
 
 public class EmployeeService : BaseService<Employee>
 {
-    public EmployeeService(BaseRepo<Employee> repository) : base(repository)
+    public EmployeeService(IBaseRepo<Employee> repository) : base(repository)
     {
     }
 }

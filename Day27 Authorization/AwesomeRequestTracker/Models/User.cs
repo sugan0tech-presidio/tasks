@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace AwesomeRequestTracker.Models;
+﻿namespace AwesomeRequestTracker.Models;
 
 public class User : Person
 {
