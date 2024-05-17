@@ -4,6 +4,8 @@ using AwesomePizzas.Contexts;
 using AwesomePizzas.Models;
 using AwesomePizzas.Repos;
 using AwesomePizzas.Services;
+using EmployeeRequestTrackerAPI.Interfaces;
+using EmployeeRequestTrackerAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,28 +19,6 @@ namespace AwesomePizzas
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            #region Context
-
-            builder.Services.AddDbContext<AwesomePizzasContext>(optionsBuilder =>
-                optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
-
-            #endregion
-
-            #region Repos
-
-            builder.Services.AddScoped<IBaseRepo<Pizza>, PizzaRepo>();
-            builder.Services.AddScoped<IBaseRepo<Order>, OrderRepo>();
-            builder.Services.AddScoped<IBaseRepo<User>, UserRepo>();
-
-            #endregion
-
-            #region Services
-
-            builder.Services.AddScoped<OrderService>();
-            builder.Services.AddScoped<PizzaService>();
-            builder.Services.AddScoped<UserService>();
-
-            #endregion
 
             builder.Services.AddControllers().AddJsonOptions(
                 options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -75,7 +55,7 @@ namespace AwesomePizzas
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
@@ -86,6 +66,29 @@ namespace AwesomePizzas
                 });
 
 
+            #region Context
+
+            builder.Services.AddDbContext<AwesomePizzasContext>(optionsBuilder =>
+                optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+            #endregion
+
+            #region Repos
+
+            builder.Services.AddScoped<IBaseRepo<Pizza>, PizzaRepo>();
+            builder.Services.AddScoped<IBaseRepo<Order>, OrderRepo>();
+            builder.Services.AddScoped<IBaseRepo<User>, UserRepo>();
+
+            #endregion
+
+            #region Services
+
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<PizzaService>();
+            builder.Services.AddScoped<UserService>();
+
+            #endregion
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -95,6 +98,7 @@ namespace AwesomePizzas
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

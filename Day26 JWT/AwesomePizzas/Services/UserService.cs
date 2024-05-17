@@ -10,8 +10,10 @@ namespace AwesomePizzas.Services;
 
 public class UserService : BaseService<User>, IUserService
 {
-    public UserService(IBaseRepo<User> repository) : base(repository)
+    private readonly ITokenService _tokenService;
+    public UserService(IBaseRepo<User> repository, ITokenService tokenService) : base(repository)
     {
+        _tokenService = tokenService;
     }
 
     public async Task<User> GetByEmail(string email)
@@ -30,7 +32,12 @@ public class UserService : BaseService<User>, IUserService
         var passwordHash = hasher.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
         if (ComparePassword(passwordHash, user.Password))
-            return user.ToLoginReturnDto();
+        {
+            var returnDto = user.ToLoginReturnDto();
+            returnDto.Token = _tokenService.GenerateToken(user);
+            return returnDto;
+
+        }
 
         throw new System.Security.Authentication.AuthenticationException("Invalid email or password");
     }
