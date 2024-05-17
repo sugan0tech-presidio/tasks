@@ -29,7 +29,7 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
         {
             var entity = _context.Set<TBaseEntity>().SingleOrDefault(entity => entity.Id.Equals(id));
             if (entity == null)
-                throw new KeyNotFoundException($"{typeof(TBaseEntity)} with key {id} not found!!!");
+                throw new KeyNotFoundException($"{typeof(TBaseEntity).Name} with key {id} not found!!!");
             return entity;
         }
     }
@@ -55,7 +55,7 @@ public abstract class BaseRepo<TBaseEntity> : IBaseRepo<TBaseEntity> where TBase
     public async Task<TBaseEntity> Add(TBaseEntity entity)
     {
         if (entity == null)
-            throw new ArgumentNullException(nameof(entity), $"{typeof(TBaseEntity)} cannot be null.");
+            throw new ArgumentNullException(nameof(entity), $"{typeof(TBaseEntity).Name} cannot be null.");
         //
         // try
         // {
