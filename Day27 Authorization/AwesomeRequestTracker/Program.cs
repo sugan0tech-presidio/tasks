@@ -21,14 +21,15 @@ namespace AwesomeRequestTracker
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             #endregion
-            
+
             #region Swagger
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             #endregion
-            
+
             #region Context
 
             builder.Services.AddDbContext<AwesomeRequestTrackerContext>(optionsBuilder =>
@@ -57,6 +58,7 @@ namespace AwesomeRequestTracker
             builder.Services.AddScoped<AuthService>();
 
             #endregion
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

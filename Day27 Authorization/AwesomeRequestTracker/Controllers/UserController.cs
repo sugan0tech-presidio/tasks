@@ -2,7 +2,6 @@
 
 namespace AwesomeRequestTracker.Controllers;
 
-public class UserController: ControllerBase
+public class UserController : ControllerBase
 {
-    
 }

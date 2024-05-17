@@ -1,11 +1,10 @@
-﻿
-using AwesomeRequestTracker.Models;
+﻿using AwesomeRequestTracker.Models;
 
 namespace AwesomeRequestTracker.Repos;
 
-public class RegistryRepo: BaseRepo<Registry>
+public class RegistryRepo : BaseRepo<Registry>
 {
-    public RegistryRepo(AwesomeRequestTrackerContext context): base(context)
+    public RegistryRepo(AwesomeRequestTrackerContext context) : base(context)
     {
     }
 }

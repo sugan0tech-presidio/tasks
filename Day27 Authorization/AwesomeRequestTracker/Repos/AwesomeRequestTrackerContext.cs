@@ -18,6 +18,8 @@ public class AwesomeRequestTrackerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        #region Seeds
+
         modelBuilder.Entity<Employee>().HasData(
             new
             {
@@ -36,10 +38,6 @@ public class AwesomeRequestTrackerContext : DbContext
             }
         );
 
-        modelBuilder.Entity<Person>()
-            .HasIndex(p => p.Email)
-            .IsUnique();
-
         modelBuilder.Entity<User>().HasData(
             new
             {
@@ -47,12 +45,55 @@ public class AwesomeRequestTrackerContext : DbContext
                 ContactNumber = "6855339922"
             }
         );
+
+        #endregion
+
+        #region Index
+
+        modelBuilder.Entity<Person>()
+            .HasIndex(p => p.Email)
+            .IsUnique();
+
+        #endregion
+
+        #region Person
+
+        modelBuilder.Entity<Person>()
+            .HasMany<Request>()
+            .WithOne(r => r.RaisedBy)
+            .HasForeignKey(r => r.RequestRaisedById)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
+        
+        modelBuilder.Entity<Person>()
+            .HasMany<SolutionFeedback>()
+            .WithOne(sf => sf.FeedbackByPerson)
+            .HasForeignKey(sf => sf.FeedbackBy)
+            .OnDelete(DeleteBehavior.NoAction)
+            .IsRequired();
+
+        modelBuilder.Entity<Person>()
+            .Navigation(p => p.RequestsRaised)
+            .AutoInclude();
+        
+        modelBuilder.Entity<Person>()
+            .Navigation(p => p.FeedbacksGiven)
+            .AutoInclude();
+
+        #endregion
+
+        #region Employee
+
         modelBuilder.Entity<Employee>()
             .HasMany(e => e.SolutionPrvided)
             .WithOne(rs => rs.SolvedByEmployee)
             .HasForeignKey(e => e.Id)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
+
+        #endregion
+
+        #region Request
 
         modelBuilder.Entity<Request>()
             .HasOne(r => r.RaisedBy)
@@ -79,6 +120,9 @@ public class AwesomeRequestTrackerContext : DbContext
             .Navigation(request => request.RequestClosedByEmployee)
             .AutoInclude();
 
+        #endregion
+
+        #region RequstSolution
 
         modelBuilder.Entity<RequestSolution>()
             .HasOne(rs => rs.RequestRaised)
@@ -106,6 +150,10 @@ public class AwesomeRequestTrackerContext : DbContext
             .Navigation(rs => rs.Feedbacks)
             .AutoInclude();
 
+        #endregion
+
+        #region SolutionFeedback
+
         modelBuilder.Entity<SolutionFeedback>()
             .HasOne(sf => sf.Solution)
             .WithMany(s => s.Feedbacks)
@@ -127,5 +175,7 @@ public class AwesomeRequestTrackerContext : DbContext
         modelBuilder.Entity<SolutionFeedback>()
             .Navigation(sf => sf.FeedbackByPerson)
             .AutoInclude();
+
+        #endregion
     }
 }

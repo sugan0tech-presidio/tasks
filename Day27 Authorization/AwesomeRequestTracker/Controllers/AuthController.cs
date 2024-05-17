@@ -2,7 +2,6 @@
 
 namespace AwesomeRequestTracker.Controllers;
 
-public class AuthController: ControllerBase
+public class AuthController : ControllerBase
 {
-    
 }
