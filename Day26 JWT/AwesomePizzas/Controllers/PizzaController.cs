@@ -2,10 +2,12 @@
 using AwesomePizzas.Models;
 using AwesomePizzas.Models.DTO;
 using AwesomePizzas.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AwesomePizzas.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PizzaController : ControllerBase

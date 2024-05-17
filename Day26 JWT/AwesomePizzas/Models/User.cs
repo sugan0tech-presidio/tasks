@@ -9,6 +9,7 @@ public class User : BaseEntity
     [Required] public string Email { get; set; }
     public byte[] Password { get; set; }
     public byte[] PasswordHashKey { get; set; }
+    public string Role { get; set; } = "User";
     public List<Order> Orders { get; set; }
     public LoginReturnDTO ToLoginReturnDto()
     {
