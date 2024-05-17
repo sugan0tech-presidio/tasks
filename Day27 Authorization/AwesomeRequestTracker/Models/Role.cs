@@ -3,7 +3,7 @@
 public enum Role
 {
     Admin,
-    BaseUser,
+    User,
     Manager,
     Assistant,
     Intern,

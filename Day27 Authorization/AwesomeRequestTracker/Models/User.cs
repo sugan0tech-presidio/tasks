@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Runtime.CompilerServices;
 
 namespace AwesomeRequestTracker.Models;
 
-[Table("Users")]
 public class User : Person
 {
 }

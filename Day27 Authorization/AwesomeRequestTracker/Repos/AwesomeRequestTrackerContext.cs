@@ -5,15 +5,13 @@ namespace AwesomeRequestTracker.Repos;
 
 public class AwesomeRequestTrackerContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public AwesomeRequestTrackerContext(DbContextOptions options) : base(options)
     {
-        optionsBuilder.UseSqlServer(
-            @"Data Source=B4RBBX3\SQLEXPRESS;Integrated Security=true;TrustServerCertificate=True;Initial Catalog=AwesomeDB;");
-        optionsBuilder.EnableSensitiveDataLogging();
     }
 
     public DbSet<Employee> Employees { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Registry> Registry { get; set; }
     public DbSet<Request> Requests { get; set; }
     public DbSet<SolutionFeedback> RequestFeedbacks { get; set; }
     public DbSet<RequestSolution> RequestSolutions { get; set; }
@@ -38,10 +36,14 @@ public class AwesomeRequestTrackerContext : DbContext
             }
         );
 
+        modelBuilder.Entity<Person>()
+            .HasIndex(p => p.Email)
+            .IsUnique();
+
         modelBuilder.Entity<User>().HasData(
             new
             {
-                Id = 4, Name = "sugu", password = "123", Role = Role.BaseUser, Email = "sugu@gmail.com",
+                Id = 4, Name = "sugu", password = "123", Role = Role.User, Email = "sugu@gmail.com",
                 ContactNumber = "6855339922"
             }
         );

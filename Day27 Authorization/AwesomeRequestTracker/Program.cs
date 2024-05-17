@@ -1,3 +1,6 @@
+using AwesomeRequestTracker.Repos;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace AwesomeRequestTracker
 {
@@ -13,6 +16,13 @@ namespace AwesomeRequestTracker
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            #region Context
+
+            builder.Services.AddDbContext<AwesomeRequestTrackerContext>(optionsBuilder =>
+                optionsBuilder.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+            #endregion
 
             var app = builder.Build();
 

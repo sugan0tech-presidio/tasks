@@ -10,8 +10,7 @@ public abstract class Person : BaseEntity
     public string? Address { get; set; }
     public ICollection<Request> RequestsRaised { get; set; }
     public ICollection<SolutionFeedback> FeedbacksGiven { get; set; }
-    public Role Role { get; set; } = Role.BaseUser;
-    [Required] public string password { get; set; }
+    public Role Role { get; set; } = Role.User;
 
     public override bool Equals(object? obj)
     {

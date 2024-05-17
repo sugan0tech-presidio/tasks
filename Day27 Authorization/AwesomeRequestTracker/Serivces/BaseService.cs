@@ -61,6 +61,7 @@ public abstract class BaseService<TBaseEntity> where TBaseEntity : BaseEntity
         {
             throw new ArgumentNullException($"Entity {typeof(TBaseEntity).Name} is null");
         }
+
         return await Repository.Add(entity);
     }
 
