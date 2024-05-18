@@ -2,9 +2,11 @@
 using AwesomeRequestTracker.DTO;
 using AwesomeRequestTracker.Models;
 using AwesomeRequestTracker.Serivces;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "EmployeePolicy")]
 public class RequestSolutionController : ControllerBase
 {
     private readonly RequestSolutionService _solutionService;

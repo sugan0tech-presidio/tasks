@@ -1,4 +1,6 @@
-﻿namespace AwesomeRequestTracker.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace AwesomeRequestTracker.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using DTO;
@@ -7,6 +9,7 @@ using Services;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "UserPolicy")]
 public class RequestController : ControllerBase
 {
     private readonly IBaseService<Request> _requestService;

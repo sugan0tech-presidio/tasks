@@ -2,11 +2,13 @@
 using AwesomeRequestTracker.DTO;
 using AwesomeRequestTracker.Models;
 using AwesomeRequestTracker.Repos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AwesomeRequestTracker.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "UserPolicy")]
 public class FeedbackController : ControllerBase
 {
     private readonly IBaseRepo<SolutionFeedback> _feedbackService;

@@ -2,6 +2,8 @@
 
 namespace AwesomeRequestTracker.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
 }
