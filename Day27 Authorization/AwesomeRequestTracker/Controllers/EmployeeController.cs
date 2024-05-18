@@ -99,7 +99,7 @@ public class EmployeeController(IBaseService<Employee> _employeeService, Request
         }
     }
 
-    [HttpPost]
+    [HttpPost("Feedback")]
     [Authorize(Policy = "EmployeePolicy")]
     public async Task<IActionResult> ProvideSolution(FeedbackDTO feedbackDto)
     {
