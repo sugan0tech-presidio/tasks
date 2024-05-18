@@ -29,7 +29,7 @@ public abstract class BaseService<TBaseEntity> : IBaseService<TBaseEntity> where
     /// <param name="id">The unique identifier of the entity to retrieve.</param>
     /// <returns>The entity with the specified identifier.</returns>
     /// <exception cref="KeyNotFoundException">Thrown if the entity with the specified identifier is not found.</exception>
-    public async Task<TBaseEntity> GetById(int id)
+    public virtual async Task<TBaseEntity> GetById(int id)
     {
         try
         {
@@ -45,7 +45,7 @@ public abstract class BaseService<TBaseEntity> : IBaseService<TBaseEntity> where
     /// Retrieves all entities asynchronously.
     /// </summary>
     /// <returns>A list of all entities.</returns>
-    public async Task<List<TBaseEntity>> GetAll()
+    public virtual async Task<List<TBaseEntity>> GetAll()
     {
         return await Repository.GetAll();
     }
@@ -56,7 +56,7 @@ public abstract class BaseService<TBaseEntity> : IBaseService<TBaseEntity> where
     /// <param name="entity">The entity to add.</param>
     /// <returns>The added entity.</returns>
     /// <exception cref="ArgumentNullException">Thrown if the provided entity is null.</exception>
-    public async Task<TBaseEntity> Add(TBaseEntity entity)
+    public virtual async Task<TBaseEntity> Add(TBaseEntity entity)
     {
         if (entity == null)
         {
@@ -72,7 +72,7 @@ public abstract class BaseService<TBaseEntity> : IBaseService<TBaseEntity> where
     /// <param name="entity">The entity to update.</param>
     /// <returns>The updated entity.</returns>
     /// <exception cref="KeyNotFoundException">Thrown if the entity to update is not found.</exception>
-    public async Task<TBaseEntity> Update(TBaseEntity entity)
+    public virtual async Task<TBaseEntity> Update(TBaseEntity entity)
     {
         try
         {
