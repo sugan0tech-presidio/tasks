@@ -5,7 +5,7 @@ namespace AwesomeRequestTracker.Models;
 public abstract class Person : BaseEntity
 {
     [MaxLength(100)] [Required] public string Name { get; set; }
-    [MaxLength(12)] public string ContactNumber { get; }
+    [MaxLength(12)] public string ContactNumber { get; set; }
     [Required] public string Email { get; set; }
     public string? Address { get; set; }
     public ICollection<Request> RequestsRaised { get; set; }

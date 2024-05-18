@@ -14,7 +14,7 @@ public record PersonDTO
     }
 
     public string Name { get; set; }
-    public string ContactNumber { get; }
+    public string ContactNumber { get; set; }
     public string Email { get; set; }
     public string? Address { get; set; }
     public Role Role { get; set; } = Role.User;
