@@ -83,4 +83,29 @@ public class AuthService
         throw new AuthenticationException("Not able to register at this moment");
     }
 
+    public async Task ResetPassword(ResetPasswordDTO resetPasswordDto)
+    {
+        // Find the user based on the provided email
+        var user = _registryService.GetAll().Result.FirstOrDefault(registry => registry.Person.Email.Equals(resetPasswordDto.Email));
+        if (user == null)
+            throw new EntityNotFoundException("User not found");
+        
+        var hasher = new HMACSHA512(user.HashKey);
+
+        if (!ComparePassword(hasher.ComputeHash(Encoding.UTF8.GetBytes(resetPasswordDto.Password)), user.PasswordHash))
+            throw new AuthenticationException("Invalid Password");
+        
+        try
+        {
+            user.PasswordHash = hasher.ComputeHash(Encoding.UTF8.GetBytes(resetPasswordDto.NewPassword));
+            _registryService.Update(user);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception("Failed to reset password");
+        }
+    }
+
 }
