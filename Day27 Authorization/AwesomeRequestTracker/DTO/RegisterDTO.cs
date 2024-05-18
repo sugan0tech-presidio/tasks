@@ -1,6 +1,4 @@
-﻿using AwesomeRequestTracker.Models;
-
-namespace AwesomeRequestTracker.DTO;
+﻿namespace AwesomeRequestTracker.DTO;
 
 public record RegisterDTO
 {

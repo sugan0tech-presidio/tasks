@@ -28,12 +28,12 @@ public class AwesomeRequestTrackerContext : DbContext
             },
             new
             {
-                Id = 2, Name = "somu", password = "456", Role = Role.Intern, Email = "somu@gmail.com",
+                Id = 2, Name = "somu", password = "456", Role = Role.Employee, Email = "somu@gmail.com",
                 ContactNumber = "6855339922"
             },
             new
             {
-                Id = 3, Name = "vembu", password = "789", Role = Role.Manager, Email = "vembu@gmail.com",
+                Id = 3, Name = "vembu", password = "789", Role = Role.Employee, Email = "vembu@gmail.com",
                 ContactNumber = "6855339922"
             }
         );
@@ -41,8 +41,13 @@ public class AwesomeRequestTrackerContext : DbContext
         modelBuilder.Entity<User>().HasData(
             new
             {
-                Id = 4, Name = "sugu", password = "123", Role = Role.User, Email = "sugu@gmail.com",
-                ContactNumber = "6855339922"
+                Id = 4, Name = "sugu", Role = Role.User, Email = "sugu@gmail.com",
+                ContactNumber = "6855339922", Address = "magic, street"
+            },
+            new
+            {
+                Id = 5, Name = "bboi", Role = Role.User, Email = "bboi@gmail.com",
+                ContactNumber = "9855339922", Address = "Someting"
             }
         );
 
@@ -151,6 +156,14 @@ public class AwesomeRequestTrackerContext : DbContext
             .HasForeignKey(sf => sf.FeedbackBy)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
+
+        #endregion
+
+        #region Registry
+
+        modelBuilder.Entity<Registry>()
+            .Navigation(r => r.Person)
+            .AutoInclude();
 
         #endregion
     }
