@@ -2,10 +2,18 @@
 
 namespace AwesomeRequestTracker.DTO;
 
-public record AuthReturnDTO()
+public record AuthReturnDTO
 {
-    private string Email;
-    private string Name;
-    private Role Role;
-    private string Token;
+    public AuthReturnDTO(string email, string name, Role role, string token)
+    {
+        Email = email;
+        Name = name;
+        Role = role;
+        Token = token;
+    }
+
+    public string Email { get; }
+    public string Name { get; }
+    public Role Role { get; }
+    public string Token { get; }
 }

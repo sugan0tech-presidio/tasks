@@ -1,7 +1,13 @@
 ﻿namespace AwesomeRequestTracker.DTO;
 
-public record LoginDTO()
+public record LoginDTO
 {
-    string Email;
-    string Password;
+    public LoginDTO(string email, string password)
+    {
+        Email = email;
+        Password = password;
+    }
+
+    public string Email { get; }
+    public string Password { get; }
 }
