@@ -22,7 +22,6 @@ public class RequestSolution : BaseEntity
     public override string ToString()
     {
         return $"\n\tId: {Id}\t\tIsSolved: {IsSolved}" +
-               $"\n\tSolvedBy: {SolvedByEmployee.Name}" +
                $"\n\tDescription: {SolutionDescription}" +
                $"\n\tSolved On: {SolvedDate}" +
                $"\n\tFeedbacks: {Feedbacks.Count}\n\n";

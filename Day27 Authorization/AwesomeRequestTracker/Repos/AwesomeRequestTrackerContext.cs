@@ -112,14 +112,6 @@ public class AwesomeRequestTrackerContext : DbContext
             .Navigation(request => request.RequestSolutions)
             .AutoInclude();
 
-        modelBuilder.Entity<Request>()
-            .Navigation(request => request.RaisedBy)
-            .AutoInclude();
-
-        modelBuilder.Entity<Request>()
-            .Navigation(request => request.RequestClosedByEmployee)
-            .AutoInclude();
-
         #endregion
 
         #region RequstSolution
@@ -137,14 +129,6 @@ public class AwesomeRequestTrackerContext : DbContext
             .HasForeignKey(rs => rs.SolvedBy)
             .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
-
-        modelBuilder.Entity<RequestSolution>()
-            .Navigation(rs => rs.RequestRaised)
-            .AutoInclude();
-
-        modelBuilder.Entity<RequestSolution>()
-            .Navigation(rs => rs.SolvedByEmployee)
-            .AutoInclude();
 
         modelBuilder.Entity<RequestSolution>()
             .Navigation(rs => rs.Feedbacks)
@@ -167,14 +151,6 @@ public class AwesomeRequestTrackerContext : DbContext
             .HasForeignKey(sf => sf.FeedbackBy)
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
-
-        modelBuilder.Entity<SolutionFeedback>()
-            .Navigation(sf => sf.Solution)
-            .AutoInclude();
-
-        modelBuilder.Entity<SolutionFeedback>()
-            .Navigation(sf => sf.FeedbackByPerson)
-            .AutoInclude();
 
         #endregion
     }

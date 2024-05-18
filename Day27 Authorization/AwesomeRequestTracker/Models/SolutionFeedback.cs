@@ -18,7 +18,6 @@ public class SolutionFeedback : BaseEntity
         return $"\n\nId: {Id}\t\tRating: {Rating}" +
                $"\n\tRemarks: {Remarks}" +
                $"\n\tSolutionID: {Solution.Id} Description: {Solution.SolutionDescription}" +
-               $"\n\tBy: {FeedbackByPerson.Name}\n" +
                $"\n\tOn: {FeedbackDate}\n\n";
     }
 }

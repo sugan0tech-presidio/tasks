@@ -50,7 +50,7 @@ namespace AwesomeRequestTracker.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Person");
+                    b.ToTable("Person", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
@@ -81,7 +81,7 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Registry");
+                    b.ToTable("Registry", (string)null);
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.Request", b =>
@@ -118,7 +118,7 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasIndex("RequestRaisedById");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Requests", (string)null);
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.RequestSolution", b =>
@@ -154,7 +154,7 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasIndex("SolvedBy");
 
-                    b.ToTable("RequestSolutions");
+                    b.ToTable("RequestSolutions", (string)null);
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.SolutionFeedback", b =>
@@ -186,14 +186,14 @@ namespace AwesomeRequestTracker.Migrations
 
                     b.HasIndex("SolutionId");
 
-                    b.ToTable("SolutionFeedbacks");
+                    b.ToTable("SolutionFeedbacks", (string)null);
                 });
 
             modelBuilder.Entity("AwesomeRequestTracker.Models.Employee", b =>
                 {
                     b.HasBaseType("AwesomeRequestTracker.Models.Person");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
 
                     b.HasData(
                         new
@@ -223,7 +223,7 @@ namespace AwesomeRequestTracker.Migrations
                 {
                     b.HasBaseType("AwesomeRequestTracker.Models.Person");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
