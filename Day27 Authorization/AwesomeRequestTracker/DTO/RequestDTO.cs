@@ -13,9 +13,9 @@ public record RequestDTO
         RequestClosedBy = requestClosedBy;
     }
 
-    public int Id { get; }
+    public int? Id { get; }
     public string RequestMessage { get; }
-    public DateTime RequestDate { get;  }= DateTime.Now;
+    public DateTime RequestDate { get;  } = DateTime.Now;
     public DateTime? ClosedDate { get;  }
     public string RequestStatus { get; }= "Created";
     public int RequestRaisedById { get; }

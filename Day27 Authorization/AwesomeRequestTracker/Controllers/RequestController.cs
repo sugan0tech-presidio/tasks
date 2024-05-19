@@ -36,6 +36,7 @@ public class RequestController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<RequestDTO>>> GetAllRequests()
     {
+        // var token = HttpContext.Request.Headers("")
         var requests = await _requestService.GetAll();
         return Ok(requests.Select(MapToDTO).ToList());
     }

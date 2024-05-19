@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AwesomeRequestTracker.DTO;
 using AwesomeRequestTracker.Models;
 using Microsoft.IdentityModel.Tokens;
 
@@ -21,7 +22,7 @@ public class TokenService : ITokenService
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, person.Email),
+            new Claim(ClaimTypes.Name, person.Id.ToString()),
             new Claim(ClaimTypes.Role, person.Role.ToString()),
             new Claim(ClaimTypes.Email, person.Email)
         };
@@ -30,5 +31,28 @@ public class TokenService : ITokenService
             signingCredentials: credentials);
         var token = new JwtSecurityTokenHandler().WriteToken(myToken);
         return token;
+    }
+
+    public PayloadDTO GetPayload(string token)
+    {
+        var tokenHandeler = new JwtSecurityTokenHandler();
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = _key,
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+        tokenHandeler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+        var jwtToken = (JwtSecurityToken)validatedToken;
+        var claims = jwtToken.Claims;
+        var payload = new PayloadDTO
+        (
+            int.Parse(claims.First(x => x.Type == ClaimTypes.Name).Value),
+            claims.First(x => x.Type == ClaimTypes.Email).Value,
+            (Role)Enum.Parse(typeof(Role), claims.First(x => x.Type == ClaimTypes.Role).Value)
+        );
+
+        return payload;
     }
 }
