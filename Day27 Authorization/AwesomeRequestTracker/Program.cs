@@ -104,7 +104,7 @@ namespace AwesomeRequestTracker
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminPolicy", policyBuilder =>  policyBuilder.RequireRole(Role.Admin.ToString()));
-                options.AddPolicy("UserPolicy", policyBuilder =>  policyBuilder.RequireRole(Role.User.ToString(), Role.Admin.ToString()));
+                options.AddPolicy("UserPolicy", policyBuilder =>  policyBuilder.RequireRole(Role.User.ToString(), Role.Employee.ToString(), Role.Admin.ToString()));
                 options.AddPolicy("EmployeePolicy", policyBuilder =>  policyBuilder.RequireRole(Role.User.ToString(), Role.Employee.ToString()));
             });
 
