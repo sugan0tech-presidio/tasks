@@ -12,6 +12,9 @@ namespace AwesomeRequestTracker.Controllers;
 public class AdminController(AdminService adminService): ControllerBase {
     
     [HttpPut("Activate/{id}")]
+    [ProducesResponseType(typeof(Registry), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Registry>> ActivateUser(int id)
     {
         try
@@ -20,14 +23,17 @@ public class AdminController(AdminService adminService): ControllerBase {
         }
         catch (UserNotRegisteredException e)
         {
-            return NotFound(e.Message);
+            return NotFound(new ErrorModel(404, e.Message));
         }
         catch (AlreadyWithChangeException e)
         {
-            return BadRequest(e.Message);
+            return BadRequest(new ErrorModel(400, e.Message));
         }
     }
     [HttpPut("Dactivate/{id}")]
+    [ProducesResponseType(typeof(Registry), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Registry>> DeactivateUser(int id)
     {
         try
@@ -36,12 +42,11 @@ public class AdminController(AdminService adminService): ControllerBase {
         }
         catch (UserNotRegisteredException e)
         {
-            Console.WriteLine(e);
-            return NotFound(e.Message);
+            return NotFound(new ErrorModel(404, e.Message));
         }
         catch (AlreadyWithChangeException e)
         {
-            return BadRequest(e.Message);
+            return BadRequest(new ErrorModel(400, e.Message));
         }
     }
 }

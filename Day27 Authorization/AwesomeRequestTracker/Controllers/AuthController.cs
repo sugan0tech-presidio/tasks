@@ -1,6 +1,8 @@
 ﻿using AwesomeRequestTracker.DTO;
 using AwesomeRequestTracker.Exceptions;
+using AwesomeRequestTracker.Models;
 using AwesomeRequestTracker.Serivces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AwesomeRequestTracker.Controllers;
@@ -10,20 +12,34 @@ namespace AwesomeRequestTracker.Controllers;
 public class AuthController(AuthService _authService) : ControllerBase
 {
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
+    [ProducesResponseType(typeof(LoginReturnDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<LoginReturnDTO>> Login([FromBody] LoginDTO loginDTO)
     {
         try
         {
             var loginReturnDTO = await _authService.Login(loginDTO);
             return Ok(loginReturnDTO);
         }
-        catch (AuthenticationException ex)
+        catch (UserNotActivatedException e)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new ErrorModel(404, e.Message));
+        }
+        catch (UserNotRegisteredException e)
+        {
+            return BadRequest(new ErrorModel(404, e.Message));
+        }
+        catch (AuthenticationException e)
+        {
+            return NotFound(new ErrorModel(404, e.Message));
         }
     }
 
     [HttpPost("register")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegisterDTO registerDto)
     {
         try
@@ -31,13 +47,24 @@ public class AuthController(AuthService _authService) : ControllerBase
             var success = await _authService.Register(registerDto);
             return Ok(new { Success = success });
         }
-        catch (AuthenticationException ex)
+        catch (UserNotActivatedException e)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new ErrorModel(404, e.Message));
+        }
+        catch (UserNotRegisteredException e)
+        {
+            return BadRequest(new ErrorModel(404, e.Message));
+        }
+        catch (AuthenticationException e)
+        {
+            return NotFound(new ErrorModel(404, e.Message));
         }
     }
 
     [HttpPost("ResetPassword")]
+    [ProducesResponseType(typeof(LoginReturnDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDTO)
     {
         try
@@ -45,9 +72,17 @@ public class AuthController(AuthService _authService) : ControllerBase
             await _authService.ResetPassword(resetPasswordDTO);
             return Ok("Password reset successful");
         }
-        catch (AuthenticationException ex)
+        catch (UserNotActivatedException e)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new ErrorModel(400, e.Message));
+        }
+        catch (UserNotRegisteredException e)
+        {
+            return BadRequest(new ErrorModel(400, e.Message));
+        }
+        catch (AuthenticationException e)
+        {
+            return BadRequest(new ErrorModel(400,e.Message));
         }
     }
 }
