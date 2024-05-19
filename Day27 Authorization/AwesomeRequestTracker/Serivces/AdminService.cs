@@ -18,7 +18,9 @@ public class AdminService
         var registry = _registryService.GetAll().Result.Find(r => r.Person.Id.Equals(id));
         if (registry == null)
             throw new UserNotRegisteredException("Please ask the user to register for account activation");
-        
+
+        if (registry.IsActivated)
+            throw new AlreadyWithChangeException($"User is Already Activated {id}");
         registry.IsActivated = true;
         _registryService.Update(registry);
         return registry;
@@ -29,8 +31,13 @@ public class AdminService
         var registry = _registryService.GetAll().Result.Find(r => r.Person.Id.Equals(id));
         if (registry == null)
             throw new UserNotRegisteredException("User Not registered");
-        registry.IsActivated = false;
-        _registryService.Update(registry);
-        return registry;
+        if (registry.IsActivated)
+        {
+            registry.IsActivated = false;
+            _registryService.Update(registry);
+            return registry;
+        }
+
+        throw new AlreadyWithChangeException($"User is Already Deactivated {id}");
     }
 }

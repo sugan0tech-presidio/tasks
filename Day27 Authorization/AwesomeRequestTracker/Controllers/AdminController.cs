@@ -20,8 +20,11 @@ public class AdminController(AdminService adminService): ControllerBase {
         }
         catch (UserNotRegisteredException e)
         {
-            Console.WriteLine(e);
             return NotFound(e.Message);
+        }
+        catch (AlreadyWithChangeException e)
+        {
+            return BadRequest(e.Message);
         }
     }
     [HttpPut("Dactivate/{id}")]
@@ -35,6 +38,10 @@ public class AdminController(AdminService adminService): ControllerBase {
         {
             Console.WriteLine(e);
             return NotFound(e.Message);
+        }
+        catch (AlreadyWithChangeException e)
+        {
+            return BadRequest(e.Message);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AwesomeRequestTracker.Serivces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AwesomeRequestTracker.Controllers;
 
@@ -10,15 +11,8 @@ using Services;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize(Policy = "UserPolicy")]
-public class RequestController : ControllerBase
+public class RequestController (RequestService _requestService, ITokenService _tokenService): ControllerBase
 {
-    private readonly IBaseService<Request> _requestService;
-
-    public RequestController(IBaseService<Request> requestService)
-    {
-        _requestService = requestService;
-    }
-
     [HttpGet("{id}")]
     public async Task<ActionResult<RequestDTO>> GetRequest(int id)
     {
@@ -36,8 +30,10 @@ public class RequestController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<RequestDTO>>> GetAllRequests()
     {
-        // var token = HttpContext.Request.Headers("")
-        var requests = await _requestService.GetAll();
+        var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault("");
+        Console.WriteLine(token);
+        var payload = _tokenService.GetPayload(token.Split(" ").LastOrDefault(""));
+        var requests = await _requestService.GetAll(payload.Id, payload.Role);
         return Ok(requests.Select(MapToDTO).ToList());
     }
 

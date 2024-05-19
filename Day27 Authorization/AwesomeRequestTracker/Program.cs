@@ -83,12 +83,13 @@ namespace AwesomeRequestTracker
 
             builder.Services.AddScoped<IBaseService<User>, UserService>();
             builder.Services.AddScoped<IBaseService<Employee>, EmployeeService>();
-            builder.Services.AddScoped<IBaseService<Request>, RequestService>();
             builder.Services.AddScoped<IBaseService<Registry>, RegistryService>();
             builder.Services.AddScoped<IBaseService<SolutionFeedback>, SolutionFeedbackService>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<RequestSolutionService>();
+            builder.Services.AddScoped<RequestService>();
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddScoped<AdminService>();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
