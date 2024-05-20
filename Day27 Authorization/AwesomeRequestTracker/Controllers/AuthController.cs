@@ -9,7 +9,7 @@ namespace AwesomeRequestTracker.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(AuthService _authService) : ControllerBase
+public class AuthController(AuthService _authService, ILogger<AuthController> _logger) : ControllerBase
 {
     [HttpPost("login")]
     [ProducesResponseType(typeof(LoginReturnDTO), StatusCodes.Status200OK)]
@@ -20,6 +20,8 @@ public class AuthController(AuthService _authService) : ControllerBase
         try
         {
             var loginReturnDTO = await _authService.Login(loginDTO);
+            _logger.LogInformation(loginDTO.Email);
+            _logger.LogCritical(loginDTO.Email);
             return Ok(loginReturnDTO);
         }
         catch (UserNotActivatedException e)

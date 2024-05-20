@@ -26,3 +26,15 @@ var authors = context.Authors;
 - ==KeySelector== - the key to be used for grouping
 - ==ElementSelector== - any element to be used for aggregation
 - ==ResultSelector== - function to aggrigate the results ( grouped Key and result list for aggregated data)
+
+# Logging
+```csharp
+ILogger<Controller> logger
+logger.LogCritical("Some critical message");
+logger.LogInfo("base info");
+```
+
+
+## Tasks 
+
+1. Print the TitleId and the same Quantity and order id for every title

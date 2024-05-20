@@ -4,6 +4,29 @@ namespace LinqCheck
 {
     internal class Program
     {
+        void PrintSales()
+        {
+            var context = new pubsContext();
+            var sales = context.Sales.GroupBy(s => s.TitleId, s => s, (titleId, sale) =>
+                new
+                {
+                    Key = titleId,
+                    Sales = sale.ToList()
+                }
+            ).ToList();
+            
+            foreach (var sale in sales)
+            {
+                Console.WriteLine("Title Id : " + sale.Key);
+                sale.Sales.ForEach(sale1 =>
+                    {
+                        Console.WriteLine("Quantity : " + sale1.Qty);
+                        Console.WriteLine("Order Id : " + sale1.OrdNum);
+                        
+                    }
+                    );
+            }
+        }
         void PrintTheBooksPulisherwise()
         {
             pubsContext context = new pubsContext();
@@ -43,6 +66,7 @@ namespace LinqCheck
             program.PrintAuthors();
             program.PrintBookByTypes("mod_cook");
             program.PrintTheBooksPulisherwise();
+            program.PrintSales();
             Console.WriteLine("Hello, World!");
         }
     }
