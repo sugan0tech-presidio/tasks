@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "1940b24e735ea094",
+        "id": "a2d10dc555d047fd",
         "type": "tabs",
         "children": [
           {
-            "id": "4e57a1dd084992e2",
+            "id": "60bda2349ef4acb6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Tasks 22 Mon Apr.md",
+                "file": "Day wise/Day 28 Adv LINQ.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "51b2708c7e4cdcf6",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Tasks 22 Mon Apr.md",
+                "file": "Day wise/Day 28 Adv LINQ.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Tasks 22 Mon Apr.md",
+                "file": "Day wise/Day 28 Adv LINQ.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Tasks 22 Mon Apr.md"
+                "file": "Day wise/Day 28 Adv LINQ.md"
               }
             }
           }
@@ -134,7 +135,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 312.5
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -146,9 +147,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1bf5cf2816e9cd52",
+  "active": "60bda2349ef4acb6",
   "lastOpenFiles": [
     "Tasks 22 Mon Apr.md",
+    "Day wise/Day 28 Adv LINQ.md",
+    "Day wise",
     "Language/Untitled.md",
     "Language/CSharp/LINQ.md",
     "Language/CSharp/Tasks.md",
