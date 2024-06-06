@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Home</title>
+    <meta lang="en-us"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        header, footer {
+            width: 100%;
+            text-align: center;
+        }
+        form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="alert alert-primary">
+            <em>Add a new Product</em>
+        </h1>
+    </header>
+    <form action="Product.html" class="col-12 col-md-6">
+        <div class="mb-3">
+            <label for="productName" class="form-label">Name</label>
+            <input class="form-control" type="text" id="productName" name="productName" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="productPrice">Price</label>
+            <input class="form-control" type="number" id="productPrice" name="productPrice" min="1" max="1000"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="productCategory">Category</label>
+            <select class="form-select" id="productCategory" name="productCategory">
+                <option value="1">Dairy</option>
+                <option value="2" selected>Stationery</option>
+                <option value="3">Eatables</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Availability</label>
+            <div class="form-check form-switch">
+                <input class="form-check-input" role="switch" type="radio" checked name="rbAvailability" id="available"/>
+                <label class="form-check-label" for="available">Available</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" role="switch" type="radio" name="rbAvailability" id="unavailable"/>
+                <label class="form-check-label" for="unavailable">Unavailable</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>Others</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="giftPack"/>
+                <label class="form-check-label" for="giftPack">Gift Pack</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" checked id="wishCard"/>
+                <label class="form-check-label" for="wishCard">Wish Card</label>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <input class="btn btn-primary me-md-2" type="submit" value="Submit">
+            <input class="btn btn-danger" type="reset" value="Reset">
+        </div>
+    </form>
+    <footer class="mt-4">
+        <p>© Copyright, GFG</p>
+    </footer>
+</body>
+</html>

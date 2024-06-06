@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List View</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .table-wrapper {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .status-open {
+            color: #007bff;
+        }
+        .status-paid {
+            color: #28a745;
+        }
+        .status-inactive {
+            color: #6c757d;
+        }
+        .status-due {
+            color: #dc3545;
+        }
+        .text-red {
+            color: #dc3545;
+        }
+        .text-green {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container table-wrapper">
+        <div class="d-flex justify-content-between mb-3">
+            <h2>Customers</h2>
+            <button class="btn btn-primary">+ Add customer</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Rate</th>
+                        <th>Balance</th>
+                        <th>Deposit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Ann Culhane<br><small>5684236526</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-primary status-open">Open</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-red">-$270.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ahmad Rosser<br><small>5684236527</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-success status-paid">Paid</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-green">$270.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Zain Calzoni<br><small>5684236528</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-primary status-open">Open</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-red">-$20.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Leo Stanton<br><small>5684236529</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-secondary status-inactive">Inactive</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-green">$600.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Kaiya Vetrov<br><small>5684236530</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-primary status-open">Open</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-red">-$350.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Ryan Westervelt<br><small>5684236531</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-success status-paid">Paid</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-red">-$270.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Corey Stanton<br><small>5684236532</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-danger status-due">Due</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-green">$30.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Adison Aminoff<br><small>5684236533</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-primary status-open">Open</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-red">-$270.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Alfredo Aminoff<br><small>5684236534</small></td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla...</td>
+                        <td><span class="badge badge-secondary status-inactive">Inactive</span></td>
+                        <td>$70.00 CAD</td>
+                        <td class="text-green">$460.00</td>
+                        <td>$500.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between">
+            <small>Rows per page: 10</small>
+            <small>1-10 of 97</small>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
