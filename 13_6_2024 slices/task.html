@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label, input {
+            margin: 5px 0;
+            display: block;
+        }
+        input[type="submit"] {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function addProduct(event) {
+            event.preventDefault(); 
+
+            var id = document.getElementById('productID').value;
+            var name = document.getElementById('productName').value;
+            var price = document.getElementById('productPrice').value;
+            var quantity = document.getElementById('productQuantity').value;
+
+            var table = document.getElementById('productTable');
+            var newRow = table.insertRow();
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+
+            cell1.innerHTML = id;
+            cell2.innerHTML = name;
+            cell3.innerHTML = '$' + parseFloat(price).toFixed(2);
+            cell4.innerHTML = quantity;
+
+            // Clear form fields
+            document.getElementById('productForm').reset();
+        }
+    </script>
+</head>
+<body>
+    <h1>Product Data</h1>
+    <div>
+        <form id="productForm" onsubmit="addProduct(event)">
+            <label for="productID">ID:</label>
+            <input type="text" id="productID" name="productID" required>
+            
+            <label for="productName">Name:</label>
+            <input type="text" id="productName" name="productName" required>
+            
+            <label for="productPrice">Price:</label>
+            <input type="number" step="0.01" id="productPrice" name="productPrice" required>
+            
+            <label for="productQuantity">Quantity:</label>
+            <input type="number" id="productQuantity" name="productQuantity" required>
+            
+            <input type="submit" value="Add Product">
+        </form>
+    </div>
+    <table id="productTable">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Product 1</td>
+            <td>$10.00</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Product 2</td>
+            <td>$15.00</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Product 3</td>
+            <td>$20.00</td>
+            <td>3</td>
+        </tr>
+    </table>
+</body>
+</html>
