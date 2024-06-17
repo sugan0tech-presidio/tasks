@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Details</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card-tags {
+      margin-top: 10px;
+    }
+    .card-tags .badge {
+      margin-right: 5px;
+    }
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-image {
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
+  <script>
+    var clickButton = () => {
+      fetch('https://dummyjson.com/products', { method: 'GET'}).then(async (response) => {
+        var data = await response.json();
+        var divProducts = document.getElementById('divProducts');
+        var productData = "";
+        data.products.forEach(element => {
+          productData += `
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img src="${element.thumbnail}" class="card-img-top product-image" alt="${element.title}">
+                <div class="card-body">
+                  <h5 class="card-title">${element.title}</h5>
+                  <p class="card-text">${element.description}</p>
+                  <p class="card-text"><strong>Price:</strong> $${element.price.toFixed(2)}</p>
+                  <p class="card-text"><strong>Discount:</strong> ${element.discountPercentage.toFixed(2)} %</p>
+                  <p class="card-text"><strong>Rating:</strong> ${element.rating} ⭐</p>
+                  <p class="card-text"><strong>Stock:</strong> ${element.availabilityStatus}</p>
+                  <div class="card-tags">` +
+                    element.tags.map(tag => `<span class="badge badge-primary">${tag}</span>`).join('') +
+                  `</div>
+                  <div class="card-actions mt-3">
+                    <small class="text-muted">${element.warrantyInformation}</small>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        });
+        divProducts.innerHTML = productData;
+      }).catch(error => {
+        console.error(error);
+      })
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="my-4">Product Details</h1>
+    <button class="btn btn-primary mb-4" onclick="clickButton()">Load Products</button>
+    <div class="row" id="divProducts"></div>
+  </div>
+</body>
+</html>
+
