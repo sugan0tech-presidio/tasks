@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('token')) {
+                getUserFromAPI();
+            } else {
+                showLoginForm();
+            }
+        });
+
+        const showLoginForm = () => {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('userProfile').style.display = 'none';
+        };
+
+        const showUserProfile = () => {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('userProfile').style.display = 'block';
+            document.getElementById('editForm').style.display = 'none';
+        };
+
+        const showEditForm = () => {
+            document.getElementById('userProfile').style.display = 'none';
+            document.getElementById('editForm').style.display = 'block';
+        };
+
+        const clickButton = () => {
+            alert('Logging in...');
+            const txtMail = document.getElementById('textMail').value;
+            const txtPass = document.getElementById('txtPass').value;
+            fetch('http://localhost:5094/api/Auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "email": txtMail,
+                    "password": txtPass
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    getUserFromAPI();
+                } else {
+                    alert('Login failed!');
+                }
+            });
+        };
+
+        const getUserFromAPI = () => {
+            fetch('http://localhost:5094/api/User/email/suganfk@gmail.com', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                displayUserDetails(data);
+                showUserProfile();
+            });
+        };
+
+        const displayUserDetails = (user) => {
+            document.getElementById('userProfile').innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">User Profile</h3>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>First Name:</strong> ${user.firstName}</p>
+                        <p><strong>Last Name:</strong> ${user.lastName}</p>
+                        <p><strong>Phone Number:</strong> ${user.phoneNumber}</p>
+                        <p><strong>Role:</strong> ${user.role}</p>
+                        <button class="btn btn-primary" onclick="showEditForm()">Edit</button>
+                        <button class="btn btn-danger" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('editForm').innerHTML = `
+                <h3>Edit Profile</h3>
+                <div class="mb-3">
+                    <label for="editEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="editEmail" value="${user.email}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="editFirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="editFirstName" value="${user.firstName}">
+                </div>
+                <div class="mb-3">
+                    <label for="editLastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="editLastName" value="${user.lastName}">
+                </div>
+                <div class="mb-3">
+                    <label for="editPhoneNumber" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="editPhoneNumber" value="${user.phoneNumber}">
+                </div>
+                <div class="mb-3">
+                    <label for="editRole" class="form-label">Role</label>
+                    <input type="text" class="form-control" id="editRole" value="${user.role}">
+                </div>
+                <button class="btn btn-primary" onclick="updateUser()">Save Changes</button>
+                <button class="btn btn-secondary" onclick="showUserProfile()">Cancel</button>
+            `;
+        };
+
+        const updateUser = () => {
+            const updatedUser = {
+                "userId": 1,
+                "email": document.getElementById('editEmail').value,
+                "firstName": document.getElementById('editFirstName').value,
+                "lastName": document.getElementById('editLastName').value,
+                "phoneNumber": document.getElementById('editPhoneNumber').value,
+                "addressId": 0,
+                "isVerified": true,
+                "loginAttempts": 0,
+                "role": document.getElementById('editRole').value
+            };
+
+            fetch('http://localhost:5094/api/User', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                },
+                body: JSON.stringify(updatedUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                alert('User updated successfully!');
+                getUserFromAPI(); 
+            });
+        };
+
+        const logout = () => {
+            localStorage.removeItem('token');
+            showLoginForm();
+        };
+    </script>
+</head>
+<body>
+    <div id="loginForm" class="container" style="display: none;">
+        <h1>Login</h1>
+        <input class="form-control" type="email" id="textMail" placeholder="Enter email" />
+        <input class="form-control" type="password" id="txtPass" placeholder="Enter password" />
+        <button class="btn btn-success mt-3" onclick="clickButton()">Login</button>
+    </div>
+
+    <div id="userProfile" class="container" style="display: none;">
+        <div id="userDetails" class="mt-3"></div>
+    </div>
+
+    <div id="editForm" class="container" style="display: none;">
+    </div>
+</body>
+</html>
+
