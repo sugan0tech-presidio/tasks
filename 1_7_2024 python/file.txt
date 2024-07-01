@@ -1,0 +1,2 @@
+This content will override the existing content.
+All previous content has been cleared and replaced.
