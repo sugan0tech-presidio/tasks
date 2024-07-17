@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            margin: 20px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            gap: 5px;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ccc;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .cell.correct {
+            background-color: #6aaa64;
+            color: white;
+        }
+
+        .cell.present {
+            background-color: #c9b458;
+            color: white;
+        }
+
+        .cell.absent {
+            background-color: #787c7e;
+            color: white;
+        }
+
+        .input-row {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wordle</h1>
+    <div id="grid" class="grid"></div>
+    <div class="input-row">
+        <input type="text" id="guess-input" maxlength="5" autofocus>
+        <button onclick="submitGuess()">Submit</button>
+    </div>
+
+    <script>
+        const words = ["apple", "grape", "lemon", "melon", "peach"];
+        const targetWord = words[Math.floor(Math.random() * words.length)];
+        const maxAttempts = 6;
+        let attempts = 0;
+
+        function createGrid() {
+            const grid = document.getElementById('grid');
+            for (let i = 0; i < maxAttempts * 5; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                grid.appendChild(cell);
+            }
+        }
+
+        function submitGuess() {
+            const guessInput = document.getElementById('guess-input');
+            const guess = guessInput.value.toLowerCase();
+            if (guess.length !== 5) {
+                alert("Please enter a 5-letter word.");
+                return;
+            }
+
+            if (attempts >= maxAttempts) {
+                alert("You've used all attempts!");
+                return;
+            }
+
+            const grid = document.getElementById('grid');
+            const startIndex = attempts * 5;
+            for (let i = 0; i < 5; i++) {
+                const cell = grid.children[startIndex + i];
+                cell.textContent = guess[i];
+                if (guess[i] === targetWord[i]) {
+                    cell.classList.add('correct');
+                } else if (targetWord.includes(guess[i])) {
+                    cell.classList.add('present');
+                } else {
+                    cell.classList.add('absent');
+                }
+            }
+
+            attempts++;
+            guessInput.value = '';
+            if (guess === targetWord) {
+                setTimeout(() => alert("Congratulations! You've guessed the word!"), 100);
+            } else if (attempts >= maxAttempts) {
+                setTimeout(() => alert(`Game Over! The word was: ${targetWord}`), 100);
+            }
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>
+
