@@ -1,0 +1,6 @@
+﻿services:
+  demowebservice:
+    image: demowebservice
+    build:
+      context: .
+      dockerfile: Dockerfile
